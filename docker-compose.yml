@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: php7.4.16-fpm-alpine3.13
+    container_name: mol-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: mol-app
+      SERVICE_TAGS: mol-dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: mol-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #POSTGRESQL Service
+  db:
+    image: postgres:9.6-alpine
+    env_file: 
+      - database.env
+    container_name: mol-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data/
+      - ./postgresql/psql.cnf:/etc/postgresql/psql.cnf
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
