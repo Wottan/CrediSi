@@ -29,3 +29,13 @@ Route::post(
     "/logout",
     [App\Http\Controllers\LoginController::class, "logout"]
 )->name("logout");
+
+Route::get(
+    "/auth/redirect",
+    [App\Http\Controllers\SocialiteLoginController::class, "redirectToLogin"]
+)->name("socialite-login");
+
+Route::get(
+    "/auth/callback",
+    [App\Http\Controllers\SocialiteLoginController::class, "redirectToHome"]
+)->name("socialite-callback");
