@@ -18,6 +18,10 @@ export default {
   methods: {
     submit() {
       console.debug("submit", this.email, this.password);
+      this.axios.post("/api/login", {
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };

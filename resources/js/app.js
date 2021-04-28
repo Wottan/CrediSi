@@ -1,9 +1,10 @@
 import Vue from 'vue'
-
-//Main pages
 import router from './router';
 import App from './App';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
+Vue.use(VueAxios, axios);
 
 const app = new Vue({
     router,
