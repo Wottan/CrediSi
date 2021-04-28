@@ -20,15 +20,17 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route("home");
+            return response()->json(
+                auth()->user(),
+                200
+            );
         }
 
-        return back()->withErrors([
-            "email" => "The provided credentials do not match our records.",
-        ]);
+        return response()->json(["error" => "The provided credentials do not match our records."], 400);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
