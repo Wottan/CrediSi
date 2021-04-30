@@ -21,6 +21,10 @@
         ></v-text-field>
 
         <v-btn class="mr-4" @click="submit"> Iniciar sesion </v-btn>
+
+        <v-btn class="mr-4" href="/auth/redirect">
+          Iniciar sesion con Google
+        </v-btn>
       </form>
     </v-card-text>
   </v-card>
