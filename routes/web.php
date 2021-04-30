@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SocialiteLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,13 @@ Route::get('{any?}', function () {
 });
 
 Route::post('/api/login', [LoginController::class, 'authenticate']);
+
+Route::get(
+    "/auth/redirect",
+    [SocialiteLoginController::class, "redirectToLogin"]
+)->name("socialite-login");
+
+Route::get(
+    "/auth/callback",
+    [SocialiteLoginController::class, "redirectToHome"]
+)->name("socialite-callback");
