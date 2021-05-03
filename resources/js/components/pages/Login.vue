@@ -16,7 +16,6 @@
           label="Password"
           required
           :type="showPassword ? 'text' : 'password'"
-          counter
           @click:append="showPassword = !showPassword"
         ></v-text-field>
 
@@ -33,6 +32,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   mixins: [validationMixin],
@@ -49,6 +49,8 @@ export default {
   }),
 
   computed: {
+    ...mapGetters("auth", ["user"]),
+
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) {
@@ -69,12 +71,19 @@ export default {
   },
 
   methods: {
+    ...mapActions("auth", ["login"]),
     submit() {
       this.$v.$touch();
-      this.axios.post("/api/login", {
+      this.login({
         email: this.email,
         password: this.password,
-      });
+      })
+        .then((result) => {
+          console.debug("Mensaje", result);
+        })
+        .catch((err) => {
+          console.debug("Error logueo", err);
+        });
     },
   },
 };
