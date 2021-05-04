@@ -5,8 +5,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import vuetify from './plugins/vuetify';
 import Vuelidate from 'vuelidate';
-import store from './store';
-
+import store from './stores/store';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);

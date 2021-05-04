@@ -2,8 +2,9 @@ import axios from 'axios';
 
 export default {
     namespaced: true,
+
     state: {
-        user: {}
+        user: {},
     },
 
     getters: {
@@ -17,7 +18,7 @@ export default {
                 ).then((result) => {
                     commit("setUser", result.data);
                     resolve(result);
-                }).catch(err => {
+                }).catch((err) => {
                     commit("setUser", {});
                     reject(err);
                 })
