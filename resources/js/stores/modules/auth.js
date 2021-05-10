@@ -20,6 +20,17 @@ export default {
                     resolve(result);
                 }).catch((err) => {
                     commit("setUser", {});
+                    reject(err.response);
+                })
+            });
+        },
+        logout({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios.post("/api/logout"
+                ).then((result) => {
+                    commit("setUser", {});
+                    resolve(result);
+                }).catch(err => {
                     reject(err);
                 })
             });

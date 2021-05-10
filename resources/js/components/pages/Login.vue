@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <messages />
+  <layout>
     <v-card class="mx-auto my-12" max-width="450" elevation="15">
       <v-card-text>
         <form>
@@ -29,17 +28,17 @@
         </form>
       </v-card-text>
     </v-card>
-  </div>
+  </layout>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import { mapActions } from "vuex";
-import Messages from "../util/Messages.vue";
+import Layout from "../layout/Layout.vue";
 
 export default {
-  components: { Messages },
+  components: { Layout },
   mixins: [validationMixin],
 
   validations: {
@@ -79,9 +78,11 @@ export default {
       this.login({
         email: this.email,
         password: this.password,
-      }).then(() => {
-        this.$router.push({ name: 'home' });
-      }).catch(this.handleError);
+      })
+        .then(() => {
+          this.$router.push({ name: "home" });
+        })
+        .catch(this.handleError);
     },
   },
 };

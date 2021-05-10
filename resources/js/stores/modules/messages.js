@@ -16,14 +16,14 @@ const Types = {
  * @returns { status, message, error }
  */
 function RestResponse(response) {
-    let r = response?.response;
-    if (!r) {
+
+    if (!response.status) {
         throw Error("Not a rest response");
     }
     return {
-        status: r.status,
-        message: r.statusText,
-        error: r.data?.error
+        status: response.status,
+        message: response.statusText,
+        error: response.data?.error
     }
 }
 
@@ -42,11 +42,11 @@ function RestResponseMessage(restResponse, type, timeout) {
  * 
  * @returns { text, type, timeout }
  */
- function Message(text, type, timeout) {
+function Message(text, type, timeout) {
     if (!Object.values(Types).includes(type)) {
         throw Error("Not a valid type: " + type);
     }
-    return { text, type, timeout};
+    return { text, type, timeout };
 }
 
 export default {
