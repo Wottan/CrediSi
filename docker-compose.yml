@@ -8,7 +8,6 @@ services:
       dockerfile: Dockerfile
     image: php7.4.16-fpm-alpine3.13
     container_name: mol-app
-    restart: unless-stopped
     tty: true
     environment:
       SERVICE_NAME: mol-app
@@ -24,7 +23,6 @@ services:
   webserver:
     image: nginx:alpine
     container_name: mol-webserver
-    restart: unless-stopped
     tty: true
     ports:
       - "80:80"
@@ -41,7 +39,6 @@ services:
     env_file: 
       - database.env
     container_name: mol-db
-    restart: unless-stopped
     tty: true
     ports:
       - "5432:5432"
