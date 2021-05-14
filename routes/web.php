@@ -21,6 +21,8 @@ Route::get('{any?}', function () {
 
 Route::post('/api/login', [LoginController::class, 'authenticate']);
 
+Route::post('/api/logout', [LoginController::class, 'logout']);
+
 Route::get(
     "/auth/redirect",
     [SocialiteLoginController::class, "redirectToLogin"]

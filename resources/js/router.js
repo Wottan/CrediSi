@@ -18,15 +18,15 @@ const router = new VueRouter({
         },
         {
             path: '/home',
-            name: 'Home',
+            name: 'home',
             component: Home
         },
     ]
 });
 
 router.beforeEach((to, from, next) => {
-   store.dispatch("messages/clear");
-   next(); 
+    store.dispatch("messages/clear");
+    next();
 });
 
 export default router;
