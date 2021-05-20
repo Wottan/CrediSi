@@ -1,6 +1,6 @@
 <template >
   <span>
-    <snackbar
+    <i-snackbar
       v-for="(msg, index) in messages"
       :key="index"
       :offset="index * 50"
@@ -8,7 +8,7 @@
       :timeout="msg.timeout * 1000"
     >
       {{ msg.type }}: {{ msg.text }}
-    </snackbar>
+    </i-snackbar>
   </span>
 </template>
 <script>

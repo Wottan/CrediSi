@@ -27,6 +27,6 @@ class SocialiteLoginController extends Controller
                 "password" => Hash::make(Str::random(8))
             ]
         ), true);
-        return redirect()->to("/");
+        return redirect()->to("/home");
     }
 }

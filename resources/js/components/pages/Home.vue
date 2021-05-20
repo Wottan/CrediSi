@@ -1,9 +1,12 @@
 <template>
-  <layout> Home! </layout>
+  <layout>
+    <user-table />
+  </layout>
 </template>
 <script>
 import Layout from "../layout/Layout.vue";
+import UserTable from "../users/UserTable.vue";
 export default {
-  components: { Layout },
+  components: { Layout, UserTable },
 };
 </script>
