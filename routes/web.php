@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SocialiteLoginController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::get('{any?}', function () {
 Route::post('/api/login', [LoginController::class, 'authenticate']);
 
 Route::post('/api/logout', [LoginController::class, 'logout']);
+
+Route::resource('/api/users', UserController::class);
 
 Route::get(
     "/auth/redirect",

@@ -1,5 +1,6 @@
 <template>
   <v-app app>
+    <messages />
     <router-view></router-view>
   </v-app>
 </template>

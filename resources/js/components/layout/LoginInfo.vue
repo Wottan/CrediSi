@@ -1,8 +1,8 @@
 <template>
   <div>
     {{ user.name }}
-    <login-action />
-    <logout-action />
+    <login-action v-if="!login" />
+    <logout-action v-if="login" />
   </div>
 </template>
 <script>
@@ -12,7 +12,7 @@ import LogoutAction from "../actions/LogoutAction.vue";
 export default {
   components: { LoginAction, LogoutAction },
   computed: {
-    ...mapGetters("auth", ["user"]),
+    ...mapGetters("auth", ["user", "login"]),
   },
 };
 </script>

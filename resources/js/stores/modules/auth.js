@@ -5,10 +5,12 @@ export default {
 
     state: {
         user: {},
+        login: false,
     },
 
     getters: {
         user: state => state.user,
+        login: state => state.login,
     },
 
     actions: {
@@ -16,10 +18,9 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.post("/api/login", credentials
                 ).then((result) => {
-                    commit("setUser", result.data);
+                    commit("login", result.data);
                     resolve(result);
                 }).catch((err) => {
-                    commit("setUser", {});
                     reject(err.response);
                 })
             });
@@ -28,7 +29,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.post("/api/logout"
                 ).then((result) => {
-                    commit("setUser", {});
+                    commit("logout", {});
                     resolve(result);
                 }).catch(err => {
                     reject(err);
@@ -38,9 +39,13 @@ export default {
     },
 
     mutations: {
-        setUser(state, user) {
-            state.user = user
+        login(state, user) {
+            state.user = user;
+            state.login = true
+        },
+        logout(state, user) {
+            state.user = user;
+            state.login = false
         },
     }
-
 }
