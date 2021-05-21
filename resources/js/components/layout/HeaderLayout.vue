@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar dense:true flat:true>
-    <v-spacer></v-spacer>
+  <i-app-bar>
+    <i-spacer></i-spacer>
     <login-info />
-  </v-app-bar>
+  </i-app-bar>
 </template>
 <script>
 import LoginInfo from "./LoginInfo.vue";

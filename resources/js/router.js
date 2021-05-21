@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Login from './components/pages/Login.vue';
-import Home from './components/pages/Home.vue';
+import LoginPage from './components/pages/LoginPage.vue';
+import HomePage from './components/pages/HomePage.vue';
 import store from './stores/store'
 
 Vue.use(VueRouter);
@@ -14,12 +14,12 @@ const router = new VueRouter({
         {
             path: '/login',
             name: 'login',
-            component: Login
+            component: LoginPage
         },
         {
             path: '/home',
             name: 'home',
-            component: Home
+            component: HomePage
         },
     ]
 });
