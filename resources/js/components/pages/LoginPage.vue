@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="450" elevation="15">
+  <i-card class="mx-auto my-12" max-width="450" elevation="15">
     <v-card-text>
       <form>
         <v-text-field
@@ -26,7 +26,7 @@
         </v-btn>
       </form>
     </v-card-text>
-  </v-card>
+  </i-card>
 </template>
 
 <script>

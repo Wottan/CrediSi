@@ -1,35 +1,54 @@
 <template>
-  <v-card>
-    <v-card-title>
-      {{ title }}
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Buscar"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      :search="search"
-    ></v-data-table>
-  </v-card>
+  <v-data-table
+    :headers="columns"
+    :items="rows"
+    :search="searchString"
+    :single-expand="singleExpand"
+    :expanded.sync="expanded"
+    item-key="id"
+    :show-expand="canExpand"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>{{ title }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="searchString"
+          append-icon="mdi-magnify"
+          label="Buscar"
+          single-line
+        ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-switch
+          v-if="canExpand"
+          v-model="singleExpand"
+          label="Expandir solo uno"
+          class="mt-2"
+        ></v-switch>
+      </v-toolbar>
+    </template>
+    <template v-slot:expanded-item="{ headers, item }">
+      <td :colspan="headers.length">
+        <slot name="expandedRow" :row="item">No se definieron mas datos</slot>
+      </td>
+    </template>
+  </v-data-table>
 </template>
 <script>
 export default {
   data() {
-    return { search: "" };
+    return { 
+      searchString: "", 
+      singleExpand: false, 
+      expanded: [] 
+    };
   },
-
   props: {
-    items: {
+    rows: {
       type: Array,
       default: null,
     },
-    headers: {
+    columns: {
       type: Array,
       default: null,
     },
@@ -38,5 +57,10 @@ export default {
       default: "",
     },
   },
+  computed: {
+    canExpand() {
+      return !!this.$scopedSlots.expandedRow;
+    } 
+  }
 };
 </script>

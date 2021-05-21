@@ -1,9 +1,6 @@
 <template>
-  <v-app app>
-    <messages />
+  <i-app>
+    <i-messages />
     <router-view></router-view>
-  </v-app>
+  </i-app>
 </template>
-<script>
-export default {};
-</script>
