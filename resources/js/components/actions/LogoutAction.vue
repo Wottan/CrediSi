@@ -1,10 +1,6 @@
 <template>
-  <i-button
-    @click="onClick"
-    :icon="'mdi-logout'"
-    :label="'LogOut'"
-    :color="'primary'"
-  >
+  <i-button @click="onClick" tooltip="LogOut" color="primary">
+    <i-icon value="logout" />
   </i-button>
 </template>
 <script>

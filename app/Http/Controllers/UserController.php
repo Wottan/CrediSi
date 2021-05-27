@@ -80,7 +80,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->update($request->all());
 
-        return response()->json('user updated!');
+        return response()->json($user);
     }
 
     /**

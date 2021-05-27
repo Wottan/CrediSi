@@ -24,12 +24,28 @@ export default {
                 })
             });
         },
+        update({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                axios.put("/api/users/" + user.id, user
+                ).then((result) => {
+                    commit("update", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {
         users(state, users) {
             state.users = users
         },
+        update(state, user) {
+            state.users = state.users.filter(u => u.id !== user.id);
+            state.users.push(user);
+        }
+
     }
 
 }

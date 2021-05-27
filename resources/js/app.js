@@ -19,6 +19,10 @@ import IGridRow from './components/interface/IGridRow';
 import IGridColumn from './components/interface/IGridColumn';
 import IAppBar from './components/interface/IAppBar';
 import IFooter from './components/interface/IFooter';
+import IDialog from './components/interface/IDialog'
+import IForm from './components/interface/IForm';
+import ITextInput from './components/interface/ITextInput';
+import IIcon from './components/interface/IIcon';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -37,6 +41,10 @@ Vue.component('i-grid-row', IGridRow);
 Vue.component('i-grid-column', IGridColumn);
 Vue.component('i-app-bar', IAppBar);
 Vue.component('i-footer', IFooter);
+Vue.component('i-dialog', IDialog);
+Vue.component('i-form', IForm);
+Vue.component('i-text-input', ITextInput);
+Vue.component('i-icon', IIcon);
 
 
 const app = new Vue({

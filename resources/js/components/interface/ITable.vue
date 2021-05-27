@@ -27,6 +27,11 @@
         ></v-switch>
       </v-toolbar>
     </template>
+
+    <template v-slot:[`item.actions`]="{ item }">
+      <slot name="rowAction" :row="item" />
+    </template>
+
     <template v-slot:expanded-item="{ headers, item }">
       <td :colspan="headers.length">
         <slot name="expandedRow" :row="item">No se definieron mas datos</slot>
@@ -37,10 +42,10 @@
 <script>
 export default {
   data() {
-    return { 
-      searchString: "", 
-      singleExpand: false, 
-      expanded: [] 
+    return {
+      searchString: "",
+      singleExpand: false,
+      expanded: [],
     };
   },
   props: {
@@ -57,10 +62,11 @@ export default {
       default: "",
     },
   },
+
   computed: {
     canExpand() {
       return !!this.$scopedSlots.expandedRow;
-    } 
-  }
+    },
+  },
 };
 </script>

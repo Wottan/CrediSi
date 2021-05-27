@@ -1,10 +1,6 @@
 <template>
-  <i-button
-    @click="onClick"
-    :icon="'mdi-login'"
-    :label="'LogIn'"
-    :color="'primary'"
-  >
+  <i-button @click="onClick" tooltip="LogIn" color="primary">
+    <i-icon value="login" />
   </i-button>
 </template>
 <script>
