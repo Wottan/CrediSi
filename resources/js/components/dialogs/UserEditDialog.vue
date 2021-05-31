@@ -7,7 +7,7 @@
   </i-dialog>
 </template>
 <script>
-import UserEditForm from "./UserEditForm.vue";
+import UserEditForm from "../forms/UserEditForm.vue";
 export default {
   components: { UserEditForm },
   props: {

@@ -5,7 +5,7 @@
   </i-app-bar>
 </template>
 <script>
-import LoginInfo from "../login/LoginInfo.vue";
+import LoginInfo from "../info/LoginInfo.vue";
 export default {
   components: { LoginInfo },
 };

@@ -22,7 +22,9 @@ import IFooter from './components/interface/IFooter';
 import IDialog from './components/interface/IDialog'
 import IForm from './components/interface/IForm';
 import ITextInput from './components/interface/ITextInput';
+import IPasswordInput from './components/interface/IPasswordInput';
 import IIcon from './components/interface/IIcon';
+import ICardText from './components/interface/ICardText';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -32,6 +34,7 @@ Vue.component('i-snackbar', ISnackbar);
 Vue.component('i-button', IButton);
 Vue.component('i-table', ITable);
 Vue.component('i-card', ICard);
+Vue.component('i-card-text', ICardText);
 Vue.component('i-app', IApp);
 Vue.component('i-messages', IMessages);
 Vue.component('i-container', IContainer);
@@ -44,8 +47,8 @@ Vue.component('i-footer', IFooter);
 Vue.component('i-dialog', IDialog);
 Vue.component('i-form', IForm);
 Vue.component('i-text-input', ITextInput);
+Vue.component('i-password-input', IPasswordInput);
 Vue.component('i-icon', IIcon);
-
 
 const app = new Vue({
     router,

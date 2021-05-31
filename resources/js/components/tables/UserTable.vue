@@ -20,14 +20,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 
-import UserEditDialog from "./UserEditDialog.vue";
-import UserEditForm from "./UserEditForm.vue";
-import UserInfo from "./UserInfo";
+import UserEditDialog from "../dialogs/UserEditDialog.vue";
+import UserInfo from "../info/UserInfo";
 export default {
   components: {
     UserInfo,
     UserEditDialog,
-    UserEditForm,
   },
   data() {
     return {

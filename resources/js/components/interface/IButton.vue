@@ -1,7 +1,13 @@
 <template >
   <v-tooltip bottom>
     <template v-slot:activator="{ on, attrs }">
-      <v-btn @click="$emit('click')" :color="color" v-bind="attrs" v-on="on">
+      <v-btn
+        @click="$emit('click')"
+        :color="color"
+        v-bind="attrs"
+        v-on="on"
+        :href="href"
+      >
         <slot />
       </v-btn>
     </template>
@@ -13,11 +19,12 @@ export default {
   props: {
     tooltip: {
       type: String,
-      default: "",
     },
     color: {
       type: String,
-      default: "",
+    },
+    href: {
+      type: String,
     },
   },
 };
