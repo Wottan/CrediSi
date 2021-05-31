@@ -5,7 +5,7 @@
 </template>
 <script>
 import PageLayout from "../layout/PageLayout.vue";
-import UserTable from "../users/UserTable.vue";
+import UserTable from "../tables/UserTable.vue";
 export default {
   components: { PageLayout, UserTable },
 };
