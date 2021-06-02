@@ -25,6 +25,7 @@ import ITextInput from './components/interface/ITextInput';
 import IPasswordInput from './components/interface/IPasswordInput';
 import IIcon from './components/interface/IIcon';
 import ICardText from './components/interface/ICardText';
+import IComboBoxInput from './components/interface/IComboBoxInput';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -49,6 +50,7 @@ Vue.component('i-form', IForm);
 Vue.component('i-text-input', ITextInput);
 Vue.component('i-password-input', IPasswordInput);
 Vue.component('i-icon', IIcon);
+Vue.component('i-combo-box-input', IComboBoxInput);
 
 const app = new Vue({
     router,

@@ -1,15 +1,15 @@
 <template >
-  <i-dialog :value="show" @close="close">
+  <i-dialog :value="show" @close="close" width="500">
     <v-card>
-      <v-card-title> Editar Usuario </v-card-title>
-      <user-edit-form :value="value" @submit="close" />
+      <v-card-title> {{ value.name }} </v-card-title>
+      <user-label-form :value="value" @submit="close" />
     </v-card>
   </i-dialog>
 </template>
 <script>
-import UserEditForm from "../forms/UserEditForm.vue";
+import UserLabelForm from "../forms/UserLabelForm.vue";
 export default {
-  components: { UserEditForm },
+  components: { UserLabelForm },
   props: {
     show: {
       type: Boolean,

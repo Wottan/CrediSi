@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LabelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SocialiteLoginController;
@@ -24,7 +25,12 @@ Route::post('/api/login', [LoginController::class, 'authenticate']);
 
 Route::post('/api/logout', [LoginController::class, 'logout']);
 
-Route::resource('/api/users', UserController::class);
+Route::resources(
+    [
+        '/api/users' => UserController::class,
+        '/api/labels' => LabelController::class,
+    ]
+);
 
 Route::get(
     "/auth/redirect",

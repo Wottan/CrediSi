@@ -5,20 +5,29 @@
         <user-info :user="row" />
       </template>
       <template v-slot:rowAction="{ row }">
-        <i-button tooltip="Editar Usuario" @click="edit(row)">
+        <i-button tooltip="Editar Usuario" @click="openEditUserDialog(row)">
           <i-icon value="edit" />
+        </i-button>
+        <i-button tooltip="Agregar Etiqueta" @click="openEditLabelsDialog(row)">
+          <i-icon value="label" />
         </i-button>
       </template>
     </i-table>
     <user-edit-dialog
-      :value="dialog"
-      :user="editUser"
-      @close="dialog = false"
+      :show="showEditUserDialog"
+      :value="selectedUser"
+      @close="showEditUserDialog = false"
+    />
+    <user-label-dialog
+      :show="showUserlabelDialog"
+      :value="selectedUser"
+      @close="showUserlabelDialog = false"
     />
   </i-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import UserLabelDialog from "../dialogs/UserLabelDialog.vue";
 
 import UserEditDialog from "../dialogs/UserEditDialog.vue";
 import UserInfo from "../info/UserInfo";
@@ -26,6 +35,7 @@ export default {
   components: {
     UserInfo,
     UserEditDialog,
+    UserLabelDialog,
   },
   data() {
     return {
@@ -35,8 +45,9 @@ export default {
         { text: "Acciones", value: "actions", sortable: false },
         { text: "", value: "data-table-expand", sortable: false },
       ],
-      dialog: false,
-      editUser: {},
+      showEditUserDialog: false,
+      selectedUser: {},
+      showUserlabelDialog: false,
     };
   },
   computed: {
@@ -46,9 +57,13 @@ export default {
   methods: {
     ...mapActions("users", ["load"]),
 
-    edit(row) {
-      this.editUser = row;
-      this.dialog = true;
+    openEditUserDialog(row) {
+      this.selectedUser = row;
+      this.showEditUserDialog = true;
+    },
+    openEditLabelsDialog(row) {
+      this.selectedUser = row;
+      this.showUserlabelDialog = true;
     },
   },
 

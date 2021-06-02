@@ -19,10 +19,7 @@ class LoginController extends Controller
         $credentials = $request->only("email", "password");
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return response()->json(
-                auth()->user(),
-                200
-            );
+            return auth()->user();
         }
 
         return response()->json(["error" => "The provided credentials do not match our records."], 400);
