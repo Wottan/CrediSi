@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="value" @input="$emit('close')">
+  <v-dialog :value="value" @input="$emit('close')" :width="width">
     <slot />
   </v-dialog>
 </template>
@@ -8,6 +8,10 @@ export default {
   props: {
     value: {
       type: Boolean,
+      default: null,
+    },
+    width: {
+      type: String,
       default: null,
     },
   },
