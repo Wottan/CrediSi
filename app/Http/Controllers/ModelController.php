@@ -10,18 +10,14 @@ use Illuminate\Http\Request;
  */
 abstract class ModelController extends Controller
 {
-    private Model $model;
-
-    public function __construct(Model $model) {
-        $this->model = $model;
-    }
+    abstract protected function getModel();
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->model::all();
+        return $this->getModel()::all();
     }
 
     /**
@@ -37,7 +33,7 @@ abstract class ModelController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->model::create($request->all());
+        return $this->getModel()::create($request->all());
     }
 
     /**
@@ -45,7 +41,7 @@ abstract class ModelController extends Controller
      */
     public function show($id)
     {
-        return $this->model::findOrFail($id);
+        return $this->getModel()::findOrFail($id);
     }
 
     /**
@@ -61,7 +57,7 @@ abstract class ModelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return tap($this->model::findOrFail($id))->update($request->all());
+        return tap($this->getModel()::findOrFail($id))->update($request->all());
     }
 
     /**
@@ -69,6 +65,6 @@ abstract class ModelController extends Controller
      */
     public function destroy($id)
     {
-        return $this->model::findOrFail($id)->delete();
+        return $this->getModel()::findOrFail($id)->delete();
     }
 }
