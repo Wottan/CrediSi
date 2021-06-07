@@ -7,14 +7,13 @@ const ICONS = {
   logout: "mdi-logout",
   edit: "mdi-pencil",
   label: "mdi-label",
+  shifts: "mdi-calendar",
 };
 export default {
   props: {
     value: {
       type: String,
-      validator: (value) => {
-        return value in ICONS;
-      },
+      validator: (v) => v in ICONS,
     },
   },
 
