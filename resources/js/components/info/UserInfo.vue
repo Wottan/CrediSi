@@ -20,6 +20,11 @@
         :value="value"
         @close="showUserlabelDialog = false"
       />
+      <user-shifts-dialog
+        :show="showUserShiftsDialog"
+        :value="value"
+        @close="showUserShiftsDialog = false"
+      />
     </i-grid>
     <i-card-text v-else> No hay usuario disponible </i-card-text>
   </i-container>
@@ -27,9 +32,10 @@
 
 <script>
 import UserLabelDialog from "../dialogs/UserLabelDialog.vue";
+import UserShiftsDialog from "../dialogs/UserShiftsDialog.vue";
 
 export default {
-  components: { UserLabelDialog },
+  components: { UserLabelDialog, UserShiftsDialog },
   props: {
     value: {
       type: Object,

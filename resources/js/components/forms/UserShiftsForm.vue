@@ -1,9 +1,10 @@
 <template >
   <i-container>
     <i-form>
-      <i-combo-box-input
-        :options="labels"
-        :value="selectedLabels"
+      <i-calendar
+        type="week"
+        :value="now"
+        :events="events"
         @input="onChange"
         label="Etiquetas"
       />
@@ -14,6 +15,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { DateTime } from 'luxon';
 export default {
   props: {
     value: {
@@ -22,24 +24,20 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("labels", ["labels"]),
-    selectedLabels() {
-      return this.value.labels?.map((l) => l.text);
-    }
+    ...mapGetters("shifts", []),
+    now: () => DateTime.now().toISODate(),
+    events: () => [],
   },
   methods: {
-    ...mapActions("labels", ["load"]),
+    ...mapActions("shifts", []),
     ...mapActions("messages", ["handleError"]),
 
-    onChange(labels) {
-      //to do translate to objects
+    onChange(events) {
+      //todo
     },
     onSubmit() {
       this.$emit("submit");
     },
-  },
-  created() {
-    this.load();
   },
 };
 </script>
