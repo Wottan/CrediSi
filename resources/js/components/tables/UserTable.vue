@@ -2,14 +2,11 @@
   <i-container>
     <i-table :columns="columns" :rows="users" title="Usuarios">
       <template v-slot:expandedRow="{ row }">
-        <user-info :user="row" />
+        <user-info :value="row" />
       </template>
       <template v-slot:rowAction="{ row }">
         <i-button tooltip="Editar Usuario" @click="openEditUserDialog(row)">
           <i-icon value="edit" />
-        </i-button>
-        <i-button tooltip="Agregar Etiqueta" @click="openEditLabelsDialog(row)">
-          <i-icon value="label" />
         </i-button>
       </template>
     </i-table>
@@ -18,24 +15,17 @@
       :value="selectedUser"
       @close="showEditUserDialog = false"
     />
-    <user-label-dialog
-      :show="showUserlabelDialog"
-      :value="selectedUser"
-      @close="showUserlabelDialog = false"
-    />
   </i-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import UserLabelDialog from "../dialogs/UserLabelDialog.vue";
 
 import UserEditDialog from "../dialogs/UserEditDialog.vue";
 import UserInfo from "../info/UserInfo";
 export default {
   components: {
     UserInfo,
-    UserEditDialog,
-    UserLabelDialog,
+    UserEditDialog
   },
   data() {
     return {
@@ -47,7 +37,6 @@ export default {
       ],
       showEditUserDialog: false,
       selectedUser: {},
-      showUserlabelDialog: false,
     };
   },
   computed: {
@@ -60,10 +49,6 @@ export default {
     openEditUserDialog(row) {
       this.selectedUser = row;
       this.showEditUserDialog = true;
-    },
-    openEditLabelsDialog(row) {
-      this.selectedUser = row;
-      this.showUserlabelDialog = true;
     },
   },
 

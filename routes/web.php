@@ -22,15 +22,15 @@ Route::get('{any?}', function () {
 });
 
 Route::post('/api/login', [LoginController::class, 'authenticate']);
-
 Route::post('/api/logout', [LoginController::class, 'logout']);
 
-Route::resources(
-    [
-        '/api/users' => UserController::class,
-        '/api/labels' => LabelController::class,
-    ]
-);
+Route::resources([
+    '/api/users' => UserController::class,
+    '/api/labels' => LabelController::class,
+    '/api/shifts' => ShiftController::class,
+]);
+
+Route::get('/api/shifts/active', [ShiftController::class,'active'])->name("active-shifts");
 
 Route::get(
     "/auth/redirect",
