@@ -6,7 +6,8 @@ use App\Models\User;
 
 class UserController extends ModelController
 {
-    public function __construct() {
-        parent::__construct(new User());
+    protected function getModel()
+    {
+        return User::class;
     }
 }
