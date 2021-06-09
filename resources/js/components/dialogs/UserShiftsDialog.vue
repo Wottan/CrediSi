@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="close" width="500">
+  <i-dialog :value="show" @close="close" width="900">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
       <user-shifts-form :value="value" @submit="close" />
