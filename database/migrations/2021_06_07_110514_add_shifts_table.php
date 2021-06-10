@@ -19,7 +19,7 @@ class AddShiftsTable extends Migration
             $table->json('configuration');
             $table->boolean('active');
             $table->timestamps();
-        }
+        });
     }
 
     /**

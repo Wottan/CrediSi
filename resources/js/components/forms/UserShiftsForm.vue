@@ -13,9 +13,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { DateTime } from 'luxon';
-import ICardActions from '../interface/ICardActions.vue';
 export default {
-  components: { ICardActions },
   props: {
     value: {
       type: Object,

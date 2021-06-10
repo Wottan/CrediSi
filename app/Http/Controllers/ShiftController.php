@@ -10,11 +10,4 @@ class ShiftController extends ModelController
     {
         return Shift::class;
     }
-
-    /**
-     * Evaluates schedules and retuns currently active shifts
-     */
-    public function active() {
-        return [];
-    }
 }
