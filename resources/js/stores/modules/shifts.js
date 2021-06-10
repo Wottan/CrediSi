@@ -5,12 +5,10 @@ export default {
 
     state: {
         shifts: [],
-        active: [],
     },
 
     getters: {
         shifts: state => state.shifts,
-        active: state => state.active,
     },
 
     actions: {
@@ -26,14 +24,13 @@ export default {
                 })
             });
         },
-        active({ commit }) {
+        update({ commit }, shift) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/shifts/active"
+                axios.put("/api/shifts/" + shift.id, user
                 ).then((result) => {
-                    commit("active", result.data);
+                    commit("update", result.data);
                     resolve(result);
                 }).catch((err) => {
-                    commit("active", {});
                     reject(err.response);
                 })
             });
@@ -43,9 +40,6 @@ export default {
     mutations: {
         shifts(state, shifts) {
             state.shifts = shifts
-        },
-        active(state, shifts) {
-            state.active = shifts
         },
     }
 
