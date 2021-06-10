@@ -26,11 +26,13 @@
 </template>
 <script>
 import { cloneDeep } from "lodash";
+import { DateTime } from 'luxon';
 
 export default {
   props: {
     value: {
       type: String,
+      default: DateTime.now().toISODate()
     },
     type: {
       type: String,

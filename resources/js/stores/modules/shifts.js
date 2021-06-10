@@ -26,8 +26,17 @@ export default {
         },
         update({ commit }, shift) {
             return new Promise((resolve, reject) => {
-                axios.put("/api/shifts/" + shift.id, user
-                ).then((result) => {
+                axios.put("/api/shifts/" + shift.id, shift).then((result) => {
+                    commit("update", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                });
+            });
+        },
+        add({ commit }, shift) {
+            return new Promise((resolve, reject) => {
+                axios.post("/api/shifts", shift).then((result) => {
                     commit("update", result.data);
                     resolve(result);
                 }).catch((err) => {

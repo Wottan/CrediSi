@@ -14,6 +14,7 @@ import ICardActions from './components/interface/ICardActions';
 import IApp from './components/interface/IApp';
 import IMessages from './components/interface/IMessages';
 import IContainer from './components/interface/IContainer';
+import IDiv from './components/interface/IDiv';
 import ISpacer from './components/interface/ISpacer';
 import IGrid from './components/interface/IGrid';
 import IGridRow from './components/interface/IGridRow';
@@ -28,6 +29,8 @@ import IIcon from './components/interface/IIcon';
 import ICardText from './components/interface/ICardText';
 import IComboBoxInput from './components/interface/IComboBoxInput';
 import ICalendar from './components/interface/ICalendar';
+import IFilterableSelect from './components/interface/IFilterableSelect';
+
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -55,6 +58,8 @@ Vue.component('i-password-input', IPasswordInput);
 Vue.component('i-icon', IIcon);
 Vue.component('i-combo-box-input', IComboBoxInput);
 Vue.component('i-calendar', ICalendar);
+Vue.component('i-filterable-select', IFilterableSelect);
+Vue.component('i-div', IDiv);
 
 const app = new Vue({
     router,

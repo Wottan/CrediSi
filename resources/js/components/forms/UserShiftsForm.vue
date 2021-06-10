@@ -2,7 +2,6 @@
     <i-form>
       <i-calendar
         type="week"
-        :value="now"
         :events="events"
         @input="events = $event"
         label="Etiquetas"
@@ -12,7 +11,6 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { DateTime } from 'luxon';
 export default {
   props: {
     value: {
@@ -25,7 +23,6 @@ export default {
   }),
   computed: {
     ...mapGetters("shifts", []),
-    now: () => DateTime.now().toISODate(),
   },
   methods: {
     ...mapActions("shifts", []),
