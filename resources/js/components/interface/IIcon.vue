@@ -7,7 +7,10 @@ const ICONS = {
   logout: "mdi-logout",
   edit: "mdi-pencil",
   label: "mdi-label",
-  shifts: "mdi-calendar",
+  shift: "mdi-calendar",
+  user: "mdi-account",
+  home: "mdi-home",
+  add: "mdi-plus",
 };
 export default {
   props: {

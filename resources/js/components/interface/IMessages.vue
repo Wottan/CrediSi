@@ -1,5 +1,5 @@
 <template >
-  <i-container>
+  <i-div>
     <i-snackbar
       v-for="(msg, index) in messages"
       :key="index"
@@ -9,7 +9,7 @@
     >
       {{ msg.type }}: {{ msg.text }}
     </i-snackbar>
-  </i-container>
+  </i-div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";

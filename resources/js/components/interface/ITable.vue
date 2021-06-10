@@ -11,14 +11,16 @@
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-text-field
           v-model="searchString"
           append-icon="mdi-magnify"
           label="Buscar"
           single-line
         ></v-text-field>
-        <v-spacer></v-spacer>
+        <v-spacer />
+        <slot name="actions"/>
+        <v-spacer />
         <v-switch
           v-if="canExpand"
           v-model="singleExpand"

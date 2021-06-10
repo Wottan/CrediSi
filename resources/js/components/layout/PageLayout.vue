@@ -1,9 +1,9 @@
  <template>
-  <i-card>
+  <i-div>
     <header-layout />
     <slot></slot>
     <footer-layout />
-  </i-card>
+  </i-div>
 </template>
 <script>
 import HeaderLayout from "./HeaderLayout.vue";

@@ -11,7 +11,7 @@
             <i-icon value="label" />
           </i-button>
           <i-button tooltip="Turnos" @click="showUserShiftsDialog = true">
-            <i-icon value="shifts" />
+            <i-icon value="shift" />
           </i-button>
         </i-grid-column>
       </i-grid-row>
