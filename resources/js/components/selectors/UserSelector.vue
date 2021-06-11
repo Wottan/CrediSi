@@ -2,7 +2,7 @@
   <i-filterable-select
     :value="selected"
     :options="options"
-    label="Usuario"
+    :label="label"
     @input="onInput"
   />
 </template>
@@ -17,6 +17,9 @@ export default {
       type: Object,
       default:{},
     },
+    label: {
+      type: String,
+    }
   },
   computed: {
     ...mapGetters("users", ["users"]),

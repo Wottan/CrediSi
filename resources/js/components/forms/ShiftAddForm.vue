@@ -1,7 +1,24 @@
 <template >
-  <i-container>
+  <i-div>
     <i-form>
-      <user-selector :value="shift.user" @input="shift.user = $event" />
+      <i-grid>
+        <i-grid-row>
+          <i-grid-column>
+            <user-selector
+              :value="shift.user"
+              @input="shift.user = $event"
+              label="Usuario"
+            />
+          </i-grid-column>
+          <i-grid-column>
+            <i-date-input
+              :value="shift.start"
+              @input="shift.start = $event"
+              label="Inicio"
+            />
+          </i-grid-column>
+        </i-grid-row>
+      </i-grid>
       <i-calendar
         type="week"
         :events="shift.events"
@@ -11,7 +28,7 @@
     </i-form>
     <i-spacer />
     <i-button @click="onSubmit"> Guardar </i-button>
-  </i-container>
+  </i-div>
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -23,18 +40,16 @@ export default {
   },
   data() {
     return {
-      shift: {user: {}, events: []},
+      shift: { user: {}, events: [], start: null },
     };
   },
   methods: {
     ...mapActions("shifts", ["add"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
-      this.add(this.shift)
-        .then(() => {
-          this.$emit("submit");
-        })
-        .catch(this.handleError);
+      this.add(this.shift).then(() => {
+        this.$emit("submit");
+      }).catch(this.handleError);
     },
   },
 };
