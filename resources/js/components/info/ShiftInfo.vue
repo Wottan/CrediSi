@@ -31,10 +31,10 @@
 
 <script>
 import ShiftLabelDialog from "../dialogs/ShiftLabelDialog.vue";
-import ShiftEditDialog from "../dialogs/ShiftEditDialog.vue";
+import ShiftDialog from "../dialogs/ShiftDialog.vue";
 
 export default {
-  components: { ShiftLabelDialog, ShiftEditDialog },
+  components: { ShiftLabelDialog, ShiftDialog },
   props: {
     value: {
       type: Object,
