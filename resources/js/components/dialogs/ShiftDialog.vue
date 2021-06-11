@@ -16,11 +16,9 @@ export default {
       type: Boolean
     },
     value: {
-      type: Object,
-      required: false,
+      type: Object
     },
   },
-
   methods: {
     close() {
       this.$emit("close");

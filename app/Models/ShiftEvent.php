@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Shift extends Model
+class ShiftEvent extends Model
 {
     /**
      * The primary key associated with the table.
@@ -20,22 +20,22 @@ class Shift extends Model
      */
     protected $fillable = [
         'name',
-        'user_id',
+        'shift_id',
         'start',
-        'type',
-        'recurrence'
+        'end',
+        'color',
+        'timed',
     ];
 
     protected $casts = [
+        'timed' => 'boolean',
+        'start' => 'datetime',
+        'end' => 'datetime'
     ];
 
-    public function events()
-    {
-        return $this->hasMany(ShiftEvent::class);
-    }
 
-    public function user()
+    public function shift()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Shift::class, 'shift_id');
     }
 }

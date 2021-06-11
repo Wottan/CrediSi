@@ -7,7 +7,7 @@
         </i-button>
       </template>
       <template v-slot:expandedRow="{ row }">
-        <user-info :value="row" />
+        <shift-info :value="row" />
       </template>
       <template v-slot:rowAction="{ row }">
         <i-button tooltip="Editar turno" @click="openEditDialog(row)">
@@ -17,7 +17,7 @@
     </i-table>
     <shift-dialog
       :show="showDialog"
-      :value="selected"
+      :value="selectedRow"
       @close="showDialog = false"
     />
   </i-container>
@@ -37,12 +37,12 @@ export default {
   data() {
     return {
       columns: [
-        { text: "Usuario", value: "user" },
+        { text: "Nombre", value: "name" },
         { text: "Acciones", value: "actions", sortable: false },
         { text: "", value: "data-table-expand", sortable: false },
       ],
       showDialog: false,
-      selected: null,
+      selectedRow: null,
     };
   },
   computed: {
@@ -53,11 +53,12 @@ export default {
     ...mapActions("shifts", ["load"]),
 
     openEditDialog(row) {
-      this.selected = row;
+      console.debug(row)
+      this.selectedRow = row;
       this.showDialog = true;
     },
     openAddDialog() {
-      this.selected = null;
+      this.selectedRow = null;
       this.showDialog = true;
     },
   },

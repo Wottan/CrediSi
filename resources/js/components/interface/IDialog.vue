@@ -8,11 +8,9 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: null,
     },
     width: {
       type: String,
-      default: null,
     },
   },
 };

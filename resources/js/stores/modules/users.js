@@ -45,7 +45,5 @@ export default {
             state.users = state.users.filter(u => u.id !== user.id);
             state.users.push(user);
         }
-
     }
-
 }

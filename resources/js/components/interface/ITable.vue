@@ -53,15 +53,12 @@ export default {
   props: {
     rows: {
       type: Array,
-      default: null,
     },
     columns: {
       type: Array,
-      default: null,
     },
     title: {
       type: String,
-      default: "",
     },
   },
 

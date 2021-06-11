@@ -30,12 +30,10 @@ export default {
   },
   props: {
     options: {
-      type: Array,
-      default: null,
+      type: Array
     },
     label: {
-      type: String,
-      default: null,
+      type: String
     },
     value: {
       type: Array,

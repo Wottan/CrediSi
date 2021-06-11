@@ -50,6 +50,10 @@ export default {
         shifts(state, shifts) {
             state.shifts = shifts
         },
+        update(state, shift) {
+            state.shifts = state.shifts.filter(s => s.id !== s.id);
+            state.shifts.push(shift);
+        }
     }
 
 }
