@@ -15,7 +15,7 @@ export default {
   props: {
     value: {
       type: Object,
-      default:{},
+      default: () => ({}),
     },
     label: {
       type: String,

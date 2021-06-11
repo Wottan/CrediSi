@@ -17,13 +17,14 @@
         readonly
         v-bind="attrs"
         v-on="on"
-      ></v-text-field>
+      />
     </template>
-    <v-date-picker :value="value" @input="onInput"></v-date-picker>
+    <v-date-picker :value="value" @input="onInput" />
   </v-menu>
 </template>
 
 <script>
+
 export default {
   data: () => ({
     show: false,

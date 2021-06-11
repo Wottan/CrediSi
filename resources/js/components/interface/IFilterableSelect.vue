@@ -15,20 +15,18 @@
 export default {
   props: {
     label: {
-      type: String,
-      default: null,
+      type: String
     },
     value: {
       type: Object,
-      default: {},
+      default: () => ({}),
     },
     options: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     disabled: {
-      type: Boolean,
-      default: false,
+      type: Boolean
     },
   },
   methods: {

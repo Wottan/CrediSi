@@ -4,6 +4,13 @@
       <i-grid>
         <i-grid-row>
           <i-grid-column>
+            <i-text-input
+              :value="shift.name"
+              @input="shift.name = $event"
+              label="Nombre"
+            />
+          </i-grid-column>
+          <i-grid-column>
             <user-selector
               :value="shift.user"
               @input="shift.user = $event"
@@ -46,14 +53,15 @@ export default {
   },
   data() {
     return {
-      shift: this.value ? cloneDeep(this.value) : { user: {}, events: [], start: null }
+      shift: this.value ? cloneDeep(this.value) : { name: null, user: {}, events: [], start: null, type: "week", recurrence: "weekly" }
     };
   },
   methods: {
     ...mapActions("shifts", ["add","update"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
-      let submit = this.value ? this.add : this.update
+      let submit = this.value ? this.update : this.add;
+      this.shift.user_id = this.shift.user.id;
       submit(this.shift).then(() => {
         this.$emit("submit");
       }).catch(this.handleError);

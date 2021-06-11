@@ -14,12 +14,12 @@
           </i-button>
         </i-grid-column>
       </i-grid-row>
-      <user-label-dialog
+      <shift-label-dialog
         :show="showLabelDialog"
         :value="value"
         @close="showLabelDialog = false"
       />
-      <shift-edit-dialog
+      <shift-dialog
         :show="showEditDialog"
         :value="value"
         @close="showEditDialog = false"

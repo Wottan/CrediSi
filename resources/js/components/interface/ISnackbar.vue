@@ -16,11 +16,10 @@ export default {
   props: {
       timeout: {
           type: Number,
-          default: null
       },
       offset: {
           type: Number,
-          default: 0
+          default: () => 0
       }
   }
 };
