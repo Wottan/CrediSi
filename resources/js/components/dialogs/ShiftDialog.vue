@@ -1,23 +1,23 @@
 <template >
   <i-dialog :value="show" @close="close">
     <v-card>
-      <v-card-title> Editar turno </v-card-title>
-      <shift-edit-form :value="value" @submit="close" />
+      <v-card-title> Turno </v-card-title>
+      <shift-form :value="value" @submit="close" />
     </v-card>
   </i-dialog>
 </template>
 <script>
-import ShiftEditForm from "../forms/ShiftEditForm.vue";
+import ShiftForm from "../forms/ShiftForm.vue";
+
 export default {
-  components: { ShiftEditForm },
+  components: { ShiftForm },
   props: {
     show: {
-      type: Boolean,
-      required: true,
+      type: Boolean
     },
     value: {
       type: Object,
-      required: true,
+      required: false,
     },
   },
 

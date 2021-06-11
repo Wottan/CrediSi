@@ -32,22 +32,29 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { cloneDeep } from "lodash";
 import UserSelector from "../selectors/UserSelector.vue";
 
 export default {
   components: {
     UserSelector,
   },
+  props: {
+    value: {
+      type: Object
+    }
+  },
   data() {
     return {
-      shift: { user: {}, events: [], start: null },
+      shift: this.value ? cloneDeep(this.value) : { user: {}, events: [], start: null }
     };
   },
   methods: {
-    ...mapActions("shifts", ["add"]),
+    ...mapActions("shifts", ["add","update"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
-      this.add(this.shift).then(() => {
+      let submit = this.value ? this.add : this.update
+      submit(this.shift).then(() => {
         this.$emit("submit");
       }).catch(this.handleError);
     },

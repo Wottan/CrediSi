@@ -2,7 +2,7 @@
   <i-container>
     <i-table :columns="columns" :rows="shifts" title="Turnos">
       <template v-slot:actions>
-        <i-button tooltip="Agregar turno" @click="showAddDialog = true">
+        <i-button tooltip="Agregar turno" @click="openAddDialog">
           <i-icon value="add" />
         </i-button>
       </template>
@@ -15,27 +15,24 @@
         </i-button>
       </template>
     </i-table>
-    <shift-edit-dialog
-      :show="showEditDialog"
+    <shift-dialog
+      :show="showDialog"
       :value="selected"
-      @close="showEditDialog = false"
+      @close="showDialog = false"
     />
-    <shift-add-dialog :value="showAddDialog" @close="showAddDialog = false" />
   </i-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
 
-import ShiftEditDialog from "../dialogs/ShiftEditDialog.vue";
-import ShiftAddDialog from "../dialogs/ShiftAddDialog.vue";
+import ShiftDialog from "../dialogs/ShiftDialog.vue";
 
 import ShiftInfo from "../info/ShiftInfo";
 
 export default {
   components: {
     ShiftInfo,
-    ShiftEditDialog,
-    ShiftAddDialog
+    ShiftDialog
   },
   data() {
     return {
@@ -44,9 +41,8 @@ export default {
         { text: "Acciones", value: "actions", sortable: false },
         { text: "", value: "data-table-expand", sortable: false },
       ],
-      showEditDialog: false,
-      showAddDialog: false,
-      selected: {},
+      showDialog: false,
+      selected: null,
     };
   },
   computed: {
@@ -58,7 +54,11 @@ export default {
 
     openEditDialog(row) {
       this.selected = row;
-      this.showEditDialog = true;
+      this.showDialog = true;
+    },
+    openAddDialog() {
+      this.selected = null;
+      this.showDialog = true;
     },
   },
 
