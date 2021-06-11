@@ -30,6 +30,7 @@ import ICardText from './components/interface/ICardText';
 import IComboBoxInput from './components/interface/IComboBoxInput';
 import ICalendar from './components/interface/ICalendar';
 import IFilterableSelect from './components/interface/IFilterableSelect';
+import IDateInput from './components/interface/IDateInput';
 
 
 Vue.use(Vuelidate);
@@ -60,6 +61,7 @@ Vue.component('i-combo-box-input', IComboBoxInput);
 Vue.component('i-calendar', ICalendar);
 Vue.component('i-filterable-select', IFilterableSelect);
 Vue.component('i-div', IDiv);
+Vue.component('i-date-input', IDateInput);
 
 const app = new Vue({
     router,
