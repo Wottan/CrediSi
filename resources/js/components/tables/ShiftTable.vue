@@ -16,7 +16,8 @@
       </template>
     </i-table>
     <shift-dialog
-      :show="showDialog"
+      v-if="showDialog"
+      show
       :value="selectedRow"
       @close="showDialog = false"
     />
@@ -53,7 +54,6 @@ export default {
     ...mapActions("shifts", ["load"]),
 
     openEditDialog(row) {
-      console.debug(row)
       this.selectedRow = row;
       this.showDialog = true;
     },

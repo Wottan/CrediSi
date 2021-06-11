@@ -11,7 +11,8 @@
       </template>
     </i-table>
     <user-edit-dialog
-      :show="showEditUserDialog"
+      v-if="showEditUserDialog"
+      :show="true"
       :value="selectedUser"
       @close="showEditUserDialog = false"
     />
