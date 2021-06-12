@@ -44,6 +44,16 @@ export default {
                 })
             });
         },
+        delete({ commit }, shift) {
+            return new Promise((resolve, reject) => {
+                axios.delete("/api/shifts/" + shift.id).then((result) => {
+                    commit("delete", shift);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {
@@ -53,7 +63,9 @@ export default {
         update(state, shift) {
             state.shifts = state.shifts.filter(s => s.id !== shift.id);
             state.shifts.push(shift);
+        },
+        delete(state, shift) {
+            state.shifts = state.shifts.filter(s => s.id !== shift.id);
         }
     }
-
 }

@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shift;
+use App\Services\ShiftService;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
 {
+    
+    public function __construct(ShiftService $shiftService) {
+        $this->shiftService = $shiftService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {   
-        return Shift::with(['events','user'])->get(); //TODO recurrence
+        return $this->shiftService->all();
     }
 
     /**
@@ -20,7 +25,7 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        return Shift::create($request->all());
+        return $this->shiftService->create($request->all());
     }
 
     /**
@@ -28,6 +33,14 @@ class ShiftController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return tap(Shift::findOrFail($id))->update($request->all());
+        return $this->shiftService->update($id, $request->all());
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        return $this->shiftService->delete($id);
     }
 }

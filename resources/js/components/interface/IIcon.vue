@@ -11,6 +11,7 @@ const ICONS = {
   user: "mdi-account",
   home: "mdi-home",
   add: "mdi-plus",
+  delete: "mdi-delete-outline",
 };
 export default {
   props: {

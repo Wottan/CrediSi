@@ -12,6 +12,9 @@
           <i-button tooltip="Horario" @click="showEditDialog = true">
             <i-icon value="edit" />
           </i-button>
+          <i-button tooltip="Eliminar" @click="showDeleteDialog = true">
+            <i-icon value="delete" />
+          </i-button>
         </i-grid-column>
       </i-grid-row>
       <shift-label-dialog
@@ -24,17 +27,25 @@
         :value="value"
         @close="showEditDialog = false"
       />
+      <shift-delete-dialog
+        :show="showDeleteDialog"
+        :value="value"
+        @close="showDeleteDialog = false"
+        @delete="onDelete"
+      />
     </i-grid>
     <i-card-text v-else> No hay usuario disponible </i-card-text>
   </i-container>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import ShiftDeleteDialog from "../dialogs/ShiftDeleteDialog.vue";
 import ShiftLabelDialog from "../dialogs/ShiftLabelDialog.vue";
 import ShiftDialog from "../dialogs/ShiftDialog.vue";
 
 export default {
-  components: { ShiftLabelDialog, ShiftDialog },
+  components: { ShiftLabelDialog, ShiftDialog, ShiftDeleteDialog },
   props: {
     value: {
       type: Object,
@@ -44,8 +55,14 @@ export default {
     return {
       showLabelDialog: false,
       showEditDialog: false,
+      showDeleteDialog: false,
     };
   },
-  methods: {},
+  methods: {
+    ...mapActions("messages", ["info"]),
+    onDelete() {
+      this.info("El turno fue borrado con exito");
+    }
+  },
 };
 </script>

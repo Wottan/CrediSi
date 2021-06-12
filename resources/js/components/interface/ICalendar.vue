@@ -82,7 +82,7 @@ export default {
       }
     },
     emit(events) {
-      this.$emit("input", cloneDeep(events));
+      this.$emit("input", events);
     },
     extendBottom(event) {
       this.createEvent = event;
