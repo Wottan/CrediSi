@@ -40,6 +40,7 @@
 <script>
 import { mapActions } from "vuex";
 import { cloneDeep } from "lodash";
+import { DateTime } from "luxon";
 import UserSelector from "../selectors/UserSelector.vue";
 
 export default {
@@ -53,19 +54,44 @@ export default {
   },
   data() {
     return {
-      shift: this.value ? cloneDeep(this.value) : { name: null, user: {}, events: [], start: null, type: "week", recurrence: "weekly" }
+      shift: {}      
     };
+  },
+  created() {
+    this.init();
   },
   methods: {
     ...mapActions("shifts", ["add","update"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
       let submit = this.value ? this.update : this.add;
-      this.shift.user_id = this.shift.user.id;
-      submit(this.shift).then(() => {
+      let shift = cloneDeep(this.shift);
+      shift.user_id = shift.user.id;
+      shift.events = shift.events.map(
+        e => ({
+          ...e,
+          start: e.start && DateTime.fromMillis(e.start).toISO() || null,
+          end: e.end && DateTime.fromMillis(e.end).toISO() || null,
+        })
+      );
+      submit(shift).then(() => {
         this.$emit("submit");
       }).catch(this.handleError);
     },
+    init() {
+      if(this.value) {
+        this.shift = cloneDeep(this.value);
+        this.shift.events = this.shift.events.map(
+          e => ({
+            ...e,
+            start: e.start && DateTime.fromISO(e.start).toMillis() || null,
+            end: e.end && DateTime.fromISO(e.end).toMillis() || null,
+          })
+        );
+      } else {
+        this.shift = { name: null, user: {}, events: [], start: null, type: "week", recurrence: "weekly" };
+      }
+    }
   },
 };
 </script>

@@ -27,6 +27,7 @@ class Shift extends Model
     ];
 
     protected $casts = [
+        'start' => 'date'
     ];
 
     public function events()
@@ -37,5 +38,9 @@ class Shift extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public static function calculate() {
+        return self::with(['events','user'])->get(); //TODO recurrence
     }
 }

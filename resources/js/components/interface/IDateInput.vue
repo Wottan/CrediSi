@@ -8,22 +8,21 @@
     offset-y
     min-width="auto"
   >
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
       <v-text-field
-        :value="value"
-        @input="$emit('input', $event)"
+        :value="formatted"
         :label="label"
         prepend-icon="mdi-calendar"
         readonly
-        v-bind="attrs"
         v-on="on"
       />
     </template>
-    <v-date-picker :value="value" @input="onInput" />
+    <v-date-picker :value="iso" @input="onInput" />
   </v-menu>
 </template>
 
 <script>
+import { DateTime } from "luxon";
 
 export default {
   data: () => ({
@@ -36,6 +35,14 @@ export default {
     label: {
       type: String,
     },
+  },
+  computed: {
+    formatted() {
+      return this.value && DateTime.fromISO(this.value).toFormat("dd MMM yyyy") || null;
+    },
+    iso() {
+      return this.value && DateTime.fromISO(this.value).toISODate() || null;
+    }
   },
   methods: {
     onInput(value) {
