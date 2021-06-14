@@ -39,8 +39,4 @@ class Shift extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    public static function calculate() {
-        return self::with(['events','user'])->get(); //TODO recurrence
-    }
 }

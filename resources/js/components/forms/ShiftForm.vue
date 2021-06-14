@@ -4,17 +4,17 @@
       <i-grid>
         <i-grid-row>
           <i-grid-column>
-            <i-text-input
-              :value="shift.name"
-              @input="shift.name = $event"
-              label="Nombre"
-            />
-          </i-grid-column>
-          <i-grid-column>
             <user-selector
               :value="shift.user"
               @input="shift.user = $event"
               label="Usuario"
+            />
+          </i-grid-column>
+          <i-grid-column>
+            <i-text-input
+              :value="shift.name"
+              @input="shift.name = $event"
+              label="Nombre"
             />
           </i-grid-column>
           <i-grid-column>

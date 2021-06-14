@@ -39,8 +39,6 @@ export default {
     return {
       columns: [
         { text: "Nombre", value: "name" },
-        { text: "Acciones", value: "actions", sortable: false },
-        { text: "", value: "data-table-expand", sortable: false },
       ],
       showDialog: false,
       selectedRow: null,
