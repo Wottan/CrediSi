@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-    :headers="columns"
+    :headers="headers"
     :items="rows"
     :search="searchString"
     :single-expand="singleExpand"
@@ -61,11 +61,23 @@ export default {
       type: String,
     },
   },
-
   computed: {
     canExpand() {
       return !!this.$scopedSlots.expandedRow;
     },
+    hasActions() {
+      return !!this.$scopedSlots.rowAction;
+    },
+    headers() {
+      let headers = [ ...this.columns ];
+      if(this.hasActions) {
+        headers.push({ text: "Acciones", value: "actions", sortable: false });
+      }
+      if(this.canExpand) {
+        headers.push({ text: "", value: "data-table-expand", sortable: false });
+      }
+      return headers;
+    }
   },
 };
 </script>
