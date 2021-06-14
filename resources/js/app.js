@@ -26,6 +26,7 @@ import IForm from './components/interface/IForm';
 import ITextInput from './components/interface/ITextInput';
 import IPasswordInput from './components/interface/IPasswordInput';
 import IIcon from './components/interface/IIcon';
+import IChip from './components/interface/IChip';
 import ICardText from './components/interface/ICardText';
 import IComboBoxInput from './components/interface/IComboBoxInput';
 import ICalendar from './components/interface/ICalendar';
@@ -62,6 +63,7 @@ Vue.component('i-calendar', ICalendar);
 Vue.component('i-filterable-select', IFilterableSelect);
 Vue.component('i-div', IDiv);
 Vue.component('i-date-input', IDateInput);
+Vue.component('i-chip', IChip);
 
 const app = new Vue({
     router,

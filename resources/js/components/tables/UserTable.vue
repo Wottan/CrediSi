@@ -4,14 +4,6 @@
       <template v-slot:expandedRow="{ row }">
         <user-info :value="row" />
       </template>
-      <template v-slot:rowAction="{ row }">
-        <i-button tooltip="Editar Usuario" @click="openEditUserDialog(row)">
-          <i-icon value="edit" />
-        </i-button>
-        <i-button tooltip="Agregar Etiqueta" @click="openEditLabelsDialog(row)">
-          <i-icon value="label" />
-        </i-button>
-      </template>
     </i-table>
     <user-edit-dialog
       :show="showEditUserDialog"
@@ -42,8 +34,6 @@ export default {
       columns: [
         { text: "Nombre", value: "name" },
         { text: "Email", value: "email" },
-        { text: "Acciones", value: "actions", sortable: false },
-        { text: "", value: "data-table-expand", sortable: false },
       ],
       showEditUserDialog: false,
       selectedUser: {},

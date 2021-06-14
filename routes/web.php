@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SocialiteLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\TimeOffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::resources([
     '/api/users' => UserController::class,
     '/api/labels' => LabelController::class,
     '/api/shifts' => ShiftController::class,
+    '/api/timeoff' => TimeOffController::class,
 ]);
 
 Route::get(
