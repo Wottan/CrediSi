@@ -24,6 +24,17 @@ export default {
                 })
             });
         },
+        upsert({ commit }, labels) {
+            return new Promise((resolve, reject) => {
+                axios.post("api/labels/upsert", labels
+                ).then((result) => {
+                    commit("labels", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {

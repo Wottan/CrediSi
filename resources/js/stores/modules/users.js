@@ -14,7 +14,7 @@ export default {
     actions: {
         load({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/users"
+                axios.get("/api/users/labels"
                 ).then((result) => {
                     commit("users", result.data);
                     resolve(result);
@@ -35,6 +35,18 @@ export default {
                 })
             });
         },
+
+        updateLabel({ commit }, payload) {
+            return new Promise((resolve, reject) => {
+                axios.post("api/users/" + payload.idUser + "/label", payload.labelIds
+                ).then((result) => {
+                    commit("update", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {
@@ -44,6 +56,6 @@ export default {
         update(state, user) {
             state.users = state.users.filter(u => u.id !== user.id);
             state.users.push(user);
-        }
+        },
     }
 }
