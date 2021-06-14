@@ -6,7 +6,7 @@
           <i-card-text> ID: {{ value.id }} </i-card-text>
         </i-grid-column>
         <i-grid-column align-self="stretch" :cols="2">
-          <i-button tooltip="Etiquetas" @click="showLabelDialog = true">
+          <i-button tooltip="Etiquetas" @click="openShiftLabelDialog">
             <i-icon value="label" />
           </i-button>
           <i-button tooltip="Horario" @click="showEditDialog = true">
@@ -19,8 +19,8 @@
       </i-grid-row>
       <shift-label-dialog
         :show="showLabelDialog"
-        :value="value"
-        @close="showLabelDialog = false"
+        :value="selectedUser"
+        @close="onShiftLabelDialogClose"
       />
       <shift-dialog
         :show="showEditDialog"
@@ -56,13 +56,23 @@ export default {
       showLabelDialog: false,
       showEditDialog: false,
       showDeleteDialog: false,
+      selectedUser: {},
     };
   },
   methods: {
     ...mapActions("messages", ["info"]),
+
+    openShiftLabelDialog() {
+      this.selectedUser = this.value;
+      this.showLabelDialog = true;
+    },
+    onShiftLabelDialogClose() {
+      this.showLabelDialog = false;
+      this.selectedUser = {};
+    },
     onDelete() {
       this.info("El turno fue borrado con exito");
-    }
+    },
   },
 };
 </script>

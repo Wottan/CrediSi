@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class ShiftController extends Controller
 {
-    
-    public function __construct(ShiftService $shiftService) {
+
+    public function __construct(ShiftService $shiftService)
+    {
         $this->shiftService = $shiftService;
     }
 
@@ -16,7 +17,7 @@ class ShiftController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         return $this->shiftService->all();
     }
 
@@ -42,5 +43,13 @@ class ShiftController extends Controller
     public function destroy($id)
     {
         return $this->shiftService->delete($id);
+    }
+
+    /**
+     * 
+     */
+    public function sync(Request $request, $id)
+    {
+        return $this->shiftService->sync($id, $request->all());
     }
 }
