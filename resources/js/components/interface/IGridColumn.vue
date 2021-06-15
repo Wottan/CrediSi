@@ -10,7 +10,7 @@ export default {
             validator: (v) => ['start', 'center', 'end', 'auto', 'baseline','stretch'].includes(v)
         },
         cols: {
-            type: Number
+            type: [String,Number]
         }
     }
 }

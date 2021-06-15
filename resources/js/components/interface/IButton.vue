@@ -1,7 +1,11 @@
 <template >
-  <v-tooltip bottom>
+  <v-tooltip bottom :disabled="!tooltip">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        :icon="isIcon"
+        :x-small="'tiny'===size"
+        :small="'small'===size"
+        :large="'large'===size"
         @click="$emit('click')"
         :color="color"
         v-bind="attrs"
@@ -26,6 +30,14 @@ export default {
     href: {
       type: String,
     },
+    isIcon: {
+      type: Boolean
+    },
+    size: {
+      type: String,
+      default: "normal",
+      validator: (v) => ['tiny','small','normal','large'].includes(v)
+    }
   },
 };
 </script>

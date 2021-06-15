@@ -2,8 +2,7 @@
   <v-calendar
     :now="value"
     :value="value"
-    :events="events"
-    :event-color="eventColor"
+    :events="eventProxies"
     :type="type"
     :first-time="firstTime"
     :interval-count="intervals"
@@ -15,24 +14,37 @@
     @mouseleave.native="cancelDrag"
   >
     <template v-slot:event="{ event, timed, eventSummary }">
-      <div class="v-event-draggable" v-html="eventSummary()" />
-      <div
-        v-if="timed"
-        class="v-event-drag-bottom"
-        @mousedown.stop="extendBottom(event)"
-      />
+            <i-grid class="pa-0">
+        <i-grid-row>
+          <i-grid-column cols="9">
+            <div class="v-event-draggable" v-html="eventSummary()" />
+          </i-grid-column>
+          <i-grid-column cols="1">
+            <i-button size="tiny" is-icon @click="deleteEvent(event)">
+              <i-icon size="tiny" value="close"/>
+            </i-button>
+          </i-grid-column>
+        </i-grid-row>
+        <i-grid-row>
+          <i-grid-column>
+            <div
+              v-if="timed"
+              class="v-event-drag-bottom"
+              @mousedown.stop="extendBottom(event)"
+          /></i-grid-column>
+        </i-grid-row>
+      </i-grid>
     </template>
   </v-calendar>
 </template>
 <script>
 import { cloneDeep } from "lodash";
-import { DateTime } from 'luxon';
-
+import { DateFunctions } from "../../dates";
 export default {
   props: {
     value: {
       type: String,
-      default: () => DateTime.now().toISODate()
+      default: () => DateFunctions.currentDateTimeStr(),
     },
     type: {
       type: String,
@@ -44,21 +56,46 @@ export default {
   },
   data: () => ({
     eventColor: "#2196F3",
+    selectedEventColor: "#1ab055",
     firstTime: "0:00",
     intervals: 24,
-    weekDays: [0,1,2,3,4,5,6],
+    weekDays: [0, 1, 2, 3, 4, 5, 6],
     dragEvent: null,
     dragStart: null,
     createEvent: null,
     createStart: null,
     extendOriginal: null,
+    selectedEvent: null,
+    eventProxies: [],
   }),
+  created() {
+    this.initProxies();
+  },
   methods: {
+    initProxies() {
+      this.eventProxies = cloneDeep(this.events).map((e) => ({
+        ...e,
+        start: DateFunctions.fromISOToMillis(e.start),
+        end: DateFunctions.fromISOToMillis(e.end),
+      }));
+    },
     startDrag({ event, timed }) {
+      this.selectEvent(event);
       if (event && timed) {
         this.dragEvent = event;
+        this.selectedEvent = event;
         this.dragTime = null;
         this.extendOriginal = null;
+      }
+    },
+    selectEvent(event) {
+      if (this.selectedEvent) {
+        this.selectedEvent.color = this.eventColor;
+        this.selectedEvent = null;
+      }
+      if (event) {
+        this.selectedEvent = event;
+        this.selectedEvent.color = this.selectedEventColor;
       }
     },
     startTime(tms) {
@@ -74,15 +111,22 @@ export default {
           name: "Disponible",
           color: this.eventColor,
           start: this.createStart,
-          end: this.createStart + (1000 * 60 * 60) ,
+          end: this.createStart + 1000 * 60 * 60,
           timed: true,
         };
-
-        this.emit([...this.events, this.createEvent]);
+        this.eventProxies.push(this.createEvent);
+        this.selectEvent(this.createEvent);
+        this.emit();
       }
     },
-    emit(events) {
-      this.$emit("input", events);
+    emit() {
+      let updated = this.eventProxies.map((e) => ({
+        ...e,
+        color: this.eventColor,
+        start: DateFunctions.fromMillisToDateTimeStr(e.start),
+        end: DateFunctions.fromMillisToDateTimeStr(e.end),
+      }));
+      this.$emit("input", updated);
     },
     extendBottom(event) {
       this.createEvent = event;
@@ -118,18 +162,21 @@ export default {
       this.createStart = null;
       this.extendOriginal = null;
     },
+    deleteEvent(event) {
+      this.eventProxies = this.eventProxies.filter(e => e !== event);
+      this.emit();
+    },
     cancelDrag() {
       if (this.createEvent) {
         if (this.extendOriginal) {
           this.createEvent.end = this.extendOriginal;
         } else {
-          const i = this.events.indexOf(this.createEvent);
-          if (i !== -1) {
-            this.emit(this.events.splice(i, 1));
-          }
+          this.eventProxies = this.eventProxies.filter(
+            e !== this.createEvent
+          );
+          this.emit();
         }
       }
-
       this.createEvent = null;
       this.createStart = null;
       this.dragTime = null;
@@ -184,7 +231,7 @@ export default {
     width: 16px;
     margin-left: -8px;
     opacity: 0.8;
-    content: '';
+    content: "";
   }
 
   &:hover::after {

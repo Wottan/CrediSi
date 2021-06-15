@@ -3,7 +3,8 @@
     <i-grid v-if="value">
       <i-grid-row>
         <i-grid-column align-self="start" :cols="10">
-          <i-card-text> ID: {{ value.id }} </i-card-text>
+          <i-card-text> Nombre: {{ value.name }} </i-card-text>
+          <i-card-text> Etiquetas: <labels-info :value="value.labels" /> </i-card-text>
         </i-grid-column>
         <i-grid-column align-self="stretch" :cols="2">
           <i-button tooltip="Etiquetas" @click="openShiftLabelDialog">
@@ -43,9 +44,10 @@ import { mapActions } from "vuex";
 import ShiftDeleteDialog from "../dialogs/ShiftDeleteDialog.vue";
 import ShiftLabelDialog from "../dialogs/ShiftLabelDialog.vue";
 import ShiftDialog from "../dialogs/ShiftDialog.vue";
+import LabelsInfo from "../info/LabelsInfo.vue";
 
 export default {
-  components: { ShiftLabelDialog, ShiftDialog, ShiftDeleteDialog },
+  components: { ShiftLabelDialog, ShiftDialog, ShiftDeleteDialog, LabelsInfo },
   props: {
     value: {
       type: Object,
