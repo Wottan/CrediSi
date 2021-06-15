@@ -1,5 +1,10 @@
 <template>
-  <v-icon>{{ icon }}</v-icon>
+  <v-icon
+    :x-small="'tiny' === size"
+    :small="'small' === size"
+    :large="'large' === size"
+    >{{ icon }}</v-icon
+  >
 </template>
 <script>
 const ICONS = {
@@ -13,12 +18,18 @@ const ICONS = {
   home: "mdi-home",
   add: "mdi-plus",
   delete: "mdi-delete-outline",
+  close: "mdi-close",
 };
 export default {
   props: {
     value: {
       type: String,
       validator: (v) => v in ICONS,
+    },
+    size: {
+      type: String,
+      default: "normal",
+      validator: (v) => ["tiny", "small", "normal", "large"].includes(v),
     },
   },
 
