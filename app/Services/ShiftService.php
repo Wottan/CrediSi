@@ -18,7 +18,7 @@ class ShiftService
      */
     public function all(): iterable
     {
-        $shifts = Shift::with(['events', 'user'])->get();
+        $shifts = Shift::with(['events', 'user', 'labels'])->get();
         $shifts->each(function (Shift $shift) {
             self::recalculate($shift);
         });
@@ -31,7 +31,7 @@ class ShiftService
     public function create(array $array): Shift
     {
         $shift = Shift::create($array);
-        $shift->events()->createMany($array["events"] ?: []);
+        $shift->events()->createMany($array['events'] ?: []);
         return Shift::with(['events', 'user'])->findOrFail($shift->id);
     }
 
@@ -91,5 +91,15 @@ class ShiftService
         } else {
             throw new ServiceException("Unrecognized recurrence type: $recurrenceType");
         }
+    }
+
+    /**
+     *  Sync the intermediate tables with a list of IDs or collection of models.
+     */
+    public function sync(string $id, array $array): Shift
+    {
+        $shift = Shift::findOrFail($id);
+        $shift->labels()->sync($array);
+        return $shift->load('events', 'user', 'labels');
     }
 }

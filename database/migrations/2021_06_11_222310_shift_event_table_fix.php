@@ -24,6 +24,7 @@ class ShiftEventTableFix extends Migration
             $table->timestamps();
         });
 
+        Schema::dropIfExists('shift_events');
         Schema::create('shift_events', function (Blueprint $table) {
             $table->id();
             $table->string('name');

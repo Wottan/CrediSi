@@ -17,7 +17,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      label: this.value.labels.map((obj) => {
+      localeLabels: this.value.labels.map((obj) => {
         return { id: obj.id, text: obj.text, color: obj.color };
       }),
     };
@@ -41,28 +41,30 @@ export default {
 
     onSelectedLabelsChange(labels) {
       //to do translate to objects
-      this.label = [];
+      this.localeLabels = [];
       labels.forEach((element) => {
         if (typeof element === "string") {
-          this.label.push({ text: element, color: "" });
+          this.localeLabels.push({ text: element, color: "" });
         } else {
-          this.label.push({ text: element.text, color: element.color });
+          this.localeLabels.push({ text: element.text, color: element.color });
         }
       });
     },
 
     onSubmit() {
-      this.upsert(this.label).then((r) => {
-        let labelIds = this.label.map((l) => {
-          return r.data.find((e) => e.text === l.text)?.id;
-        });
+      this.upsert(this.localeLabels)
+        .then((r) => {
+          let labelIds = this.localeLabels.map((l) => {
+            return r.data.find((e) => e.text === l.text)?.id;
+          });
 
-        this.updateLabel({ labelIds: labelIds, idUser: this.value.id }).then(
-          () => {
-            this.$emit("submit");
-          }
-        );
-      });
+          this.updateLabel({ labelIds: labelIds, idUser: this.value.id }).then(
+            () => {
+              this.$emit("submit");
+            }
+          );
+        })
+        .catch(this.handleError);
     },
   },
 

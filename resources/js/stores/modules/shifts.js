@@ -54,6 +54,17 @@ export default {
                 })
             });
         },
+        updateLabel({ commit }, payload) {
+            return new Promise((resolve, reject) => {
+                axios.post("api/shifts/" + payload.idShift + "/label", payload.labelIds
+                ).then((result) => {
+                    commit("update", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {
