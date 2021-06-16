@@ -45,6 +45,13 @@ function fromISOToMillis(iso) {
     return DateTime.fromISO(iso, { zone: "utc" }).toMillis();
 }
 
+function fromStrToMillis(str) {
+    if (!str) {
+        return null;
+    }
+    return DateTime.fromFormat(str, DateConstants.DATETIME_FORMAT, { zone: "utc" }).toMillis();
+}
+
 function fromMillisToDateTimeStr(millis) {
     if (!millis) {
         return null;
@@ -59,7 +66,6 @@ function fromMillisToTimeStr(millis) {
     return DateTime.fromMillis(millis).setZone("utc").toFormat(DateConstants.TIME_FORMAT, { zone: "utc" });
 }
 
-
 function fromISOTimeToMillis(iso) {
     if (!iso) {
         return null;
@@ -67,14 +73,12 @@ function fromISOTimeToMillis(iso) {
     return Duration.fromISO(iso, { zone: "utc" }).toMillis();
 }
 
-function hourDifferenceFromMillis(start, end) {
-    if (!start || !end) {
-        return null;
-    }
-    return Duration.fromMillis(end).toObject().hours - Duration.fromMillis(start).toObject().hours;
+function createToMillis({ year, month, day, hour, minute, second, millisecond }) {
+    return DateTime.utc(year, month, day, hour, minute, second, millisecond).toMillis();
 }
 
 const DateFunctions = {
+    createToMillis,
     currentTimeStr,
     currentDateStr,
     currentDateTimeMillis,
@@ -82,10 +86,10 @@ const DateFunctions = {
     fromISOToDateTimeStr,
     fromISOToDateStr,
     fromISOToMillis,
+    fromStrToMillis,
     fromISOTimeToMillis,
     fromMillisToDateTimeStr,
     fromMillisToTimeStr,
-    hourDifferenceFromMillis,
 }
 
 export {

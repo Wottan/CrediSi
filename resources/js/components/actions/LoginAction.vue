@@ -1,7 +1,5 @@
 <template>
-  <i-button @click="onClick" tooltip="LogIn" color="primary">
-    <i-icon value="login" />
-  </i-button>
+  <i-button-icon value="login" @click="onClick" tooltip="LogIn" color="primary" />
 </template>
 <script>
 export default {

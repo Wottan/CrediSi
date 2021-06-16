@@ -1,6 +1,6 @@
 <template>
   <v-calendar
-    :now="value"
+    :now="now"
     :value="value"
     :events="eventProxies"
     :type="type"
@@ -43,7 +43,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: () => DateFunctions.currentDateTimeStr(),
+      default: () => DateFunctions.currentDateStr(),
     },
     type: {
       type: String,
@@ -57,7 +57,7 @@ export default {
     eventColor: "#2196F3",
     firstTime: "0:00",
     intervals: 24,
-
+    now: DateFunctions.currentDateTimeStr(),
     weekDays: [0, 1, 2, 3, 4, 5, 6],
     dragEvent: null,
     dragStart: null,
@@ -73,8 +73,8 @@ export default {
     initProxies() {
       this.eventProxies = cloneDeep(this.events).map((e) => ({
         ...e,
-        start: DateFunctions.fromISOToMillis(e.start),
-        end: DateFunctions.fromISOToMillis(e.end),
+        start: DateFunctions.fromISOToDateTimeStr(e.start),
+        end: DateFunctions.fromISOToDateTimeStr(e.end),
       }));
     },
     startDrag({ event, timed }) {
@@ -86,59 +86,51 @@ export default {
     },
     startTime(tms) {
       const mouse = this.toTime(tms);
-
       if (this.dragEvent && this.dragTime === null) {
-        const start = this.dragEvent.start;
-
+        const start = DateFunctions.fromStrToMillis(this.dragEvent.start);
         this.dragTime = mouse - start;
       } else {
         this.createStart = this.roundTime(mouse);
         this.createEvent = {
           name: "Disponible",
           color: this.eventColor,
-          start: this.createStart,
-          end: this.createStart + 1000 * 60 * 60,
+          start: DateFunctions.fromMillisToDateTimeStr(this.createStart),
+          end: DateFunctions.fromMillisToDateTimeStr(this.createStart + 1000 * 60 * 60),
           timed: true,
         };
         this.eventProxies.push(this.createEvent);
-
         this.emit();
       }
     },
     emit() {
-      let updated = this.eventProxies.map((e) => ({
-        ...e,
-        color: this.eventColor,
-        start: DateFunctions.fromMillisToDateTimeStr(e.start),
-        end: DateFunctions.fromMillisToDateTimeStr(e.end),
-      }));
-      this.$emit("input", updated);
+      this.$emit("input", this.eventProxies);
     },
     extendBottom(event) {
       this.createEvent = event;
-      this.createStart = event.start;
-      this.extendOriginal = event.end;
+      this.createStart = DateFunctions.fromStrToMillis(event.start);
+      this.extendOriginal = DateFunctions.fromStrToMillis(event.end);
     },
     mouseMove(tms) {
       const mouse = this.toTime(tms);
 
       if (this.dragEvent && this.dragTime !== null) {
-        const start = this.dragEvent.start;
-        const end = this.dragEvent.end;
+        const start = DateFunctions.fromStrToMillis(this.dragEvent.start);
+        const end = DateFunctions.fromStrToMillis(this.dragEvent.end);                
+
         const duration = end - start;
         const newStartTime = mouse - this.dragTime;
         const newStart = this.roundTime(newStartTime);
         const newEnd = newStart + duration;
-
-        this.dragEvent.start = newStart;
-        this.dragEvent.end = newEnd;
+        
+        this.dragEvent.start = DateFunctions.fromMillisToDateTimeStr(newStart);
+        this.dragEvent.end = DateFunctions.fromMillisToDateTimeStr(newEnd);
       } else if (this.createEvent && this.createStart !== null) {
         const mouseRounded = this.roundTime(mouse, false);
         const min = Math.min(mouseRounded, this.createStart);
         const max = Math.max(mouseRounded, this.createStart);
 
-        this.createEvent.start = min;
-        this.createEvent.end = max;
+        this.createEvent.start = DateFunctions.fromMillisToDateTimeStr(min);
+        this.createEvent.end = DateFunctions.fromMillisToDateTimeStr(max);
       }
     },
     endDrag() {
@@ -147,6 +139,7 @@ export default {
       this.createEvent = null;
       this.createStart = null;
       this.extendOriginal = null;
+      this.emit();
     },
     deleteEvent(event) {
       this.eventProxies = this.eventProxies.filter((e) => e !== event);
@@ -155,7 +148,7 @@ export default {
     cancelDrag() {
       if (this.createEvent) {
         if (this.extendOriginal) {
-          this.createEvent.end = this.extendOriginal;
+          this.createEvent.end = DateFunctions.fromMillisToDateTimeStr(this.extendOriginal);
         } else {
           this.eventProxies = this.eventProxies.filter(e !== this.createEvent);
           this.emit();
@@ -175,13 +168,13 @@ export default {
         : time + (roundDownTime - (time % roundDownTime));
     },
     toTime(tms) {
-      return new Date(
-        tms.year,
-        tms.month - 1,
-        tms.day,
-        tms.hour,
-        tms.minute
-      ).getTime();
+      return DateFunctions.createToMillis({
+        year: tms.year,
+        month: tms.month,
+        day: tms.day,
+        hour: tms.hour,
+        minute: tms.minute
+      });
     },
   },
 };

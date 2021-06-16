@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="$emit('close')" width="200">
+  <i-dialog :value="show" @close="$emit('close')" width="300">
       <shift-delete-form :value="value" @submit="$emit('delete')" @close="$emit('close')"/>
   </i-dialog>
 </template>
