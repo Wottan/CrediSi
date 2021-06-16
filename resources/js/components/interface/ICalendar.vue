@@ -7,6 +7,7 @@
     :first-time="firstTime"
     :interval-count="intervals"
     :weekdays="weekDays"
+    locale="es"
     @mousedown:event="startDrag"
     @mousedown:time="startTime"
     @mousemove:time="mouseMove"
@@ -14,14 +15,14 @@
     @mouseleave.native="cancelDrag"
   >
     <template v-slot:event="{ event, timed, eventSummary }">
-            <i-grid class="pa-0">
+      <i-grid class="pa-0">
         <i-grid-row>
           <i-grid-column cols="9">
             <div class="v-event-draggable" v-html="eventSummary()" />
           </i-grid-column>
           <i-grid-column cols="1">
             <i-button size="tiny" is-icon @click="deleteEvent(event)">
-              <i-icon size="tiny" value="close"/>
+              <i-icon size="tiny" value="close" />
             </i-button>
           </i-grid-column>
         </i-grid-row>
@@ -56,16 +57,15 @@ export default {
   },
   data: () => ({
     eventColor: "#2196F3",
-    selectedEventColor: "#1ab055",
     firstTime: "0:00",
     intervals: 24,
+
     weekDays: [0, 1, 2, 3, 4, 5, 6],
     dragEvent: null,
     dragStart: null,
     createEvent: null,
     createStart: null,
     extendOriginal: null,
-    selectedEvent: null,
     eventProxies: [],
   }),
   created() {
@@ -80,22 +80,10 @@ export default {
       }));
     },
     startDrag({ event, timed }) {
-      this.selectEvent(event);
       if (event && timed) {
         this.dragEvent = event;
-        this.selectedEvent = event;
         this.dragTime = null;
         this.extendOriginal = null;
-      }
-    },
-    selectEvent(event) {
-      if (this.selectedEvent) {
-        this.selectedEvent.color = this.eventColor;
-        this.selectedEvent = null;
-      }
-      if (event) {
-        this.selectedEvent = event;
-        this.selectedEvent.color = this.selectedEventColor;
       }
     },
     startTime(tms) {
@@ -115,7 +103,7 @@ export default {
           timed: true,
         };
         this.eventProxies.push(this.createEvent);
-        this.selectEvent(this.createEvent);
+
         this.emit();
       }
     },
@@ -163,7 +151,7 @@ export default {
       this.extendOriginal = null;
     },
     deleteEvent(event) {
-      this.eventProxies = this.eventProxies.filter(e => e !== event);
+      this.eventProxies = this.eventProxies.filter((e) => e !== event);
       this.emit();
     },
     cancelDrag() {
@@ -171,9 +159,7 @@ export default {
         if (this.extendOriginal) {
           this.createEvent.end = this.extendOriginal;
         } else {
-          this.eventProxies = this.eventProxies.filter(
-            e !== this.createEvent
-          );
+          this.eventProxies = this.eventProxies.filter(e !== this.createEvent);
           this.emit();
         }
       }
