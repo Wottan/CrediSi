@@ -2,6 +2,7 @@
   <v-tooltip bottom :disabled="!tooltip">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        icon
         :x-small="'tiny'===size"
         :small="'small'===size"
         :large="'large'===size"
@@ -11,7 +12,7 @@
         v-on="on"
         :href="href"
       >
-        <slot />
+        <i-icon :value="value" :size="size"/>
       </v-btn>
     </template>
     {{ tooltip }}
@@ -20,6 +21,10 @@
 <script>
 export default {
   props: {
+    value: {
+      type: String,
+      required: true
+    },
     tooltip: {
       type: String,
     },

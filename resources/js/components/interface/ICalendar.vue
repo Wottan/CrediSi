@@ -21,9 +21,7 @@
             <div class="v-event-draggable" v-html="eventSummary()" />
           </i-grid-column>
           <i-grid-column cols="1">
-            <i-button size="tiny" is-icon @click="deleteEvent(event)">
-              <i-icon size="tiny" value="close" />
-            </i-button>
+            <i-button-icon size="tiny" value="close" @click="deleteEvent(event)" />
           </i-grid-column>
         </i-grid-row>
         <i-grid-row>
