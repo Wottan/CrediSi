@@ -8,6 +8,7 @@ import Vuelidate from 'vuelidate';
 import store from './stores/store';
 import ISnackbar from './components/interface/ISnackbar';
 import IButton from './components/interface/IButton';
+import IButtonIcon from './components/interface/IButtonIcon';
 import ITable from './components/interface/ITable';
 import ICard from './components/interface/ICard';
 import ICardActions from './components/interface/ICardActions';
@@ -40,6 +41,7 @@ Vue.use(VueAxios, axios);
 //Interface Vocabulary
 Vue.component('i-snackbar', ISnackbar);
 Vue.component('i-button', IButton);
+Vue.component('i-button-icon', IButtonIcon);
 Vue.component('i-table', ITable);
 Vue.component('i-card', ICard);
 Vue.component('i-card-text', ICardText);
