@@ -7,15 +7,9 @@
           <i-card-text> Etiquetas: <labels-info :value="value.labels" /> </i-card-text>
         </i-grid-column>
         <i-grid-column align-self="stretch" :cols="2">
-          <i-button tooltip="Etiquetas" @click="openShiftLabelDialog">
-            <i-icon value="label" />
-          </i-button>
-          <i-button tooltip="Horario" @click="showEditDialog = true">
-            <i-icon value="edit" />
-          </i-button>
-          <i-button tooltip="Eliminar" @click="showDeleteDialog = true">
-            <i-icon value="delete" />
-          </i-button>
+          <i-button-icon value="label" tooltip="Etiquetas" @click="openShiftLabelDialog" />
+          <i-button-icon value="edit" tooltip="Horario" @click="showEditDialog = true" />
+          <i-button-icon value="delete" tooltip="Eliminar" @click="showDeleteDialog = true" />
         </i-grid-column>
       </i-grid-row>
       <shift-label-dialog

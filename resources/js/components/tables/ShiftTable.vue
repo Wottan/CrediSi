@@ -10,9 +10,7 @@
         <shift-info :value="row" />
       </template>
       <template v-slot:rowAction="{ row }">
-        <i-button tooltip="Editar turno" @click="openEditDialog(row)">
-          <i-icon value="edit" />
-        </i-button>
+        <i-button-icon value="edit" tooltip="Editar turno" @click="openEditDialog(row)" />
       </template>
     </i-table>
     <shift-dialog

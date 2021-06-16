@@ -71,10 +71,10 @@ export default {
     headers() {
       let headers = [ ...this.columns ];
       if(this.hasActions) {
-        headers.push({ text: "Acciones", value: "actions", sortable: false });
+        headers.push({ text: "Acciones", value: "actions",  align: 'right', sortable: false });
       }
       if(this.canExpand) {
-        headers.push({ text: "", value: "data-table-expand", sortable: false });
+        headers.push({ text: "", value: "data-table-expand",  align: 'right', sortable: false });
       }
       return headers;
     }
