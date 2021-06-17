@@ -26,15 +26,20 @@ Route::get('{any?}', function () {
 Route::post('/api/login', [LoginController::class, 'authenticate']);
 Route::post('/api/logout', [LoginController::class, 'logout']);
 
+//Users
 Route::post('api/users/{user}/label', [UserController::class, 'sync']);
 
 Route::get('api/users/labels', [UserController::class, 'returnUsersWithLabels']);
 
+//Labels
 Route::post('api/labels/upsert', [LabelController::class, 'upsert']);
+
+//Shifts
+Route::post('/api/shifts/{shift}/label', [ShiftController::class, 'sync']);
 
 Route::get('/api/shifts/active', [ShiftController::class, 'active'])->name("active-shifts");
 
-Route::post('/api/shifts/{shift}/label', [ShiftController::class, 'sync']);
+Route::get('/api/shifts/today', [ShiftController::class, 'today']);
 
 Route::resources([
     '/api/users' => UserController::class,

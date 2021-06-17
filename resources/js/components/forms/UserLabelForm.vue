@@ -17,7 +17,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      localeLabels: this.value.labels.map((obj) => {
+      localeLabels: this.value.labels?.map((obj) => {
         return { id: obj.id, text: obj.text, color: obj.color };
       }),
     };

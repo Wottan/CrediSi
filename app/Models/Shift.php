@@ -49,4 +49,12 @@ class Shift extends Model
     {
         return $this->belongsToMany(Label::class)->withTimestamps();
     }
+
+    /**
+     * All events actives
+     */
+    public function eventsActive()
+    {
+        return $this->events()->active();
+    }
 }

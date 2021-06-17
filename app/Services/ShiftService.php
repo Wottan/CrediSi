@@ -100,6 +100,22 @@ class ShiftService
     {
         $shift = Shift::findOrFail($id);
         $shift->labels()->sync($array);
-        return $shift->load('events', 'user', 'labels');
+        return $shift->load(['events', 'user', 'labels']);
+    }
+
+    /**
+     *  All shifts actives (one or more ShiftEvents actives) with their relationships.
+     */
+    public function shiftsActive(): iterable
+    {
+        return Shift::with(['events', 'user', 'labels'])->whereHas('eventsActive')->get();
+    }
+
+    /**
+     * All shifts of the date with their relationships.
+     */
+    public function shiftsToday()
+    {
+        return Shift::with(['events', 'user', 'labels'])->whereDate('start', now())->get();
     }
 }
