@@ -38,4 +38,15 @@ class ShiftEvent extends Model
     {
         return $this->belongsTo(Shift::class, 'shift_id');
     }
+
+    /**
+     * This return all events of the date where:
+     * shiftEvent.start <= today.time and shiftEvent.end >= today.time
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereDate('start', now())
+            ->whereTime('start', '<=', now()->toTimeString())
+            ->whereTime('end', '>=', now()->toTimeString());
+    }
 }

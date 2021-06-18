@@ -19,16 +19,16 @@ export default {
     },
     label: {
       type: String,
-    }
+    },
   },
   computed: {
     ...mapGetters("users", ["users"]),
     options() {
-        return this.users.map((u) => ({ value: u.id, label: u.name }));
+      return this.users.map((u) => ({ value: u.id, label: u.name }));
     },
     selected() {
-        return { value: this.value.id, label: this.value.name };
-    }
+      return { value: this.value.id, label: this.value.name };
+    },
   },
   methods: {
     ...mapActions("users", ["load"]),

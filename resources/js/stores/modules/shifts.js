@@ -65,6 +65,30 @@ export default {
                 })
             });
         },
+        today({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios.get("/api/shifts/today"
+                ).then((result) => {
+                    commit("shifts", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    commit("shifts", {});
+                    reject(err.response);
+                })
+            });
+        },
+        active({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios.get("/api/shifts/active"
+                ).then((result) => {
+                    commit("shifts", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    commit("shifts", {});
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {

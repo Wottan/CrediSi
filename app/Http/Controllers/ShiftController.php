@@ -52,4 +52,20 @@ class ShiftController extends Controller
     {
         return $this->shiftService->sync($id, $request->all());
     }
+
+    /**
+     * All shifts actives
+     */
+    public function active()
+    {
+        return $this->shiftService->shiftsActive();
+    }
+
+    /**
+     * All shifts of the date
+     */
+    public function today()
+    {
+        return $this->shiftService->shiftsToday();
+    }
 }

@@ -19,7 +19,7 @@
           single-line
         ></v-text-field>
         <v-spacer />
-        <slot name="actions"/>
+        <slot name="actions" />
         <v-spacer />
         <v-switch
           v-if="canExpand"
@@ -69,15 +69,15 @@ export default {
       return !!this.$scopedSlots.rowAction;
     },
     headers() {
-      let headers = [ ...this.columns ];
-      if(this.hasActions) {
-        headers.push({ text: "Acciones", value: "actions",  align: 'right', sortable: false });
+      let headers = [...this.columns];
+      if (this.hasActions) {
+        headers.push({ text: "Acciones", value: "actions", sortable: false });
       }
-      if(this.canExpand) {
-        headers.push({ text: "", value: "data-table-expand",  align: 'right', sortable: false });
+      if (this.canExpand) {
+        headers.push({ text: "", value: "data-table-expand", sortable: false });
       }
       return headers;
-    }
+    },
   },
 };
 </script>

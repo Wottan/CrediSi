@@ -4,6 +4,11 @@
       <template v-slot:expandedRow="{ row }">
         <user-info :value="row" />
       </template>
+      <template v-slot:rowAction="{ row }">
+        <i-button tooltip="Editar usuario" @click="openEditUserDialog(row)">
+          <i-icon value="edit" />
+        </i-button>
+      </template>
     </i-table>
     <user-edit-dialog
       :show="showEditUserDialog"
