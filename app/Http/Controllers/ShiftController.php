@@ -68,4 +68,12 @@ class ShiftController extends Controller
     {
         return $this->shiftService->shiftsToday();
     }
+
+    /**
+     * All shifts by datetime
+     */
+    public function byDateTime($date)
+    {
+        return $this->shiftService->byDateTime($date);
+    }
 }

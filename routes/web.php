@@ -39,6 +39,8 @@ Route::get('/api/shifts/active', [ShiftController::class, 'active'])->name("acti
 
 Route::get('/api/shifts/today', [ShiftController::class, 'today']);
 
+Route::get('/api/shifts/datetime/{date}', [ShiftController::class, 'byDateTime']);
+
 Route::resources([
     '/api/users' => UserController::class,
     '/api/labels' => LabelController::class,

@@ -36,7 +36,9 @@ import IDateInput from './components/interface/IDateInput';
 import ISelect from './components/interface/ISelect';
 import IDate from './components/interface/IDate';
 import IImage from './components/interface/IImage';
-
+import IClockInput from './components/interface/IClockInput';
+import ITimeInput from './components/interface/ITimeInput';
+import IDateTimeInput from './components/interface/IDateTimeInput';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -72,6 +74,9 @@ Vue.component('i-chip', IChip);
 Vue.component('i-select', ISelect);
 Vue.component('i-date', IDate);
 Vue.component('i-image', IImage);
+Vue.component('i-time-input', ITimeInput);
+Vue.component('i-clock-input', IClockInput);
+Vue.component('i-date-time-input', IDateTimeInput);
 
 const app = new Vue({
     router,

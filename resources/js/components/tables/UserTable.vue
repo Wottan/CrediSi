@@ -7,6 +7,16 @@
       <template v-slot:expandedRow="{ row }">
         <user-info :value="row" />
       </template>
+<<<<<<< HEAD
+=======
+      <template v-slot:rowAction="{ row }">
+        <i-button-icon
+          value="edit"
+          tooltip="Editar usuario"
+          @click="openEditUserDialog(row)"
+        />
+      </template>
+>>>>>>> Shift filters implemented
     </i-table>
   </i-container>
 </template>

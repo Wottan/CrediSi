@@ -15,25 +15,29 @@
           <i-grid>
             <i-grid-row>
               <i-grid-column>
-                <i-button
+                <i-button-icon
+                  value="label"
                   tooltip="Etiquetas"
                   @click="showUserlabelDialog = true"
-                >
-                  <i-icon value="label" />
-                </i-button>
-                <i-button tooltip="Turnos" @click="showUserShiftsDialog = true">
-                  <i-icon value="shift" />
-                </i-button>
-                <i-button tooltip="Editar" @click="showEditUserDialog = true">
-                  <i-icon value="edit" />
-                </i-button>
+                />
+                <i-button-icon
+                  value="shift"
+                  tooltip="Turnos"
+                  @click="showUserShiftsDialog = true"
+                />
+                <i-button-icon
+                  value="edit"
+                  tooltip="Editar"
+                  @click="showEditUserDialog = true"
+                />
               </i-grid-column>
             </i-grid-row>
             <i-grid-row>
               <i-grid-column>
-                <i-button tooltip="Inasistencias / Vacaciones">
-                  <i-icon value="timeoff" />
-                </i-button>
+                <i-button-icon
+                  value="timeoff"
+                  tooltip="Inasistencias / Vacaciones"
+                />
               </i-grid-column>
             </i-grid-row>
           </i-grid>
