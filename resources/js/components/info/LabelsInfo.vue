@@ -1,9 +1,9 @@
 <template>
-  <i-container>
+  <i-div>
     <i-chip v-for="label in value" v-bind:key="label.id">
       {{ label.text }}
     </i-chip>
-  </i-container>
+  </i-div>
 </template>
 
 <script>
