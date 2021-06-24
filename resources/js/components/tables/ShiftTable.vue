@@ -8,15 +8,14 @@
           <i-icon value="add" />
         </i-button>
       </template>
+      <template v-slot:user="{ row }">
+        {{ row.user.name }}
+      </template>
+      <template v-slot:labels="{ row }">
+        <labels-info :value="row.labels" />
+      </template>
       <template v-slot:expandedRow="{ row }">
         <shift-info :value="row" />
-      </template>
-      <template v-slot:rowAction="{ row }">
-        <i-button-icon
-          value="edit"
-          tooltip="Editar turno"
-          @click="openEditDialog(row)"
-        />
       </template>
     </i-table>
     <shift-dialog
@@ -30,8 +29,8 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import ShiftDialog from "../dialogs/ShiftDialog.vue";
+import LabelsInfo from '../info/LabelsInfo.vue';
 import ShiftInfo from "../info/ShiftInfo";
-import ISpacer from "../interface/ISpacer.vue";
 import ShiftSelector from "../selectors/ShiftSelector.vue";
 
 export default {
@@ -39,11 +38,15 @@ export default {
     ShiftInfo,
     ShiftDialog,
     ShiftSelector,
-    ISpacer,
+    LabelsInfo,
   },
   data() {
     return {
-      columns: [{ text: "Nombre", value: "name" }],
+      columns: [
+        { text: "Usuario", value: "user", searchable: (row) => row.user.name },
+        { text: "Nombre", value: "name" },
+        { text: "Etiquetas", value: "labels", searchable: (row) => row.labels.map(l => l.text).join(' ') },
+      ],
       showDialog: false,
       selectedRow: null,
     };
@@ -63,10 +66,6 @@ export default {
       } else {
         this.active();
       }
-    },
-    openEditDialog(row) {
-      this.selectedRow = row;
-      this.showDialog = true;
     },
     openAddDialog() {
       this.selectedRow = null;

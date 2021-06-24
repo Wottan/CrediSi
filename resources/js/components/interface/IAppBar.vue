@@ -2,6 +2,8 @@
   <i-div>
     <v-app-bar>
       <v-app-bar-nav-icon @click="menu = true" />
+      <v-img contain height="40" width="40" src="./img/logo.png" class="d-flex" />
+      <v-toolbar-title>Sistema de RRHH</v-toolbar-title>
       <slot />
     </v-app-bar>
     <v-navigation-drawer

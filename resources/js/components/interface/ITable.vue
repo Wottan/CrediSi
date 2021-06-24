@@ -3,10 +3,14 @@
     :headers="headers"
     :items="rows"
     :search="searchString"
+    :custom-filter="searchFilter"
     :single-expand="singleExpand"
     :expanded.sync="expanded"
     item-key="id"
     :show-expand="canExpand"
+    :footer-props="{
+      'items-per-page-text': 'Mostrar por pagina',
+    }"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -32,6 +36,10 @@
 
     <template v-slot:[`item.actions`]="{ item }">
       <slot name="rowAction" :row="item" />
+    </template>
+
+    <template v-for="slot in columnSlots" v-slot:[`item.${slot}`]="{ item }">
+      <slot :name="slot" :row="item" />
     </template>
 
     <template v-slot:expanded-item="{ headers, item }">
@@ -68,6 +76,11 @@ export default {
     hasActions() {
       return !!this.$scopedSlots.rowAction;
     },
+    columnSlots() {
+      return this.columns
+        .map((c) => c.value)
+        .filter((v) => !!this.$scopedSlots[v]);
+    },
     headers() {
       let headers = [...this.columns];
       if (this.hasActions) {
@@ -77,6 +90,36 @@ export default {
         headers.push({ text: "", value: "data-table-expand", sortable: false });
       }
       return headers;
+    },
+  },
+  methods: {
+    searchFilter(value, searchString, row) {
+      const separator = " ";
+
+      if (!searchString?.trim()) {
+        return true;
+      }
+
+      let searchable = typeof value === "string" ? value : "";
+
+      this.columns.forEach((c) => {
+        if (c.searchable) {
+          searchable += separator + c.searchable(row);
+        }
+      });
+
+      searchable = searchable.trim();
+
+      if (!searchable) {
+        return true;
+      }
+
+      return !searchString
+        .split(separator)
+        .find(
+          (word) =>
+            !searchable.trim().toLowerCase().includes(word.toLowerCase())
+        );
     },
   },
 };
