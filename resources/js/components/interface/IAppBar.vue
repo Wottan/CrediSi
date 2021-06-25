@@ -2,8 +2,10 @@
   <i-div>
     <v-app-bar>
       <v-app-bar-nav-icon @click="menu = true" />
-      <v-img contain height="40" width="40" src="./img/logo.png" class="d-flex" />
-      <v-toolbar-title>Sistema de RRHH</v-toolbar-title>
+      <i-image value="logo" height="40" width="40" />
+      <v-container class="justify-start"
+        ><v-toolbar-title>Sistema de RRHH</v-toolbar-title></v-container
+      >
       <slot />
     </v-app-bar>
     <v-navigation-drawer
@@ -15,7 +17,7 @@
     >
       <v-list nav dense>
         <v-list-item-group>
-          <v-list-item @click="$router.push('home')"> 
+          <v-list-item @click="$router.push('home')">
             <v-list-item-icon>
               <i-icon value="home" />
             </v-list-item-icon>
@@ -29,7 +31,7 @@
           </v-list-item>
           <v-list-item @click="$router.push('home')">
             <v-list-item-icon>
-              <i-icon value="user"/>
+              <i-icon value="user" />
             </v-list-item-icon>
             <v-list-item-title>Usuarios</v-list-item-title>
           </v-list-item>

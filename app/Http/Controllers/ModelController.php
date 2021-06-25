@@ -12,11 +12,19 @@ abstract class ModelController extends Controller
     abstract protected function getModel();
 
     /**
+     * Override to include related entities
+     */
+    protected function with(): array
+    {
+        return [];
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->getModel()::all();
+        return $this->getModel()::with($this->with())->get();
     }
 
     /**
@@ -32,7 +40,8 @@ abstract class ModelController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->getModel()::create($request->all());
+        $model = $this->getModel()::create($request->all());
+        return $this->getModel()::with($this->with())->findOrFail($model->id);
     }
 
     /**
@@ -40,7 +49,7 @@ abstract class ModelController extends Controller
      */
     public function show($id)
     {
-        return $this->getModel()::findOrFail($id);
+        return $this->getModel()::with($this->with())->findOrFailfindOrFail($id);
     }
 
     /**
@@ -56,7 +65,8 @@ abstract class ModelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return tap($this->getModel()::findOrFail($id))->update($request->all());
+        $model = tap($this->getModel()::findOrFail($id))->update($request->all());
+        return $this->getModel()::with($this->with())->findOrFail($model->id);
     }
 
     /**

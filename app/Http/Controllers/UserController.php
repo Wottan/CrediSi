@@ -13,6 +13,11 @@ class UserController extends ModelController
         return User::class;
     }
 
+    protected function with(): array
+    {
+        return ['labels'];
+    }
+
     public function sync(Request $request, User $user)
     {
         try {
@@ -21,11 +26,6 @@ class UserController extends ModelController
         } catch (\Throwable $th) {
             return response()->json($th->errorInfo, 400);
         }
-    }
-
-    public function returnUsersWithLabels()
-    {
-        return User::with('labels')->get();
     }
 
     public function returnLabels(User $user)

@@ -21,7 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'admission_date',
+        'phone',
     ];
 
     /**
@@ -41,6 +42,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'admission_date' => 'date',
     ];
 
     public function labels(){
