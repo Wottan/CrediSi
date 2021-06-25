@@ -29,8 +29,6 @@ Route::post('/api/logout', [LoginController::class, 'logout']);
 //Users
 Route::post('api/users/{user}/label', [UserController::class, 'sync']);
 
-Route::get('api/users/labels', [UserController::class, 'returnUsersWithLabels']);
-
 //Labels
 Route::post('api/labels/upsert', [LabelController::class, 'upsert']);
 

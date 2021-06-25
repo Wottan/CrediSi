@@ -14,7 +14,7 @@ export default {
     actions: {
         load({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/users/labels"
+                axios.get("/api/users"
                 ).then((result) => {
                     commit("users", result.data);
                     resolve(result);

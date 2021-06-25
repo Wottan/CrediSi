@@ -11,6 +11,16 @@
         @input="user.email = $event"
         label="Email"
       />
+      <i-date-input
+        :value="user.admission_date"
+        @input="user.admission_date = $event"
+        label="Ingreso"
+      />
+      <i-text-input
+        :value="user.phone"
+        @input="user.phone = $event"
+        label="Telefono"
+      />
     </i-form>
     <i-spacer />
     <i-button @click="onSubmit"> Guardar </i-button>

@@ -2,16 +2,16 @@
   <i-div>
     <i-grid v-if="value">
       <i-grid-row>
-        <i-grid-column align-self="start" :cols="10">
+        <i-grid-column align-self="start" :cols="9">
           <i-card-text> Nombre: {{ value.name }} </i-card-text>
           <i-card-text>
             Etiquetas: <labels-info :value="value.labels" />
           </i-card-text>
           <i-card-text> Email: {{ value.email }} </i-card-text>
-          <i-card-text> Ingreso: {{ value.admission_date }} </i-card-text>
+          <i-card-text> Ingreso: <i-date :value="value.admission_date" /></i-card-text>
           <i-card-text> Telefono: {{ value.phone }} </i-card-text>
         </i-grid-column>
-        <i-grid-column align-self="stretch" :cols="2">
+        <i-grid-column align-self="stretch" :cols="3">
           <i-grid>
             <i-grid-row>
               <i-grid-column>

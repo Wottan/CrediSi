@@ -12,7 +12,7 @@
       <v-text-field
         :value="formatted"
         :label="label"
-        prepend-icon="mdi-calendar"
+        :prepend-icon="icon ? 'mdi-calendar': ''"
         readonly
         v-on="on"
       />
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { DateTime } from "luxon";
+import { DateFunctions } from "../../dates";
 
 export default {
   data: () => ({
@@ -35,13 +35,16 @@ export default {
     label: {
       type: String,
     },
+    icon: {
+      type: Boolean,
+    },
   },
   computed: {
     formatted() {
-      return this.value && DateTime.fromISO(this.value).toFormat("dd MMM yyyy") || null;
+      return DateFunctions.fromISOToDateUserStr(this.value);
     },
     iso() {
-      return this.value && DateTime.fromISO(this.value).toISODate() || null;
+      return DateFunctions.fromISOToDateStr(this.value);
     }
   },
   methods: {

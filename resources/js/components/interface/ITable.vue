@@ -8,8 +8,17 @@
     :expanded.sync="expanded"
     item-key="id"
     :show-expand="canExpand"
+    no-data-text="No hay datos disponibles"
+    no-results-text="No se encontraron conincidencias"
+    next-page="Proxima pagina"
+    prev-page="Pagina anterior"
     :footer-props="{
-      'items-per-page-text': 'Mostrar por pagina',
+      'items-per-page-text': 'Items por pagina',
+      'rows-per-page-all':'Todos',
+      'page-text':'{0}-{1} de {2}',
+      'next-page':'Proxima pagina',
+      'prev-page':'Pagina anterior'
+    
     }"
   >
     <template v-slot:top>

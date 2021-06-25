@@ -11,8 +11,6 @@ term> docker-compose up
 to install dependencies
 term> docker-compose exec app composer install
 
-(if this fails check permissions on /vendor folder)
-
 to update db
 term> docker-compose exec app php artisan migrate
 

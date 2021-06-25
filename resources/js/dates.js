@@ -5,7 +5,9 @@ Settings.defaultZoneName = "utc";
 const DateConstants = {
     TIME_FORMAT: "HH:mm",
     DATE_FORMAT: "yyyy-MM-dd",
-    DATETIME_FORMAT: "yyyy-MM-dd HH:mm"
+    DATETIME_FORMAT: "yyyy-MM-dd HH:mm",
+    USER_DATE_FORMAT: "dd MMM yyyy"
+
 }
 
 function currentTimeStr() {
@@ -36,6 +38,13 @@ function fromISOToDateStr(iso) {
         return null;
     }
     return DateTime.fromISO(iso, { zone: "utc" }).toFormat(DateConstants.DATE_FORMAT, { zone: "utc" });
+}
+
+function fromISOToDateUserStr(iso) {
+    if (!iso) {
+        return null;
+    }
+    return DateTime.fromISO(iso, { zone: "utc" }).toFormat(DateConstants.USER_DATE_FORMAT, { zone: "utc" });
 }
 
 function fromISOToMillis(iso) {
@@ -85,6 +94,7 @@ const DateFunctions = {
     currentDateTimeStr,
     fromISOToDateTimeStr,
     fromISOToDateStr,
+    fromISOToDateUserStr,
     fromISOToMillis,
     fromStrToMillis,
     fromISOTimeToMillis,
