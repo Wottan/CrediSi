@@ -1,7 +1,7 @@
 <template>
   <i-container>
     <i-table :columns="columns" :rows="shifts" title="Turnos">
-      <template v-slot:actions>
+      <template v-slot:tableActions>
         <shift-filter-selector label="Filtrar Tabla" />
         <i-spacer />
         <i-button tooltip="Agregar turno" @click="openAddDialog">

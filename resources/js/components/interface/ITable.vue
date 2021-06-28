@@ -14,11 +14,10 @@
     prev-page="Pagina anterior"
     :footer-props="{
       'items-per-page-text': 'Items por pagina',
-      'rows-per-page-all':'Todos',
-      'page-text':'{0}-{1} de {2}',
-      'next-page':'Proxima pagina',
-      'prev-page':'Pagina anterior'
-    
+      'rows-per-page-all': 'Todos',
+      'page-text': '{0}-{1} de {2}',
+      'next-page': 'Proxima pagina',
+      'prev-page': 'Pagina anterior',
     }"
   >
     <template v-slot:top>
@@ -32,7 +31,7 @@
           single-line
         ></v-text-field>
         <v-spacer />
-        <slot name="actions" />
+        <slot name="tableActions" />
         <v-spacer />
         <v-switch
           v-if="canExpand"
@@ -44,7 +43,7 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-      <slot name="rowAction" :row="item" />
+      <slot name="rowActions" :row="item" />
     </template>
 
     <template v-for="slot in columnSlots" v-slot:[`item.${slot}`]="{ item }">
@@ -83,7 +82,7 @@ export default {
       return !!this.$scopedSlots.expandedRow;
     },
     hasActions() {
-      return !!this.$scopedSlots.rowAction;
+      return !!this.$scopedSlots.rowActions;
     },
     columnSlots() {
       return this.columns

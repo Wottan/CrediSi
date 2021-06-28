@@ -35,7 +35,6 @@ export default {
                 })
             });
         },
-
         updateLabel({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 axios.post("api/users/" + payload.idUser + "/label", payload.labelIds

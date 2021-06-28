@@ -39,6 +39,7 @@ import IImage from './components/interface/IImage';
 import IClockInput from './components/interface/IClockInput';
 import ITimeInput from './components/interface/ITimeInput';
 import IDateTimeInput from './components/interface/IDateTimeInput';
+import IColorInput from './components/interface/IColorInput';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -77,6 +78,7 @@ Vue.component('i-image', IImage);
 Vue.component('i-time-input', ITimeInput);
 Vue.component('i-clock-input', IClockInput);
 Vue.component('i-date-time-input', IDateTimeInput);
+Vue.component('i-color-input', IColorInput);
 
 const app = new Vue({
     router,
