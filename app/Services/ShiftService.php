@@ -62,8 +62,8 @@ class ShiftService
      */
     private static function recalculate(Shift $shift): Shift
     {
-        foreach ($shift->events() as $event) {
-            self::recalculateEvent($event);
+        foreach ($shift->events as $event) {
+            self::recalculateEvent($event, $shift->recurrence);
         }
         return $shift;
     }
@@ -71,25 +71,31 @@ class ShiftService
     /**
      * Recalculate event's recurrence
      */
-    private static function recalculateEvent(ShiftEvent $event): ShiftEvent
+    private static function recalculateEvent(ShiftEvent $event, string $recurrence): ShiftEvent
     {
-        $event->start = self::calculateNextOccurrence($event->start, $event->recurrence);
-        $event->end = self::calculateNextOccurrence($event->end, $event->recurrence);
+        $event->start = self::calculateNextOccurrence($event->start, $recurrence);
+        $event->end = self::calculateNextOccurrence($event->end, $recurrence);
         return $event;
     }
 
     /**
      * Calculate next occurrence
      */
-    private static function calculateNextOccurrence(DateTime $moment, string $recurrenceType): DateTime
+    private static function calculateNextOccurrence(String $moment, string $recurrence): string
     {
+        $moment = Carbon::parse($moment);
         $now = Carbon::now();
-        if ("none" === $recurrenceType) {
+        if ("none" === $recurrence) {
             return $moment;
-        } else if ("weekly" === $recurrenceType) {
-            return Carbon::instance($moment)->addWeeks($now->diffInWeeks($moment))->toDateTime();
+        } else if ("weekly" === $recurrence) {
+            $startOfCurrentWeek = $now->startOfWeek();
+            $recalculated = $moment;
+            while ($startOfCurrentWeek->gt($recalculated)) {
+                $recalculated = $recalculated->addWeeks(1);
+            }
+            return $recalculated->toString();
         } else {
-            throw new ServiceException("Unrecognized recurrence type: $recurrenceType");
+            throw new ServiceException("Unrecognized recurrence type: $recurrence");
         }
     }
 
