@@ -7,7 +7,7 @@
       <template v-slot:expandedRow="{ row }">
         <user-info :value="row" />
       </template>
-      <template v-slot:rowAction="{  }">
+      <template v-slot:rowActions="{  }">
         <i-button-icon
           value="timeoff"
           tooltip="Reportar/Justificar inasistencia"

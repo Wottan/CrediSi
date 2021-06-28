@@ -35,12 +35,36 @@ export default {
                 })
             });
         },
+        update({ commit }, labels) {
+            return new Promise((resolve, reject) => {
+                axios.put("api/labels/bulk", labels
+                ).then((result) => {
+                    commit("labels", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
+        delete({ commit }, label) {
+            return new Promise((resolve, reject) => {
+                axios.delete("/api/labels/" + label.id).then((result) => {
+                    commit("delete", label);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
     },
 
     mutations: {
         labels(state, labels) {
             state.labels = labels
         },
+        delete(state, label) {
+            state.labels = state.labels.filter(l => l.id !== label.id);
+        }
     }
 
 }

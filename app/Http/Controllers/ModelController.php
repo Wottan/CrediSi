@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * A generic controller for a given model class
@@ -75,5 +76,17 @@ abstract class ModelController extends Controller
     public function destroy($id)
     {
         return $this->getModel()::findOrFail($id)->delete();
+    }
+
+    /**
+     * Updates an array of models
+     */
+    public function bulkUpdate(Request $request) {
+        $models = $request->all();
+        foreach($models as $model) {
+            Log::debug(json_encode($model));
+            $this->getModel()::where('id',$model['id'])->update($model);
+        }
+        return $this->getModel()::all();
     }
 }

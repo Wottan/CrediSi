@@ -31,6 +31,7 @@ Route::post('api/users/{user}/label', [UserController::class, 'sync']);
 
 //Labels
 Route::post('api/labels/upsert', [LabelController::class, 'upsert']);
+Route::put('api/labels/bulk', [LabelController::class, 'bulkUpdate']);
 
 //Shifts
 Route::post('/api/shifts/{shift}/label', [ShiftController::class, 'sync']);

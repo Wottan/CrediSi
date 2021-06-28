@@ -35,6 +35,12 @@
             </v-list-item-icon>
             <v-list-item-title>Usuarios</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="$router.push('labels')">
+            <v-list-item-icon>
+              <i-icon value="label" />
+            </v-list-item-icon>
+            <v-list-item-title>Etiquetas</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
