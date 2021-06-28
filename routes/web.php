@@ -27,20 +27,16 @@ Route::post('/api/login', [LoginController::class, 'authenticate']);
 Route::post('/api/logout', [LoginController::class, 'logout']);
 
 //Users
-Route::post('api/users/{user}/label', [UserController::class, 'sync']);
+Route::put('api/users/{user}/sync', [UserController::class, 'syncLabels']);
 
 //Labels
 Route::post('api/labels/upsert', [LabelController::class, 'upsert']);
 Route::put('api/labels/bulk', [LabelController::class, 'bulkUpdate']);
 
 //Shifts
-Route::post('/api/shifts/{shift}/label', [ShiftController::class, 'sync']);
-
+Route::put('/api/shifts/{shift}/sync', [ShiftController::class, 'syncLabels']);
 Route::get('/api/shifts/active', [ShiftController::class, 'active'])->name("active-shifts");
-
 Route::get('/api/shifts/today', [ShiftController::class, 'today']);
-
-Route::get('/api/shifts/datetime/{date}', [ShiftController::class, 'byDateTime']);
 
 Route::resources([
     '/api/users' => UserController::class,

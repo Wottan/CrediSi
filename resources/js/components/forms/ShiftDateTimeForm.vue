@@ -14,6 +14,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { DateFunctions } from "../../dates";
 export default {
   data() {
     return {
@@ -27,12 +28,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions("shifts", ["filterByDateTime"]),
+    ...mapActions("shifts", ["active"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
-      this.filterByDateTime(this.date + this.time)
+      let datetime = DateFunctions.fromISOToDateTimeStr(
+        this.date + "T" + this.time
+      );
+      this.active(datetime)
         .then(() => {
-          this.$emit("submit");
+          this.$emit("submit", datetime);
         })
         .catch(this.handleError);
     },

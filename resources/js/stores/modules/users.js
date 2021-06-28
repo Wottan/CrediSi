@@ -35,9 +35,16 @@ export default {
                 })
             });
         },
-        updateLabel({ commit }, payload) {
+        /**
+         * Syncronize labels whit user
+         * 
+         * @param {*} param0 
+         * @param {*} payload id user and ids of labels
+         * @returns 
+         */
+        syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                axios.post("api/users/" + payload.idUser + "/label", payload.labelIds
+                axios.put("api/users/" + payload.idUser + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result);

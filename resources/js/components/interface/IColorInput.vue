@@ -1,5 +1,5 @@
 <template>
-  <i-div>
+  <i-div wide>
     <i-button :class="style" @click="show = true" :color="value"></i-button>
     <i-dialog :value="show" @close="show = false" width="300" height="500">
       <v-color-picker
@@ -33,24 +33,24 @@ export default {
   },
   data() {
     return {
-      show: false
-    }
+      show: false,
+    };
   },
   computed: {
     style() {
       return {
         backgroundColor: this.value,
-        cursor: 'pointer',
-        height: '30px',
-        width: '30px',
-      }
-    }
+        cursor: "pointer",
+        height: "30px",
+        width: "30px",
+      };
+    },
   },
   methods: {
     onInput(color) {
       this.show = false;
-      this.$emit("input", color.hex || color)
-    }
-  }
+      this.$emit("input", color.hex || color);
+    },
+  },
 };
 </script>

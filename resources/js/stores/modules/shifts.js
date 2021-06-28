@@ -54,9 +54,16 @@ export default {
                 })
             });
         },
-        updateLabel({ commit }, payload) {
+        /**
+         * Syncronize labels whit shift
+         * 
+         * @param {*} param0 
+         * @param {*} payload id shift and ids of labels
+         * @returns 
+         */
+        syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                axios.post("api/shifts/" + payload.idShift + "/label", payload.labelIds
+                axios.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result);
@@ -76,21 +83,9 @@ export default {
                 })
             });
         },
-        active({ commit }) {
+        active({ commit }, date) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/shifts/active"
-                ).then((result) => {
-                    commit("shifts", result.data);
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err.response);
-                })
-            });
-        },
-
-        filterByDateTime({ commit }, date) {
-            return new Promise((resolve, reject) => {
-                axios.get("/api/shifts/datetime/" + date
+                axios.get("/api/shifts/active", { params: { date } }
                 ).then((result) => {
                     commit("shifts", result.data);
                     resolve(result);

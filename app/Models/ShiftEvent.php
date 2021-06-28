@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ShiftEvent extends Model
@@ -37,16 +38,5 @@ class ShiftEvent extends Model
     public function shift()
     {
         return $this->belongsTo(Shift::class, 'shift_id');
-    }
-
-    /**
-     * Return all events of the date where:
-     * shiftEvent.start <= today.time and shiftEvent.end >= today.time
-     */
-    public function scopeActive($query)
-    {
-        return $query->whereDate('start', now()->toDateString())
-            ->whereTime('start', '<=', now()->toTimeString())
-            ->whereTime('end', '>=', now()->toTimeString());
     }
 }

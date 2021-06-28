@@ -7,6 +7,7 @@ use App\Models\Shift;
 use App\Models\ShiftEvent;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class ShiftService
 {
@@ -16,11 +17,11 @@ class ShiftService
      * 
      * @return Shift[]
      */
-    public function all(): iterable
+    public function all($reference = null): iterable
     {
         $shifts = Shift::with(['events', 'user', 'labels'])->get();
-        $shifts->each(function (Shift $shift) {
-            self::recalculate($shift);
+        $shifts->each(function (Shift $shift) use ($reference) {
+            self::recalculate($shift, $reference);
         });
         return $shifts;
     }
@@ -60,10 +61,10 @@ class ShiftService
     /**
      * Recalculate events recurrence
      */
-    private static function recalculate(Shift $shift): Shift
+    private static function recalculate(Shift $shift, $reference): Shift
     {
         foreach ($shift->events as $event) {
-            self::recalculateEvent($event, $shift->recurrence);
+            self::recalculateEvent($event, $shift->recurrence, $reference);
         }
         return $shift;
     }
@@ -71,20 +72,20 @@ class ShiftService
     /**
      * Recalculate event's recurrence
      */
-    private static function recalculateEvent(ShiftEvent $event, string $recurrence): ShiftEvent
+    private static function recalculateEvent(ShiftEvent $event, string $recurrence, $reference): ShiftEvent
     {
-        $event->start = self::calculateNextOccurrence($event->start, $recurrence);
-        $event->end = self::calculateNextOccurrence($event->end, $recurrence);
+        $event->start = self::calculateNextOccurrence($event->start, $recurrence, $reference);
+        $event->end = self::calculateNextOccurrence($event->end, $recurrence, $reference);
         return $event;
     }
 
     /**
      * Calculate next occurrence
      */
-    private static function calculateNextOccurrence(String $moment, string $recurrence): string
+    private static function calculateNextOccurrence(String $moment, string $recurrence, $reference): string
     {
         $moment = Carbon::parse($moment);
-        $now = Carbon::now();
+        $now = $reference ? Carbon::parse($reference) : Carbon::now('America/Argentina/Buenos_Aires');
         if ("none" === $recurrence) {
             return $moment;
         } else if ("weekly" === $recurrence) {
@@ -102,7 +103,7 @@ class ShiftService
     /**
      *  Sync the intermediate tables with a list of IDs or collection of models.
      */
-    public function sync(string $id, array $array): Shift
+    public function syncLabels(string $id, array $array): Shift
     {
         $shift = Shift::findOrFail($id);
         $shift->labels()->sync($array);
@@ -110,31 +111,46 @@ class ShiftService
     }
 
     /**
-     *  All shifts actives (one or more ShiftEvents actives) with their relationships.
-     */
-    public function shiftsActive(): iterable
-    {
-        return Shift::with(['events', 'user', 'labels'])->whereHas('eventsActive')->get();
-    }
-
-    /**
      * All shifts of the date with their relationships.
      */
-    public function shiftsToday()
+    public function today()
     {
-        return Shift::with(['events', 'user', 'labels'])->whereDate('start', now())->get();
+        $shiftsRecalculated = collect(self::all());
+        $shiftsToday = collect();
+        $shiftsRecalculated->each(function (Shift $shift) use ($shiftsToday) {
+            $shift->events->each(function (ShiftEvent $shiftEvent) use ($shift, $shiftsToday) {
+                if (
+                    Carbon::parse($shiftEvent->start)->toDateString() == Carbon::parse(now())->toDateString()
+                ) {
+                    $shiftsToday->push($shift);
+                    return false;
+                }
+            });
+        });
+        return $shiftsToday;
     }
 
-
     /**
-     * All shifts with their relationships by datetime.
+     * All shifts actives with their relationships by datetime.
+     * 
      */
-    public function byDateTime($date)
+    public function active($date): iterable
     {
-        return  Shift::with(['events', 'user', 'labels'])->whereHas('events', function ($query) use ($date) {
-            $query->whereDate('start', Carbon::parse($date)->toDateString())
-                ->whereTime('start', '<=', Carbon::parse($date)->toTimeString())
-                ->whereTime('end', '>=', Carbon::parse($date)->toTimeString());
-        })->get();
+        $shiftsRecalculated = collect(self::all($date));
+        $datetime = $date ?: now('America/Argentina/Buenos_Aires');
+        $shiftsActive = collect();
+        $shiftsRecalculated->each(function (Shift $shift) use ($datetime, $shiftsActive) {
+            $shift->events->each(function (ShiftEvent $shiftEvent) use ($datetime, $shift, $shiftsActive) {
+                if (
+                    Carbon::parse($shiftEvent->start)->toDateString() == Carbon::parse($datetime)->toDateString() &&
+                    Carbon::parse($shiftEvent->start)->toTimeString() <= Carbon::parse($datetime)->toTimeString() &&
+                    Carbon::parse($shiftEvent->end)->toTimeString() >= Carbon::parse($datetime)->toTimeString()
+                ) {
+                    $shiftsActive->push($shift);
+                    return false;
+                }
+            });
+        });
+        return $shiftsActive;
     }
 }

@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     ...mapActions("labels", ["load", "upsert"]),
-    ...mapActions("shifts", ["updateLabel"]),
+    ...mapActions("shifts", ["syncLabels"]),
     ...mapActions("messages", ["handleError"]),
 
     onSelectedLabelsChange(labels) {
@@ -53,12 +53,12 @@ export default {
 
     onSubmit() {
       this.upsert(this.localeLabels)
-        .then((r) => {
+        .then((label) => {
           let labelIds = this.localeLabels.map((l) => {
-            return r.data.find((e) => e.text === l.text)?.id;
+            return label.data.find((e) => e.text === l.text)?.id;
           });
 
-          this.updateLabel({ labelIds: labelIds, idShift: this.value.id }).then(
+          this.syncLabels({ labelIds: labelIds, idShift: this.value.id }).then(
             () => {
               this.$emit("submit");
             }

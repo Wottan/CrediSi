@@ -66,7 +66,7 @@ export default {
       return this.tooltip ? this.tooltip : "Esta accion no se puede deshacer";
     },
     confirmText() {
-      return "Esta seguro de continuar?"
+      return "Esta seguro de continuar?";
     },
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
     onConfirm() {
       this.confirm = false;
       this.$emit("confirm");
-    }
+    },
   },
 };
 </script>
