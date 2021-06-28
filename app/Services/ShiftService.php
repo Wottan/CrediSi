@@ -118,4 +118,17 @@ class ShiftService
     {
         return Shift::with(['events', 'user', 'labels'])->whereDate('start', now())->get();
     }
+
+
+    /**
+     * All shifts with their relationships by datetime.
+     */
+    public function byDateTime($date)
+    {
+        return  Shift::with(['events', 'user', 'labels'])->whereHas('events', function ($query) use ($date) {
+            $query->whereDate('start', Carbon::parse($date)->toDateString())
+                ->whereTime('start', '<=', Carbon::parse($date)->toTimeString())
+                ->whereTime('end', '>=', Carbon::parse($date)->toTimeString());
+        })->get();
+    }
 }

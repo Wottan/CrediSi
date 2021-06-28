@@ -72,7 +72,6 @@ export default {
                     commit("shifts", result.data);
                     resolve(result);
                 }).catch((err) => {
-                    commit("shifts", {});
                     reject(err.response);
                 })
             });
@@ -84,7 +83,18 @@ export default {
                     commit("shifts", result.data);
                     resolve(result);
                 }).catch((err) => {
-                    commit("shifts", {});
+                    reject(err.response);
+                })
+            });
+        },
+
+        filterByDateTime({ commit }, date) {
+            return new Promise((resolve, reject) => {
+                axios.get("/api/shifts/datetime/" + date
+                ).then((result) => {
+                    commit("shifts", result.data);
+                    resolve(result);
+                }).catch((err) => {
                     reject(err.response);
                 })
             });

@@ -1,5 +1,10 @@
 <template>
-  <i-button value="logout" @click="onClick" tooltip="LogOut" color="primary" />
+  <i-button-icon
+    value="logout"
+    @click="onClick"
+    tooltip="LogOut"
+    color="primary"
+  />
 </template>
 <script>
 import { mapActions } from "vuex";

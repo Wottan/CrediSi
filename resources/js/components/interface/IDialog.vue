@@ -1,5 +1,10 @@
 <template>
-  <v-dialog :value="value" @input="$emit('close')" :width="width">
+  <v-dialog
+    :value="value"
+    @input="$emit('close')"
+    :width="width"
+    :persistent="persistent"
+  >
     <slot />
   </v-dialog>
 </template>
@@ -11,6 +16,10 @@ export default {
     },
     width: {
       type: String,
+    },
+    persistent: {
+      type: Boolean,
+      default: () => false,
     },
   },
 };

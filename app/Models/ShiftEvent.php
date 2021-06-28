@@ -40,12 +40,12 @@ class ShiftEvent extends Model
     }
 
     /**
-     * This return all events of the date where:
+     * Return all events of the date where:
      * shiftEvent.start <= today.time and shiftEvent.end >= today.time
      */
     public function scopeActive($query)
     {
-        return $query->whereDate('start', now())
+        return $query->whereDate('start', now()->toDateString())
             ->whereTime('start', '<=', now()->toTimeString())
             ->whereTime('end', '>=', now()->toTimeString());
     }
