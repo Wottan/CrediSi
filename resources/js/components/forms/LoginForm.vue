@@ -1,23 +1,24 @@
 <template>
-  <i-form>
-    <i-text-input
-      :value="email"
-      :errors="emailErrors"
-      label="E-mail"
-      @input="email = $event"
-    ></i-text-input>
+  <i-container>
+    <i-form v-if="loginWithUSerPass">
+      <i-text-input
+        :value="email"
+        :errors="emailErrors"
+        label="E-mail"
+        @input="email = $event"
+      ></i-text-input>
 
-    <i-password-input
-      :value="password"
-      :errors="passwordErrors"
-      label="Password"
-      @input="password = $event"
-    ></i-password-input>
+      <i-password-input
+        :value="password"
+        :errors="passwordErrors"
+        label="Password"
+        @input="password = $event"
+      ></i-password-input>
 
-    <i-button @click="submit"> Iniciar sesion </i-button>
-
+      <i-button @click="submit"> Iniciar sesion </i-button>
+    </i-form>
     <i-button href="/auth/redirect"> Iniciar sesion con Google </i-button>
-  </i-form>
+  </i-container>
 </template>
 <script>
 import { validationMixin } from "vuelidate";
@@ -34,6 +35,7 @@ export default {
     showPassword: false,
     password: "",
     email: "",
+    loginWithUSerPass: false,
   }),
 
   computed: {

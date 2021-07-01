@@ -7,13 +7,18 @@ export default {
         user: {},
         login: false,
     },
-
-    getters: {
-        user: state => state.user,
-        login: state => state.login,
-    },
-
     actions: {
+        check({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios.get("/login/check")
+                .then((result) => {
+                    commit("login", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
         login({ commit }, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post("/api/login", credentials

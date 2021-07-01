@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\LabelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SocialiteLoginController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ShiftController;
-use App\Http\Controllers\TimeOffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,27 +19,9 @@ Route::get('{any?}', function () {
     return view('app');
 });
 
-Route::post('/api/login', [LoginController::class, 'authenticate']);
-Route::post('/api/logout', [LoginController::class, 'logout']);
-
-//Users
-Route::put('api/users/{user}/sync', [UserController::class, 'syncLabels']);
-
-//Labels
-Route::post('api/labels/upsert', [LabelController::class, 'upsert']);
-Route::put('api/labels/bulk', [LabelController::class, 'bulkUpdate']);
-
-//Shifts
-Route::put('/api/shifts/{shift}/sync', [ShiftController::class, 'syncLabels']);
-Route::get('/api/shifts/active', [ShiftController::class, 'active'])->name("active-shifts");
-Route::get('/api/shifts/today', [ShiftController::class, 'today']);
-
-Route::resources([
-    '/api/users' => UserController::class,
-    '/api/labels' => LabelController::class,
-    '/api/shifts' => ShiftController::class,
-    '/api/timeoff' => TimeOffController::class,
-]);
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::get('/login/check', [LoginController::class, 'check']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get(
     "/auth/redirect",

@@ -1,5 +1,6 @@
 <template>
   <i-card class="mx-auto my-auto">
+    <i-image value="logo" />
     <i-card-text>
       <login-form />
     </i-card-text>

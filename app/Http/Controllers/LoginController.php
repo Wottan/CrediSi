@@ -25,6 +25,15 @@ class LoginController extends Controller
         return response()->json(["error" => "The provided credentials do not match our records."], 400);
     }
 
+    public function check()
+    {
+        if (auth()->check()) {
+            return auth()->user();
+        }
+
+        return response()->json(["error" => "No active session"], 400);
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();
