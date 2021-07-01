@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ShiftService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ShiftController extends Controller
 {
@@ -48,17 +49,17 @@ class ShiftController extends Controller
     /**
      * 
      */
-    public function sync(Request $request, $id)
+    public function syncLabels(Request $request, $id)
     {
-        return $this->shiftService->sync($id, $request->all());
+        return $this->shiftService->syncLabels($id, $request->all());
     }
 
     /**
      * All shifts actives
      */
-    public function active()
+    public function active(Request $request)
     {
-        return $this->shiftService->shiftsActive();
+        return $this->shiftService->active($request->get('date'));
     }
 
     /**
@@ -66,14 +67,6 @@ class ShiftController extends Controller
      */
     public function today()
     {
-        return $this->shiftService->shiftsToday();
-    }
-
-    /**
-     * All shifts by datetime
-     */
-    public function byDateTime($date)
-    {
-        return $this->shiftService->byDateTime($date);
+        return $this->shiftService->today();
     }
 }

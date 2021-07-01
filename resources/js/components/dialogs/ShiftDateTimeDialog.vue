@@ -16,8 +16,8 @@ export default {
     },
   },
   methods: {
-    close() {
-      this.$emit("close");
+    close(value) {
+      this.$emit("close", value);
     },
   },
 };

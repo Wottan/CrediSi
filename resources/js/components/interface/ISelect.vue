@@ -4,7 +4,11 @@
     :label="label"
     :value="value"
     @input="$emit('input', $event)"
-  ></v-select>
+  >
+    <template v-slot:selection="{ item }">
+      <slot name="itemSelected" :item="item"></slot>
+    </template>
+  </v-select>
 </template>
 <script>
 export default {

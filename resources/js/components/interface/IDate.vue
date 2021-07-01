@@ -1,22 +1,22 @@
 <template>
-    <i-div>{{ formatted }}</i-div>
+  <i-div wide>{{ formatted }}</i-div>
 </template>
 
 <script>
 import { DateFunctions } from "../../dates";
 
 export default {
-  computed: { 
+  computed: {
     formatted() {
-        return DateFunctions.fromISOToDateUserStr(this.value);
-    }    
+      return DateFunctions.fromISOToDateUserStr(this.value);
+    },
   },
   props: {
     value: {
       type: String,
-    }
-  }
-}   
+    },
+  },
+};
 </script>
 
 

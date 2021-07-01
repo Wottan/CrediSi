@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Shift extends Model
 {
@@ -48,13 +49,5 @@ class Shift extends Model
     public function labels()
     {
         return $this->belongsToMany(Label::class)->withTimestamps();
-    }
-
-    /**
-     * All events actives
-     */
-    public function eventsActive()
-    {
-        return $this->events()->active();
     }
 }

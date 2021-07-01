@@ -1,10 +1,11 @@
 <template>
   <i-card>
-    <i-select :options="options" :label="label" @input="onInput" />
-    <shift-date-time-dialog
-      :show="showDateTime"
-      @close="showDateTime = false"
-    />
+    <i-select :options="options" :label="label" @input="onInput">
+      <template v-slot:itemSelected="item">
+        <select-info :value="item" :date="date" />
+      </template>
+    </i-select>
+    <shift-date-time-dialog :show="showDateTime" @close="onClose" />
     <shift-date-time-range-dialog
       :show="showRange"
       @close="showRange = false"
@@ -15,18 +16,23 @@
 import { mapActions } from "vuex";
 import ShiftDateTimeDialog from "../dialogs/ShiftDateTimeDialog.vue";
 import ShiftDateTimeRangeDialog from "../dialogs/ShiftDateTimeRangeDialog.vue";
+import SelectInfo from "../info/SelectInfo.vue";
 export default {
-  components: { ShiftDateTimeDialog, ShiftDateTimeRangeDialog },
+  components: { ShiftDateTimeDialog, ShiftDateTimeRangeDialog, SelectInfo },
   data() {
     return {
       options: [
         { value: "load", text: "todos" },
-        { value: "today", text: "hoy" },
-        { value: "active", text: "ahora" },
-        { value: "openDateTimeDialog", text: "fecha/hora" },
+        { value: "today", text: "activos hoy" },
+        { value: "active", text: "activos ahora" },
+        {
+          value: "openDateTimeDialog",
+          text: "activos en fecha/hora",
+        },
       ],
       showDateTime: false,
       showRange: false,
+      date: "",
     };
   },
   props: {
@@ -34,6 +40,7 @@ export default {
       type: String,
     },
   },
+
   methods: {
     ...mapActions("shifts", ["load", "today", "active"]),
 
@@ -45,7 +52,13 @@ export default {
       this.showRange = true;
     },
 
+    onClose(value) {
+      this.date = value;
+      this.showDateTime = false;
+    },
+
     onInput(value) {
+      this.date = "";
       this[value]();
     },
   },

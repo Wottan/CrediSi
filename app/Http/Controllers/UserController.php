@@ -18,7 +18,7 @@ class UserController extends ModelController
         return ['labels'];
     }
 
-    public function sync(Request $request, User $user)
+    public function syncLabels(Request $request, User $user)
     {
         try {
             $user->labels()->sync($request->all());

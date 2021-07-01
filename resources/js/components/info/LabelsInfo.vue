@@ -1,5 +1,5 @@
 <template>
-  <i-div>
+  <i-div wide>
     <i-chip v-for="label in value" v-bind:key="label.id" :color="label.color">
       {{ label.text }}
     </i-chip>

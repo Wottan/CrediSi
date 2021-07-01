@@ -1,5 +1,5 @@
 <template >
-  <i-div>
+  <i-div wide>
     <i-form>
       <i-grid>
         <i-grid-row>

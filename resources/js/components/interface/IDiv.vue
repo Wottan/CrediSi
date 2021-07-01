@@ -1,9 +1,11 @@
 <template>
-    <div class="i-div"><slot></slot></div>
+  <div :style="[wide ? { width: '100%' } : {}]"><slot></slot></div>
 </template>
+<script>
+export default {
+  props: {
+    wide: Boolean,
+  },
+};
+</script>
 
-<style scoped>
-    .i-div {
-        width: 100%
-    }
-</style>
