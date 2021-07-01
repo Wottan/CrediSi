@@ -9,7 +9,7 @@
         </i-button>
       </template>
       <template v-slot:user="{ row }">
-        {{ row.user.name }}
+        {{ row.user && row.user.name }}
       </template>
       <template v-slot:labels="{ row }">
         <labels-info :value="row.labels" />

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,6 +45,10 @@ class User extends Authenticatable
     ];
 
     public function labels(){
-        return $this->belongsToMany(Label::class)->withTimestamps();
+        return $this->belongsToMany(Label::class);
+    }
+
+    public function shifts(){
+        return $this->hasMany(Shift::class);
     }
 }
