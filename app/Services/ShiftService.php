@@ -85,7 +85,7 @@ class ShiftService
     private static function calculateNextOccurrence(String $moment, string $recurrence, $reference): string
     {
         $moment = Carbon::parse($moment);
-        $now = $reference ? Carbon::parse($reference) : Carbon::now('America/Argentina/Buenos_Aires');
+        $now = $reference ? Carbon::parse($reference) : Carbon::now();
         if ("none" === $recurrence) {
             return $moment;
         } else if ("weekly" === $recurrence) {
@@ -115,7 +115,7 @@ class ShiftService
      */
     public function today()
     {
-        $shiftsRecalculated = collect(self::all());
+        $shiftsRecalculated = collect($this->all());
         $shiftsToday = collect();
         $shiftsRecalculated->each(function (Shift $shift) use ($shiftsToday) {
             $shift->events->each(function (ShiftEvent $shiftEvent) use ($shift, $shiftsToday) {
@@ -136,8 +136,8 @@ class ShiftService
      */
     public function active($date): iterable
     {
-        $shiftsRecalculated = collect(self::all($date));
-        $datetime = $date ?: now('America/Argentina/Buenos_Aires');
+        $shiftsRecalculated = collect($this->all($date));
+        $datetime = $date ?: now();
         $shiftsActive = collect();
         $shiftsRecalculated->each(function (Shift $shift) use ($datetime, $shiftsActive) {
             $shift->events->each(function (ShiftEvent $shiftEvent) use ($datetime, $shift, $shiftsActive) {
