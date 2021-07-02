@@ -21,7 +21,7 @@ export default {
         },
         login({ commit }, credentials) {
             return new Promise((resolve, reject) => {
-                axios.post("/api/login", credentials
+                axios.post("/login", credentials
                 ).then((result) => {
                     commit("login", result.data);
                     resolve(result);
@@ -32,7 +32,7 @@ export default {
         },
         logout({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.post("/api/logout"
+                axios.post("/logout"
                 ).then((result) => {
                     commit("logout", {});
                     resolve(result);
