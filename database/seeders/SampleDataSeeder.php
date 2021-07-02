@@ -20,22 +20,17 @@ class SampleDataSeeder extends Seeder
     public function run()
     {
         collect(self::DATA)->each(function ($data) {
+            $this->preProcessData($data);
+        });
+        collect(self::DATA)->each(function ($data) {
             $this->processData($data);
         });
     }
 
-    private function processData($data)
+    private function preProcessData($data)
     {
-        $sector = $data[self::SECTOR] ?? null;
-        $fullName = $data[self::EMPLEADO];
-        $name = $this->stripAccents($fullName);
-        $this->command->info("$name");
-
-        $name = strtolower($name);
-        $names = explode(", ", $name);
-        $lastName = $names[0];
-        $firstName = $names[1];
-        $email = "$firstName.$lastName@misionesonline.net";
+        $userData = $this->userData($data);
+        $email = $userData["email"];
         if (User::where(["email" => $email])->exists()) {
             $this->command->warn("User $email already exists. Deleting");
             $user = User::where(["email" => $email])->first();
@@ -44,12 +39,19 @@ class SampleDataSeeder extends Seeder
             $user->delete();
             $this->command->warn("User $email deleted!");
         }
+    }
 
+    private function processData($data)
+    {
+        $sector = $data[self::SECTOR] ?? null;
+        $userData = $this->userData($data);
+        $email = $userData["email"];
+        $fullName = $userData["fullName"];
         if (User::where(["email" => $email])->exists()) {
-            $this->command->warn("User $email already exists. Skipping");
+            $this->command->info("User $email already exists");
         } else {
             $this->command->info("Creating user $email...");
-            $user = User::create([
+            User::create([
                 "name" => $fullName,
                 "email" => $email,
                 "password" => Hash::make(Str::random(8)),
@@ -57,17 +59,34 @@ class SampleDataSeeder extends Seeder
                 "can_login" => $data[self::IS_ADMIN] ?? false
             ]);
             $this->command->info("User $email created!");
-            if ($sector) {
-                $this->command->info("Creating label $sector on user $email...");
-                $label = Label::firstOrCreate(["text" => $sector]);
-                $label->color = self::COLORS[$sector] ?? "#cccccc";
-                $label->save();
-                $user->labels()->attach($label);
-                $this->command->info("Label $sector on user $email created!");
-            }
-            $this->createShift($user, $data, $sector);
-            $this->command->info("User $email create!");
         }
+        $user = User::where(["email" => $email])->first();
+        if ($sector) {
+            $this->command->info("Creating label $sector on user $email...");
+            $label = Label::firstOrCreate(["text" => $sector]);
+            $label->color = self::COLORS[$sector] ?? "#cccccc";
+            $label->save();
+            if (!$user->labels->contains($label)) {
+                $user->labels()->attach($label);
+            }
+            $this->command->info("Label $sector on user $email created!");
+        }
+        $this->createShift($user, $data, $sector);
+    }
+
+    private function userData($data)
+    {
+        $fullName = $data[self::EMPLEADO];
+        $name = $this->stripAccents($fullName);
+        $name = strtolower($name);
+        $names = explode(", ", $name);
+        $lastName = $names[0];
+        $firstName = $names[1];
+        $email = "$firstName.$lastName@misionesonline.net";
+        return [
+            "fullName" => $fullName,
+            "email" => $email
+        ];
     }
 
     function stripAccents($str)
@@ -94,7 +113,7 @@ class SampleDataSeeder extends Seeder
             $label->color = self::COLORS[$sector] ?? "#cccccc";
             $label->save();
             $shift->labels()->attach($label);
-            $this->command->info("Label $sector created on user $user->email!");
+            $this->command->info("Label $sector created on shift $name for user $user->email!");
         }
         $this->createShiftEvents($shift, $data, $user);
     }
@@ -246,12 +265,12 @@ class SampleDataSeeder extends Seeder
         self::COORDINADOR_DE_PRENSA => "#8fe8f4",
         self::EDITOR_WEB => "#86f8fb",
         self::REDACCION => "#4bdeea",
-        self::DISENO =>"#00ecff",
+        self::DISENO => "#00ecff",
         //grays
         self::TURISMO_MISIONES => "#c5b4bf",
-	    self::VIA_PAIS => "#dddddd",
-	    self::PROYECTOS_ESPECIALES => "#cccccc",
-	    self::TURISMO_MISIONES=>"#bbbbbb",
+        self::VIA_PAIS => "#dddddd",
+        self::PROYECTOS_ESPECIALES => "#cccccc",
+        self::TURISMO_MISIONES => "#bbbbbb",
         null => "#cccccc",
     ];
 

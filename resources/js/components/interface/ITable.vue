@@ -119,7 +119,7 @@ export default {
       searchable = searchable.trim();
 
       if (!searchable) {
-        return true;
+        return false;
       }
 
       return !searchString
