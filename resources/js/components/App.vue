@@ -9,13 +9,15 @@
 import { mapActions } from "vuex";
 
 export default {
-  
   methods: {
     ...mapActions("auth", ["check"]),
     ...mapActions("messages", ["handleError"]),
   },
   created() {
-    this.check().catch(this.handleError);
+    this.check().catch((err) => {
+      this.handleError(err);
+      this.$router.push({ name: "login" });
+    });
   },
-}
+};
 </script>
