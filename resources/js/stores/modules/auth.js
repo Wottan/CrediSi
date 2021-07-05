@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../http';
 
 export default {
     namespaced: true,
@@ -10,7 +10,7 @@ export default {
     actions: {
         check({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/login/check")
+                http.get("/login/check")
                 .then((result) => {
                     commit("login", result.data);
                     resolve(result);
@@ -21,7 +21,7 @@ export default {
         },
         login({ commit }, credentials) {
             return new Promise((resolve, reject) => {
-                axios.post("/login", credentials
+                http.post("/login", credentials
                 ).then((result) => {
                     commit("login", result.data);
                     resolve(result);
@@ -32,7 +32,7 @@ export default {
         },
         logout({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.post("/logout"
+                http.post("/logout"
                 ).then((result) => {
                     commit("logout", {});
                     resolve(result);

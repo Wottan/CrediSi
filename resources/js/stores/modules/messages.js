@@ -22,8 +22,8 @@ function RestResponse(response) {
     }
     return {
         status: response.status,
-        message: response.statusText,
-        error: response.data?.error
+        message: response.data?.message || response.statusText,
+        error: response.data?.error,
     }
 }
 

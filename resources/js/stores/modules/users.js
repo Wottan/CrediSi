@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../http';
 
 export default {
     namespaced: true,
@@ -14,7 +14,7 @@ export default {
     actions: {
         load({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/users"
+                http.get("/api/users"
                 ).then((result) => {
                     commit("users", result.data);
                     resolve(result);
@@ -26,7 +26,7 @@ export default {
         },
         update({ commit }, user) {
             return new Promise((resolve, reject) => {
-                axios.put("/api/users/" + user.id, user
+                http.put("/api/users/" + user.id, user
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result);
@@ -44,7 +44,7 @@ export default {
          */
         syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                axios.put("api/users/" + payload.idUser + "/sync", payload.labelIds
+                http.put("api/users/" + payload.idUser + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result);
