@@ -1,27 +1,31 @@
 <template >
-  <i-dialog :value="show" @close="close" width="900">
+  <i-dialog :value="true" @close="close" width="900">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
-      <user-shifts-form :value="value" @submit="close" />
+      <i-calendar-input readonly type="week" :events="events" />
     </v-card>
   </i-dialog>
 </template>
 <script>
-import UserShiftsForm from "../forms/UserShiftsForm.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { UserShiftsForm },
   props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
     value: {
       type: Object,
       required: true,
     },
   },
-
+  computed: {
+    ...mapGetters("shifts", ["shifts"]),
+    events() {
+      return this.shifts.filter(s => s.user_id === this.value.id).flatMap(s => s.events) || [];
+    },
+  },
+  created() {
+    this.load();
+  },
   methods: {
+    ...mapActions("shifts", ["load"]),
     close() {
       this.$emit("close");
     },

@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="close" width="500">
+  <i-dialog :value="true" @close="close" width="500">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
       <shift-label-form :value="value" @submit="close" />
@@ -11,10 +11,6 @@ import ShiftLabelForm from "../forms/ShiftLabelForm.vue";
 export default {
   components: { ShiftLabelForm },
   props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
     value: {
       type: Object,
       required: true,

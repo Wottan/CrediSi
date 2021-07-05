@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="$emit('close')" width="300">
+  <i-dialog :value="true" @close="$emit('close')" width="300">
       <shift-delete-form :value="value" @submit="$emit('delete')" @close="$emit('close')"/>
   </i-dialog>
 </template>
@@ -9,9 +9,6 @@ import ShiftDeleteForm from "../forms/ShiftDeleteForm.vue";
 export default {
   components: { ShiftDeleteForm },
   props: {
-    show: {
-      type: Boolean
-    },
     value: {
       type: Object
     },

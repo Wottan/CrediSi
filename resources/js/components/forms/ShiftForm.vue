@@ -26,7 +26,7 @@
           </i-grid-column>
         </i-grid-row>
       </i-grid>
-      <i-calendar
+      <i-calendar-input
         type="week"
         :events="shift.events"
         @input="shift.events = $event"

@@ -58,11 +58,12 @@
   </v-data-table>
 </template>
 <script>
+import { deburr } from "lodash";
 export default {
   data() {
     return {
       searchString: "",
-      singleExpand: false,
+      singleExpand: true,
       expanded: [],
     };
   },
@@ -116,13 +117,14 @@ export default {
         }
       });
 
-      searchable = searchable.trim();
+      //uses deburr to ignore accents
+      searchable = deburr(searchable.trim());
 
       if (!searchable) {
         return false;
       }
 
-      return !searchString
+      return !deburr(searchString)
         .split(separator)
         .find(
           (word) =>
