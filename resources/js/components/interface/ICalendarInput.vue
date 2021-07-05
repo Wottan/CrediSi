@@ -38,7 +38,7 @@
 </template>
 <script>
 import { cloneDeep } from "lodash";
-import { DateFunctions } from "../../dates";
+import { DateFunctions, DateTime } from "../../dates";
 export default {
   props: {
     value: {
@@ -48,6 +48,9 @@ export default {
     type: {
       type: String,
       validator: (v) => ["week"].includes(v),
+    },
+    readonly: {
+      type: Boolean
     },
     events: {
       type: Array,
@@ -68,6 +71,12 @@ export default {
   }),
   created() {
     this.initProxies();
+    this.initLimits();
+  },
+  computed: {
+    editable() {
+      return !this.readonly && !!this.$listeners.input;
+    }
   },
   methods: {
     initProxies() {
@@ -77,14 +86,20 @@ export default {
         end: DateFunctions.fromISOToDateTimeStr(e.end),
       }));
     },
+    initLimits() {
+      //TODO
+    },
     startDrag({ event, timed }) {
-      if (event && timed) {
+      if (this.editable && event && timed) {
         this.dragEvent = event;
         this.dragTime = null;
         this.extendOriginal = null;
       }
     },
     startTime(tms) {
+      if(!this.editable) {
+        return;
+      }
       const mouse = this.toTime(tms);
       if (this.dragEvent && this.dragTime === null) {
         const start = DateFunctions.fromStrToMillis(this.dragEvent.start);
@@ -103,14 +118,23 @@ export default {
       }
     },
     emit() {
+      if(!this.editable) {
+        return;
+      }
       this.$emit("input", this.eventProxies);
     },
     extendBottom(event) {
+      if(!this.editable) {
+        return;
+      }
       this.createEvent = event;
       this.createStart = DateFunctions.fromStrToMillis(event.start);
       this.extendOriginal = DateFunctions.fromStrToMillis(event.end);
     },
     mouseMove(tms) {
+      if(!this.editable) {
+        return;
+      }
       const mouse = this.toTime(tms);
 
       if (this.dragEvent && this.dragTime !== null) {
@@ -134,6 +158,9 @@ export default {
       }
     },
     endDrag() {
+      if(!this.editable) {
+        return;
+      }
       this.dragTime = null;
       this.dragEvent = null;
       this.createEvent = null;
@@ -142,10 +169,16 @@ export default {
       this.emit();
     },
     deleteEvent(event) {
+      if(!this.editable) {
+        return;
+      }
       this.eventProxies = this.eventProxies.filter((e) => e !== event);
       this.emit();
     },
     cancelDrag() {
+      if(!this.editable) {
+        return;
+      }
       if (this.createEvent) {
         if (this.extendOriginal) {
           this.createEvent.end = DateFunctions.fromMillisToDateTimeStr(this.extendOriginal);

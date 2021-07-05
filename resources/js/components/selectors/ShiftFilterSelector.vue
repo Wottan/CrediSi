@@ -5,9 +5,9 @@
         <select-info :value="item" :date="date" />
       </template>
     </i-select>
-    <shift-date-time-dialog :show="showDateTime" @close="onClose" />
+    <shift-date-time-dialog v-if="showDateTime" @close="onClose" />
     <shift-date-time-range-dialog
-      :show="showRange"
+      v-if="showRange"
       @close="showRange = false"
     />
   </i-card>

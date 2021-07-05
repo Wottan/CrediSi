@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="close" width="600">
+  <i-dialog :value="true" @close="close" width="600">
     <i-card>
       <v-card-title> Rango </v-card-title>
       <shift-date-time-range-form @submit="close" />
@@ -10,11 +10,6 @@
 import ShiftDateTimeRangeForm from "../forms/ShiftDateTimeRangeForm.vue";
 export default {
   components: { ShiftDateTimeRangeForm },
-  props: {
-    show: {
-      type: Boolean,
-    },
-  },
   methods: {
     close() {
       this.$emit("close");

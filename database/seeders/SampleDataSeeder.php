@@ -74,46 +74,28 @@ class SampleDataSeeder extends Seeder
         $this->createShift($user, $data, $sector);
     }
 
-    private function userData($data)
-    {
-        $fullName = $data[self::EMPLEADO];
-        $name = $this->stripAccents($fullName);
-        $name = strtolower($name);
-        $names = explode(", ", $name);
-        $lastName = $names[0];
-        $firstName = $names[1];
-        $email = "$firstName.$lastName@misionesonline.net";
-        return [
-            "fullName" => $fullName,
-            "email" => $email
-        ];
-    }
-
-    function stripAccents($str)
-    {
-        return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
-    }
-
     private function createShift($user, $data, $sector)
     {
         $name = $sector ?? "Único";
 
-        $this->command->info("Creating shift with $name for user $user->email...");
-        $shift = $user->shifts()->create([
-            "name" => $sector ?? "Único",
-            "start" => Carbon::now()->startOfMonth(),
-            "type" => "week",
-            "recurrence" => "weekly"
-        ]);
-        $this->command->info("Shift $name created on user $user->email...");
-
-        if ($sector) {
-            $this->command->info("Creating label $sector on user $user->email...");
-            $label = Label::firstOrCreate(["text" => $sector]);
-            $label->color = self::COLORS[$sector] ?? "#cccccc";
-            $label->save();
-            $shift->labels()->attach($label);
-            $this->command->info("Label $sector created on shift $name for user $user->email!");
+        $shift = $user->shifts()->where(["name" => $name])->first();
+        if(!$shift) {
+            $this->command->info("Creating shift with $name for user $user->email...");
+            $shift = $user->shifts()->create([
+                "name" => $name,
+                "start" => Carbon::now()->startOfMonth(),
+                "type" => "week",
+                "recurrence" => "weekly"
+            ]);
+            $this->command->info("Shift $name created on user $user->email...");
+            if ($sector) {
+                $this->command->info("Creating label $sector on user $user->email...");
+                $label = Label::firstOrCreate(["text" => $sector]);
+                $label->color = self::COLORS[$sector] ?? "#cccccc";
+                $label->save();
+                $shift->labels()->attach($label);
+                $this->command->info("Label $sector created on shift $name for user $user->email!");
+            }
         }
         $this->createShiftEvents($shift, $data, $user);
     }
@@ -148,6 +130,27 @@ class SampleDataSeeder extends Seeder
             }
         }
     }
+
+    private function userData($data)
+    {
+        $fullName = $data[self::EMPLEADO];
+        $name = $this->stripAccents($fullName);
+        $name = strtolower($name);
+        $names = explode(", ", $name);
+        $lastName = $names[0];
+        $firstName = $names[1];
+        $email = "$firstName.$lastName@misionesonline.net";
+        return [
+            "fullName" => $fullName,
+            "email" => $email
+        ];
+    }
+
+    function stripAccents($str)
+    {
+        return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+    }
+
 
     const IS_ADMIN = "is_admin";
     const EMPLEADO = "empleado";

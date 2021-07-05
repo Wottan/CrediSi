@@ -7,11 +7,8 @@
       <template v-slot:expandedRow="{ row }">
         <user-info :value="row" />
       </template>
-      <template v-slot:rowActions="{  }">
-        <i-button-icon
-          value="timeoff"
-          tooltip="Reportar/Justificar inasistencia"
-        />
+      <template v-slot:rowActions="{ row }">
+        <user-actions :value="row" />
       </template>
     </i-table>
   </i-container>
@@ -21,17 +18,22 @@ import { mapActions, mapGetters } from "vuex";
 
 import UserInfo from "../info/UserInfo";
 import LabelsInfo from "../info/LabelsInfo";
+import UserActions from "../actions/UserActions";
 export default {
   components: {
     UserInfo,
     LabelsInfo,
+    UserActions,
   },
   data() {
     return {
       columns: [
         { text: "Nombre", value: "name" },
-        { text: "Email", value: "email" },
-        { text: "Etiquetas", value: "labels", searchable: (row) => row.labels?.map(l => l.text).join(' ') },
+        {
+          text: "Etiquetas",
+          value: "labels",
+          searchable: (row) => row.labels?.map((l) => l.text).join(" "),
+        },
       ],
     };
   },

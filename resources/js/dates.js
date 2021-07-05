@@ -104,5 +104,6 @@ const DateFunctions = {
 
 export {
     DateConstants,
-    DateFunctions
+    DateFunctions,
+    DateTime
 };

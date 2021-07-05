@@ -2,7 +2,9 @@ import axios from 'axios';
 
 function interceptHttpError(error) {
     if(error.response?.status === 401) {
-        window.location.href =  "/login";
+        if(window.location.pathname !== "/login") {
+            window.location.href =  "/login";
+        }
     }
     return Promise.reject(error);
 }
@@ -18,7 +20,7 @@ const http = {
         return axios.post(url, data, config).catch(interceptHttpError);
     },
     put: (url, data, config) => {
-        return axios.post(url, data, config).catch(interceptHttpError);
+        return axios.put(url, data, config).catch(interceptHttpError);
     }
 };
 

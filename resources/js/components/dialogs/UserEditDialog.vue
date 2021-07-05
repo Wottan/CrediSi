@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="show" @close="close">
+  <i-dialog :value="true" @close="close">
     <v-card>
       <v-card-title> Editar Usuario </v-card-title>
       <user-edit-form :value="value" @submit="close" />
@@ -11,10 +11,6 @@ import UserEditForm from "../forms/UserEditForm.vue";
 export default {
   components: { UserEditForm },
   props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
     value: {
       type: Object,
       required: true,

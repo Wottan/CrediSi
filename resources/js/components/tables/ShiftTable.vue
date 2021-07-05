@@ -4,7 +4,7 @@
       <template v-slot:tableActions>
         <shift-filter-selector label="Filtrar turnos" />
         <i-spacer />
-        <i-button tooltip="Agregar turno" @click="openAddDialog">
+        <i-button tooltip="Agregar turno" @click="showAddDialog = true">
           <i-icon value="add" />
         </i-button>
       </template>
@@ -14,31 +14,29 @@
       <template v-slot:labels="{ row }">
         <labels-info :value="row.labels" />
       </template>
-      <template v-slot:expandedRow="{ row }">
-        <shift-info :value="row" />
+      <template v-slot:rowActions="{ row }">
+        <shift-actions :value="row" />
       </template>
     </i-table>
     <shift-dialog
-      v-if="showDialog"
-      show
-      :value="selectedRow"
-      @close="showDialog = false"
+      v-if="showAddDialog"
+      @close="showAddDialog = false"
     />
   </i-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import ShiftDialog from "../dialogs/ShiftDialog.vue";
 import LabelsInfo from "../info/LabelsInfo.vue";
-import ShiftInfo from "../info/ShiftInfo";
+import ShiftActions from "../actions/ShiftActions.vue";
+import ShiftDialog from "../dialogs/ShiftDialog.vue";
 import ShiftFilterSelector from "../selectors/ShiftFilterSelector.vue";
 
 export default {
   components: {
-    ShiftInfo,
-    ShiftDialog,
+    ShiftActions,
     LabelsInfo,
     ShiftFilterSelector,
+    ShiftDialog
   },
   data() {
     return {
@@ -51,9 +49,7 @@ export default {
           searchable: (row) => row.labels.map((l) => l.text).join(" "),
         },
       ],
-      showDialog: false,
-      selectedRow: null,
-      show: false,
+      showAddDialog: false,
     };
   },
   computed: {
@@ -62,15 +58,6 @@ export default {
 
   methods: {
     ...mapActions("shifts", ["load"]),
-
-    openEditDialog(row) {
-      this.selectedRow = row;
-      this.showDialog = true;
-    },
-    openAddDialog() {
-      this.selectedRow = null;
-      this.showDialog = true;
-    },
   },
   created() {
     this.load();
