@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../http';
 
 export default {
     namespaced: true,
@@ -14,7 +14,7 @@ export default {
     actions: {
         load({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/labels"
+                http.get("/api/labels"
                 ).then((result) => {
                     commit("labels", result.data);
                     resolve(result);
@@ -26,7 +26,7 @@ export default {
         },
         upsert({ commit }, labels) {
             return new Promise((resolve, reject) => {
-                axios.post("api/labels/upsert", labels
+                http.post("api/labels/upsert", labels
                 ).then((result) => {
                     commit("labels", result.data);
                     resolve(result);
@@ -37,7 +37,7 @@ export default {
         },
         update({ commit }, labels) {
             return new Promise((resolve, reject) => {
-                axios.put("api/labels/bulk", labels
+                http.put("api/labels/bulk", labels
                 ).then((result) => {
                     commit("labels", result.data);
                     resolve(result);
@@ -48,7 +48,7 @@ export default {
         },
         delete({ commit }, label) {
             return new Promise((resolve, reject) => {
-                axios.delete("/api/labels/" + label.id).then((result) => {
+                http.delete("/api/labels/" + label.id).then((result) => {
                     commit("delete", label);
                     resolve(result);
                 }).catch((err) => {

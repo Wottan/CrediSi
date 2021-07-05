@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from '../http';
 
 export default {
     namespaced: true,
@@ -14,7 +14,7 @@ export default {
     actions: {
         load({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/shifts"
+                http.get("/api/shifts"
                 ).then((result) => {
                     commit("shifts", result.data);
                     resolve(result);
@@ -26,7 +26,7 @@ export default {
         },
         update({ commit }, shift) {
             return new Promise((resolve, reject) => {
-                axios.put("/api/shifts/" + shift.id, shift).then((result) => {
+                http.put("/api/shifts/" + shift.id, shift).then((result) => {
                     commit("update", result.data);
                     resolve(result);
                 }).catch((err) => {
@@ -36,7 +36,7 @@ export default {
         },
         add({ commit }, shift) {
             return new Promise((resolve, reject) => {
-                axios.post("/api/shifts", shift).then((result) => {
+                http.post("/api/shifts", shift).then((result) => {
                     commit("update", result.data);
                     resolve(result);
                 }).catch((err) => {
@@ -46,7 +46,7 @@ export default {
         },
         delete({ commit }, shift) {
             return new Promise((resolve, reject) => {
-                axios.delete("/api/shifts/" + shift.id).then((result) => {
+                http.delete("/api/shifts/" + shift.id).then((result) => {
                     commit("delete", shift);
                     resolve(result);
                 }).catch((err) => {
@@ -63,7 +63,7 @@ export default {
          */
         syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                axios.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
+                http.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result);
@@ -74,7 +74,7 @@ export default {
         },
         today({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/shifts/today"
+                http.get("/api/shifts/today"
                 ).then((result) => {
                     commit("shifts", result.data);
                     resolve(result);
@@ -85,7 +85,7 @@ export default {
         },
         active({ commit }, date) {
             return new Promise((resolve, reject) => {
-                axios.get("/api/shifts/active", { params: { date } }
+                http.get("/api/shifts/active", { params: { date } }
                 ).then((result) => {
                     commit("shifts", result.data);
                     resolve(result);

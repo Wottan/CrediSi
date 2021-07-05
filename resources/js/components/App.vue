@@ -16,7 +16,9 @@ export default {
   created() {
     this.check().catch((err) => {
       this.handleError(err);
-      this.$router.push({ name: "login" });
+      if (this.$route.name !== "login") {
+        this.$router.push({ name: "login" });
+      }
     });
   },
 };
