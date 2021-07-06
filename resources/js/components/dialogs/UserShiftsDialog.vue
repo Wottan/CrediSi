@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="true" @close="close" width="900">
+  <i-dialog :value="true" @close="close" width="700">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
       <i-calendar-input readonly type="week" :events="events" />

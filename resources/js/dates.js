@@ -61,6 +61,13 @@ function fromStrToMillis(str) {
     return DateTime.fromFormat(str, DateConstants.DATETIME_FORMAT, { zone: "utc" }).toMillis();
 }
 
+function fromStr(str) {
+    if (!str) {
+        return null;
+    }
+    return DateTime.fromFormat(str, DateConstants.DATETIME_FORMAT, { zone: "utc" });
+}
+
 function fromMillisToDateTimeStr(millis) {
     if (!millis) {
         return null;
@@ -97,6 +104,7 @@ const DateFunctions = {
     fromISOToDateUserStr,
     fromISOToMillis,
     fromStrToMillis,
+    fromStr,
     fromISOTimeToMillis,
     fromMillisToDateTimeStr,
     fromMillisToTimeStr,

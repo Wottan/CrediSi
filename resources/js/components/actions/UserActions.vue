@@ -2,7 +2,7 @@
   <i-div v-if="value" flex>
     <i-button-icon
       value="label"
-      tooltip="Etiquetas"
+      tooltip="Etiquetar"
       @click="showUserlabelDialog = true"
     />
     <user-label-dialog
@@ -13,7 +13,7 @@
     
     <i-button-icon
       value="shift"
-      tooltip="Turnos"
+      tooltip="Ver Turnos"
       @click="showUserShiftsDialog = true"
     />
     <user-shifts-dialog
