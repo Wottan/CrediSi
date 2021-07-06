@@ -40,6 +40,7 @@ import IClockInput from './components/interface/IClockInput';
 import ITimeInput from './components/interface/ITimeInput';
 import IDateTimeInput from './components/interface/IDateTimeInput';
 import IColorInput from './components/interface/IColorInput';
+import IEmailInput from './components/interface/IEmailInput';
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -79,6 +80,7 @@ Vue.component('i-time-input', ITimeInput);
 Vue.component('i-clock-input', IClockInput);
 Vue.component('i-date-time-input', IDateTimeInput);
 Vue.component('i-color-input', IColorInput);
+Vue.component('i-email-input', IEmailInput);
 
 const app = new Vue({
     router,

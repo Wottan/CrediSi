@@ -24,6 +24,16 @@ export default {
                 })
             });
         },
+        add({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                http.post("/api/users", user).then((result) => {
+                    commit("update", result.data);
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err.response);
+                })
+            });
+        },
         update({ commit }, user) {
             return new Promise((resolve, reject) => {
                 http.put("/api/users/" + user.id, user
