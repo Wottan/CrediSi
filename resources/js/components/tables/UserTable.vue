@@ -1,6 +1,9 @@
 <template>
   <i-container>
     <i-table :columns="columns" :rows="users" title="Usuarios">
+      <template v-slot:tableActions>
+        <create-user-action />
+      </template>
       <template v-slot:labels="{ row }">
         <labels-info :value="row.labels" />
       </template>
@@ -19,12 +22,15 @@ import { mapActions, mapGetters } from "vuex";
 import UserInfo from "../info/UserInfo";
 import LabelsInfo from "../info/LabelsInfo";
 import UserActions from "../actions/UserActions";
+import CreateUserAction from "../actions/CreateUserAction.vue";
 export default {
   components: {
     UserInfo,
     LabelsInfo,
     UserActions,
+    CreateUserAction,
   },
+
   data() {
     return {
       columns: [
@@ -35,6 +41,7 @@ export default {
           searchable: (row) => row.labels?.map((l) => l.text).join(" "),
         },
       ],
+      showUserEditDialog: false,
     };
   },
   computed: {

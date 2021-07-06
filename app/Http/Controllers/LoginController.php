@@ -16,12 +16,13 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only("email", "password");
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return auth()->user();
+        if (env('PASSWORD_LOGIN_ENABLED', false)) {
+            $credentials = $request->only("email", "password");
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
+                return auth()->user();
+            }
         }
-
         return response()->json(["error" => "The provided credentials do not match our records."], 400);
     }
 

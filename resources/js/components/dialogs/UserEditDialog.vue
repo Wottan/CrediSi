@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="true" @close="close">
+  <i-dialog :value="true" @close="close" width="650">
     <v-card>
       <v-card-title> Editar Usuario </v-card-title>
       <user-edit-form :value="value" @submit="close" />
