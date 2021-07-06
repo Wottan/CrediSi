@@ -6,6 +6,8 @@
     :type="type"
     :first-time="firstTime"
     :interval-count="intervals"
+    :interval-height="intervalHeight"
+    :interval-width="intervalWidth"
     :weekdays="weekDays"
     locale="es"
     @mousedown:event="startDrag"
@@ -21,7 +23,11 @@
             <div class="v-event-draggable" v-html="eventSummary()" />
           </i-grid-column>
           <i-grid-column cols="1">
-            <i-button-icon size="tiny" value="close" @click="deleteEvent(event)" />
+            <i-button-icon
+              size="tiny"
+              value="close"
+              @click="deleteEvent(event)"
+            />
           </i-grid-column>
         </i-grid-row>
         <i-grid-row>
@@ -37,8 +43,8 @@
   </v-calendar>
 </template>
 <script>
-import { cloneDeep } from "lodash";
-import { DateFunctions, DateTime } from "../../dates";
+import { cloneDeep, minBy, maxBy } from "lodash";
+import { DateFunctions } from "../../dates";
 export default {
   props: {
     value: {
@@ -50,7 +56,7 @@ export default {
       validator: (v) => ["week"].includes(v),
     },
     readonly: {
-      type: Boolean
+      type: Boolean,
     },
     events: {
       type: Array,
@@ -60,6 +66,8 @@ export default {
     eventColor: "#2196F3",
     firstTime: "0:00",
     intervals: 24,
+    intervalHeight: 20,
+    intervalWidth: 40,
     now: DateFunctions.currentDateTimeStr(),
     weekDays: [0, 1, 2, 3, 4, 5, 6],
     dragEvent: null,
@@ -71,12 +79,14 @@ export default {
   }),
   created() {
     this.initProxies();
-    this.initLimits();
+    if (!this.editable) {
+      this.initLimits();
+    }
   },
   computed: {
     editable() {
       return !this.readonly && !!this.$listeners.input;
-    }
+    },
   },
   methods: {
     initProxies() {
@@ -87,7 +97,31 @@ export default {
       }));
     },
     initLimits() {
-      //TODO
+      const comparable = (dateStr) => {
+        const date = DateFunctions.fromStr(dateStr);
+        return {
+          time: date.hour * 100 + date.minute, // 18:00 turns into 1800
+          sql: date.toSQLTime(),
+        };
+      };
+      const minTime = minBy(
+        this.eventProxies.map((e) => comparable(e.start)),
+        "time"
+      );
+      const maxTime = maxBy(
+        this.eventProxies.map((e) => comparable(e.end)),
+        "time"
+      );
+      if (minTime && maxTime) {
+        let intervals = 0;
+        let time = minTime.time;
+        while (time <= maxTime.time) {
+          intervals++;
+          time += 100;
+        }
+        this.firstTime = minTime.sql;
+        this.intervals = intervals;
+      }
     },
     startDrag({ event, timed }) {
       if (this.editable && event && timed) {
@@ -97,7 +131,7 @@ export default {
       }
     },
     startTime(tms) {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       const mouse = this.toTime(tms);
@@ -110,7 +144,9 @@ export default {
           name: "Disponible",
           color: this.eventColor,
           start: DateFunctions.fromMillisToDateTimeStr(this.createStart),
-          end: DateFunctions.fromMillisToDateTimeStr(this.createStart + 1000 * 60 * 60),
+          end: DateFunctions.fromMillisToDateTimeStr(
+            this.createStart + 1000 * 60 * 60
+          ),
           timed: true,
         };
         this.eventProxies.push(this.createEvent);
@@ -118,13 +154,13 @@ export default {
       }
     },
     emit() {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       this.$emit("input", this.eventProxies);
     },
     extendBottom(event) {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       this.createEvent = event;
@@ -132,20 +168,20 @@ export default {
       this.extendOriginal = DateFunctions.fromStrToMillis(event.end);
     },
     mouseMove(tms) {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       const mouse = this.toTime(tms);
 
       if (this.dragEvent && this.dragTime !== null) {
         const start = DateFunctions.fromStrToMillis(this.dragEvent.start);
-        const end = DateFunctions.fromStrToMillis(this.dragEvent.end);                
+        const end = DateFunctions.fromStrToMillis(this.dragEvent.end);
 
         const duration = end - start;
         const newStartTime = mouse - this.dragTime;
         const newStart = this.roundTime(newStartTime);
         const newEnd = newStart + duration;
-        
+
         this.dragEvent.start = DateFunctions.fromMillisToDateTimeStr(newStart);
         this.dragEvent.end = DateFunctions.fromMillisToDateTimeStr(newEnd);
       } else if (this.createEvent && this.createStart !== null) {
@@ -158,7 +194,7 @@ export default {
       }
     },
     endDrag() {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       this.dragTime = null;
@@ -169,19 +205,21 @@ export default {
       this.emit();
     },
     deleteEvent(event) {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       this.eventProxies = this.eventProxies.filter((e) => e !== event);
       this.emit();
     },
     cancelDrag() {
-      if(!this.editable) {
+      if (!this.editable) {
         return;
       }
       if (this.createEvent) {
         if (this.extendOriginal) {
-          this.createEvent.end = DateFunctions.fromMillisToDateTimeStr(this.extendOriginal);
+          this.createEvent.end = DateFunctions.fromMillisToDateTimeStr(
+            this.extendOriginal
+          );
         } else {
           this.eventProxies = this.eventProxies.filter(e !== this.createEvent);
           this.emit();
@@ -206,7 +244,7 @@ export default {
         month: tms.month,
         day: tms.day,
         hour: tms.hour,
-        minute: tms.minute
+        minute: tms.minute,
       });
     },
   },
