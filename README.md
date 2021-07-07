@@ -1,6 +1,7 @@
 # rrhh
 
-copy .env.default to .env
+copy default configuration
+term> cp .env.default to .env
 
 to build execute
 term> docker-compose build app
