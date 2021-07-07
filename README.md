@@ -1,30 +1,34 @@
 # rrhh
 
-copy default configuration
-term> cp .env.default to .env
+Pre-requisites:
 
-to build execute
+copy default configuration (first time only)
+term> cp .env.default .env
+
+to build execute (first time only)
 term> docker-compose build app
 
-to run execute
+Routine:
+
+to run execute (every time you want to start the servers)
 term> docker-compose up
 
-to install dependencies
+to start frontend (every time you want to user the web app)
+term> yarn hot
+
+to shutdown the app (when you are done using it and want to free docker resources)
+term>docker-compose down
+
+Updates:
+
+to install dependencies (first time or when there is new dependencies)
 term> docker-compose exec app composer install
 
-to update db
+to update db (when you change the db schema only)
 term> docker-compose exec app php artisan migrate
 
-to init db data (only the first time)
+to init db data (when you want to reset initial data only)
 term> docker-compose exec app php artisan db:seed
-
-to start frontend
-term> yarn hot
 
 to see logs of a service
 term> docker-compose logs nginx
-
-to shutdown the app
-term>docker-compose down
-
-
