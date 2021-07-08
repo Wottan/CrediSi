@@ -7,6 +7,7 @@
     item-text="label"
     item-value="value"
     :label="label"
+    :error-messages="errors"
     @input="$emit('input', $event)"
   />
 </template>
@@ -27,6 +28,9 @@ export default {
     },
     disabled: {
       type: Boolean
+    },
+    errors: {
+      type: Array,
     },
   },
   methods: {

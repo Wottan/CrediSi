@@ -3,6 +3,7 @@
     :value="selected"
     :options="options"
     :label="label"
+    :errors="errors"
     @input="onInput"
   />
 </template>
@@ -19,6 +20,9 @@ export default {
     },
     label: {
       type: String,
+    },
+    errors: {
+      type: Array,
     },
   },
   computed: {
