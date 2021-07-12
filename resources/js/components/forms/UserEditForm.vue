@@ -21,6 +21,16 @@
         @input="user.phone = $event"
         label="Telefono"
       />
+      <i-checkbox-input
+        :value="user.is_admin"
+        @input="user.is_admin = $event"
+        label="Es administrador"
+      />
+      <i-checkbox-input
+        :value="user.can_login"
+        @input="user.can_login = $event"
+        label="Puede iniciar sesión"
+      />
     </i-form>
     <i-spacer />
     <i-button @click="onSubmit"> Guardar </i-button>
@@ -29,6 +39,7 @@
 <script>
 import { cloneDeep } from "lodash";
 import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
