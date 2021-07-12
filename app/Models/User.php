@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'admission_date',
         'phone',
+        'is_admin',
+        'can_login',
     ];
 
     /**

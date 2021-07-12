@@ -10,6 +10,7 @@
         v-bind="attrs"
         v-on="on"
         :href="href"
+        class="ma-2"
       >
         <slot />
       </v-btn>
