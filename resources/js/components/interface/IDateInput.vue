@@ -13,6 +13,7 @@
         :value="formatted"
         :label="label"
         :prepend-icon="icon ? 'mdi-calendar': ''"
+        :error-messages="errors"
         readonly
         v-on="on"
       />
@@ -37,6 +38,9 @@ export default {
     },
     icon: {
       type: Boolean,
+    },
+    errors: {
+      type: Array,
     },
   },
   computed: {
