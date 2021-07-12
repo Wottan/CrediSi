@@ -6,14 +6,12 @@
       </template>
     </i-select>
     <shift-date-time-dialog v-if="showDateTime" @close="onClose" />
-    <shift-date-time-range-dialog
-      v-if="showRange"
-      @close="showRange = false"
-    />
+    <shift-date-time-range-dialog v-if="showRange" @close="showRange = false" />
   </i-card>
 </template>
 <script>
 import { mapActions } from "vuex";
+import { DateFunctions } from "../../dates";
 import ShiftDateTimeDialog from "../dialogs/ShiftDateTimeDialog.vue";
 import ShiftDateTimeRangeDialog from "../dialogs/ShiftDateTimeRangeDialog.vue";
 import SelectInfo from "../info/SelectInfo.vue";
@@ -59,7 +57,7 @@ export default {
 
     onInput(value) {
       this.date = "";
-      this[value]();
+      this[value](DateFunctions.currentDateTimeStr());
     },
   },
 };

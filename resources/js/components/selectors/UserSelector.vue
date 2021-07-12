@@ -37,7 +37,7 @@ export default {
   methods: {
     ...mapActions("users", ["load"]),
     onInput(id) {
-      this.$emit("input", cloneDeep(this.users.find((u) => (u.id = id))));
+      this.$emit("input", cloneDeep(this.users.find((u) => u.id === id)));
     },
   },
   created() {

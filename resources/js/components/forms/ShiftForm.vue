@@ -76,7 +76,7 @@ export default {
     getErrors(attribute) {
       let errors = [];
       attribute.$dirty &&
-      !attribute.required &&
+        !attribute.required &&
         errors.push("Este campo es requerido.");
       return errors;
     },

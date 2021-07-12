@@ -21,22 +21,19 @@ class SocialiteLoginController extends Controller
     {
         $oauthUser = Socialite::driver($request->driver ?? 'google')->user();
         $email = $oauthUser->getEmail();
-        if (str_contains($email, "@" . env("AUTHORIZED_LOGIN_DOMAIN"))) {
-            $user = User::firstOrNew(["email" => $email]);
-            if ($user->isDirty()) {
-                Log::info("Created user $email by google login");
-                $user->name = $oauthUser->getName();
-                $user->email_verified_at = Carbon::now();
-                $user->save();
-            }
-            if ($user->can_login) {
-                Auth::login($user, true);
-                return redirect()->to("/home");
-            } else {
-                Log::warning("User $email has no login permission");
-            }
+        $user = User::firstOrNew(["email" => $email]);
+        if ($user->isDirty()) {
+            Log::info("Created user $email by google login");
+            $user->name = $oauthUser->getName();
+            $user->email_verified_at = Carbon::now();
+            $user->save();
         }
-
+        if ($user->can_login) {
+            Auth::login($user, true);
+            return redirect()->to("/home");
+        } else {
+            Log::warning("User $email has no login permission");
+        }
         return redirect()->to("/login");
     }
 }

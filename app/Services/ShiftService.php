@@ -6,7 +6,6 @@ use App\Exceptions\ServiceException;
 use App\Models\Shift;
 use App\Models\ShiftEvent;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Log;
 
 class ShiftService
@@ -137,20 +136,13 @@ class ShiftService
     public function active($date): iterable
     {
         $shiftsRecalculated = collect($this->all($date));
-        $datetime = $date ?: now();
-        $shiftsActive = collect();
-        $shiftsRecalculated->each(function (Shift $shift) use ($datetime, $shiftsActive) {
-            $shift->events->each(function (ShiftEvent $shiftEvent) use ($datetime, $shift, $shiftsActive) {
-                if (
-                    Carbon::parse($shiftEvent->start)->toDateString() == Carbon::parse($datetime)->toDateString() &&
-                    Carbon::parse($shiftEvent->start)->toTimeString() <= Carbon::parse($datetime)->toTimeString() &&
-                    Carbon::parse($shiftEvent->end)->toTimeString() >= Carbon::parse($datetime)->toTimeString()
-                ) {
-                    $shiftsActive->push($shift);
-                    return false;
-                }
+        $shiftsActive = $shiftsRecalculated->filter(function ($value) use ($date) {
+            return $value->events->contains(function ($value) use ($date) {
+                return $value->start->toDateString() == Carbon::parse($date)->toDateString() &&
+                    $value->start->lessThanOrEqualTo(Carbon::parse($date)) &&
+                    $value->end->greaterThanOrEqualTo(Carbon::parse($date));
             });
         });
-        return $shiftsActive;
+        return $shiftsActive->values();
     }
 }
