@@ -41,7 +41,8 @@ import ITimeInput from './components/interface/ITimeInput';
 import IDateTimeInput from './components/interface/IDateTimeInput';
 import IColorInput from './components/interface/IColorInput';
 import IEmailInput from './components/interface/IEmailInput';
-import ICheckboxInput from './components/interface/ICheckboxInput.vue';
+import ICheckboxInput from './components/interface/ICheckboxInput';
+import IText from './components/interface/IText'
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -83,6 +84,7 @@ Vue.component('i-date-time-input', IDateTimeInput);
 Vue.component('i-color-input', IColorInput);
 Vue.component('i-email-input', IEmailInput);
 Vue.component('i-checkbox-input', ICheckboxInput);
+Vue.component('i-text', IText);
 
 const app = new Vue({
     router,
@@ -91,4 +93,3 @@ const app = new Vue({
     el: '#app',
     render: h => h(App)
 });
-
