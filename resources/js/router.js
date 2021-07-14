@@ -32,6 +32,10 @@ const router = new VueRouter({
             name: 'labels',
             component: LabelsPage
         },
+        { 
+            path: '*', 
+            redirect: '/home' 
+        },
     ]
 });
 
