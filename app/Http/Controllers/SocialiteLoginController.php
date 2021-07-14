@@ -30,10 +30,9 @@ class SocialiteLoginController extends Controller
         }
         if ($user->can_login) {
             Auth::login($user, true);
-            return redirect()->to("/home");
+            return redirect()->to("/");
         } else {
-            Log::warning("User $email has no login permission");
+            return redirect()->route("login", ["error" => "User $email has no login permission"]);
         }
-        return redirect()->to("/login");
     }
 }

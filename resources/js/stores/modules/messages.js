@@ -67,6 +67,9 @@ export default {
         handleSuccess({ commit }, response) {
             commit("add", RestResponseMessage(response, Types.SUCESS, 10));
         },
+        error({ commit }, text) {
+            commit("add", Message(text, Types.ERROR, 0));
+        },
         warn({ commit }, text) {
             commit("add", Message(text, Types.WARN, 10));
         },
