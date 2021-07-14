@@ -64,6 +64,9 @@ class ShiftController extends Controller
      */
     public function active(Request $request)
     {
+        $request->validate([
+            'date' => 'required|date_format:Y-m-d H:i',
+        ]);
         return $this->shiftService->active($request->get('date'));
     }
 

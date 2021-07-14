@@ -14,7 +14,7 @@ export default {
     },
     format: {
       type: String,
-      default: () => "ampm",
+      default: () => "24hr",
     },
   },
 };

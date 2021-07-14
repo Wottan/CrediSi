@@ -1,5 +1,5 @@
 <template >
-  <i-dialog :value="true" @close="close" width="650" :persistent="false">
+  <i-dialog :value="true" @close="close" width="700" :persistent="false">
     <i-card>
       <v-card-title> Fecha/Hora </v-card-title>
       <shift-date-time-form @submit="close" />
