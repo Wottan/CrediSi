@@ -1,6 +1,6 @@
 <template>
   <i-container>
-    <i-table :columns="columns" :rows="users" title="Usuarios">
+    <i-table :columns="columns" :sortBy="sortBy" :rows="users" title="Usuarios">
       <template v-slot:tableActions>
         <create-user-action />
       </template>
@@ -42,6 +42,7 @@ export default {
         },
       ],
       showUserEditDialog: false,
+      sortBy: ["name"],
     };
   },
   computed: {

@@ -1,6 +1,8 @@
 <template>
   <v-data-table
     :headers="headers"
+    :sort-by="sortBy"
+    :sort-desc="sortDesc"
     :items="rows"
     :search="searchString"
     :custom-filter="searchFilter"
@@ -77,6 +79,12 @@ export default {
     title: {
       type: String,
     },
+    sortBy: {
+      type: Array,
+    },
+    sortDesc: {
+      type: Array,
+    }
   },
   computed: {
     canExpand() {

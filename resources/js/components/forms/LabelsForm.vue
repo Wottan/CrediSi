@@ -1,6 +1,6 @@
 <template>
   <i-form>
-    <i-table :columns="columns" :rows="proxies" title="Etiquetas">
+    <i-table :columns="columns" :rows="proxies" :sortBy="sortBy" title="Etiquetas">
       <template v-slot:tableActions>
         <i-text-input :value="newLabel" @input="newLabel = $event" />
         <i-button-icon
@@ -40,6 +40,7 @@ export default {
       ],
       proxies: [],
       newLabel: null,
+      sortBy: ["text"],
     };
   },
   computed: {
