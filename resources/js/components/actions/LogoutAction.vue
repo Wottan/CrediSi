@@ -2,7 +2,7 @@
   <i-button-icon
     value="logout"
     @click="onClick"
-    tooltip="LogOut"
+    tooltip="Cerrar Sesión"
     color="primary"
   />
 </template>
