@@ -70,8 +70,7 @@ export default {
             state.users = users
         },
         update(state, user) {
-            state.users = state.users.filter(u => u.id !== user.id);
-            state.users.push(user);
+            state.users = state.users.map(u => u.id === user.id ? user : u)
         },
     }
 }
