@@ -6,7 +6,7 @@
     >
       <slot></slot>
       <template #action>
-        <v-btn @click="$emit('close')"> Close </v-btn>
+        <v-btn @click="$emit('close')"> Cerrar </v-btn>
       </template>
     </v-snackbar>
 </template>

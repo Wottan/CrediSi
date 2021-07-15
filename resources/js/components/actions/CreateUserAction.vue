@@ -7,7 +7,7 @@
             :value="email"
             @input="email = $event"
             :errors="emailErrors"
-            label="E-mail"
+            label="Correo"
           />
         </i-grid-column>
         <i-grid-column cols="1">
@@ -44,10 +44,10 @@ export default {
   computed: {
     emailErrors() {
       let errors = [];
-      !this.$v.email.email && errors.push("El e-mail debe ser valido");
+      !this.$v.email.email && errors.push("El correo debe ser válido");
       this.$v.email.$dirty &&
         !this.$v.email.required &&
-        errors.push("E-mail es necesario");
+        errors.push("El correo es obligatorio");
       return errors;
     },
   },

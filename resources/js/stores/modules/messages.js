@@ -4,9 +4,9 @@ import { isEqual } from 'lodash';
  * Valid types of messages
  */
 const Types = {
-    INFO: 'info',
-    SUCESS: 'success',
-    WARN: 'warning',
+    INFO: 'información',
+    SUCESS: 'éxito',
+    WARN: 'advertencia',
     ERROR: 'error',
 }
 

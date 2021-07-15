@@ -13,8 +13,8 @@
     next-page="Proxima pagina"
     prev-page="Pagina anterior"
     :footer-props="{
-      'items-per-page-text': 'Items por pagina',
-      'rows-per-page-all': 'Todos',
+      'items-per-page-text': 'Registros por página',
+      'items-per-page-all-text': 'Todos',
       'page-text': '{0}-{1} de {2}',
       'next-page': 'Proxima pagina',
       'prev-page': 'Pagina anterior',

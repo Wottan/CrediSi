@@ -9,7 +9,7 @@
       <i-text-input
         :value="user.email"
         @input="user.email = $event"
-        label="Email"
+        label="Correo"
       />
       <i-date-input
         :value="user.admission_date"

@@ -21,7 +21,7 @@
             <v-list-item-icon>
               <i-icon value="home" />
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
           <v-list-item @click="$router.push('shifts')">
             <v-list-item-icon>

@@ -4,7 +4,7 @@
       <i-text-input
         :value="email"
         :errors="emailErrors"
-        label="E-mail"
+        label="Correo"
         @input="email = $event"
       ></i-text-input>
 
@@ -48,10 +48,10 @@ export default {
     },
     emailErrors() {
       let errors = [];
-      !this.$v.email.email && errors.push("El e-mail debe ser valido");
+      !this.$v.email.email && errors.push("El correo debe ser valido");
       this.$v.email.$dirty &&
         !this.$v.email.required &&
-        errors.push("E-mail es necesario");
+        errors.push("El correo es obligatorio");
       return errors;
     },
   },
