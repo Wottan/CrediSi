@@ -1,6 +1,4 @@
-import { DateTime, Settings, Duration } from "luxon";
-
-Settings.defaultZoneName = "utc";
+import { DateTime, Duration } from "luxon";
 
 const DateConstants = {
     TIME_FORMAT: "HH:mm",
@@ -11,11 +9,11 @@ const DateConstants = {
 }
 
 function currentTimeStr() {
-    return DateTime.now().toFormat(DateConstants.TIME_FORMAT, { zone: "utc" });
+    return DateTime.now().toFormat(DateConstants.TIME_FORMAT);
 }
 
 function currentDateStr() {
-    return DateTime.now().toFormat(DateConstants.DATE_FORMAT, { zone: "utc" });
+    return DateTime.now().toFormat(DateConstants.DATE_FORMAT);
 }
 
 function currentDateTimeMillis() {
@@ -23,7 +21,7 @@ function currentDateTimeMillis() {
 }
 
 function currentDateTimeStr() {
-    return DateTime.now().toFormat(DateConstants.DATETIME_FORMAT, { zone: "utc" });
+    return DateTime.now().toFormat(DateConstants.DATETIME_FORMAT);
 }
 
 function fromISOToDateTimeStr(iso) {

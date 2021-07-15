@@ -16,10 +16,10 @@
       </i-grid-column>
     </i-grid-row>
     <i-grid-row>
-      <i-grid-column :align-self="center">
+      <i-grid-column align-self="center">
         <i-text color="red" align="center">
-          {{errors}}
-        </i-text >
+          {{ errors }}
+        </i-text>
       </i-grid-column>
     </i-grid-row>
   </i-grid>
