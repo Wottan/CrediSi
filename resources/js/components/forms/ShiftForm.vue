@@ -12,14 +12,6 @@
             />
           </i-grid-column>
           <i-grid-column>
-            <i-text-input
-              :value="shift.name"
-              @input="shift.name = $event"
-              :errors="getErrors($v.shift.name)"
-              label="Nombre"
-            />
-          </i-grid-column>
-          <i-grid-column>
             <i-date-input
               :value="shift.start"
               @input="shift.start = $event"
@@ -65,7 +57,6 @@ export default {
   validations: {
     shift: {
       user: { required },
-      name: { required },
       start: { required },
     },
   },
@@ -99,7 +90,6 @@ export default {
         this.shift = cloneDeep(this.value);
       } else {
         this.shift = {
-          name: null,
           user: {},
           events: [],
           start: null,

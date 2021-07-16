@@ -1,6 +1,6 @@
 <template>
   <i-container>
-    <i-table :columns="columns" :sortBy="sortBy" :rows="shifts" title="Turnos">
+    <i-table :columns="columns" :sort-by="sortBy" :rows="shifts" title="Turnos">
       <template v-slot:tableActions>
         <shift-filter-selector label="Filtrar turnos" />
         <i-spacer />
@@ -42,7 +42,6 @@ export default {
     return {
       columns: [
         { text: "Usuario", value: "user", searchable: (row) => row.user?.name },
-        { text: "Nombre", value: "name" },
         {
           text: "Etiquetas",
           value: "labels",

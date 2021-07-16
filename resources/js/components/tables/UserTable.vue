@@ -1,6 +1,6 @@
 <template>
   <i-container>
-    <i-table :columns="columns" :sortBy="sortBy" :rows="users" title="Usuarios">
+    <i-table :columns="columns" :sort-by="sortBy" :rows="users" title="Usuarios">
       <template v-slot:tableActions>
         <create-user-action />
       </template>
