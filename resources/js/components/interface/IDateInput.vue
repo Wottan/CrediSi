@@ -18,7 +18,7 @@
         v-on="on"
       />
     </template>
-    <v-date-picker :value="iso" @input="onInput" />
+    <v-date-picker :value="iso" @input="onInput" locale="es"/>
   </v-menu>
 </template>
 
