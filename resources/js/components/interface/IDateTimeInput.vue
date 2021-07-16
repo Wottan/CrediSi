@@ -3,6 +3,7 @@
     <i-grid-row>
       <i-grid-column>
         <v-date-picker
+          locale="es"
           :value="date"
           @input="$emit('inputDate', $event)"
         ></v-date-picker>
