@@ -1,5 +1,5 @@
 <template>
-  <i-div wide>{{ formatted }}</i-div>
+  <i-text>{{ formatted }}</i-text>
 </template>
 
 <script>

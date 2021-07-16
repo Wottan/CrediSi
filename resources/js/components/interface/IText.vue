@@ -1,7 +1,7 @@
 <template>
-  <i-div wide :class="spanCss" :align="align">
+  <span :class="classes" :bold="bold">
       <slot />
-  </i-div>
+  </span>
 </template>
 <script>
 const COLORS = {
@@ -13,16 +13,17 @@ export default {
       type: String,
       validator: (v) => !v || v in COLORS,
     },
-    align: {
-      type: String,
-      validator: (v) =>
-        ["center", "right", "left", null].includes(v),
+    bold: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
-      spanCss(){
-        return this.color && this.color + '--text';
-      }
+    classes() {
+      return [
+        this.color && this.color + '--text', this.bold && "font-weight-bold"
+      ];
+    },
   }
 };
 </script>

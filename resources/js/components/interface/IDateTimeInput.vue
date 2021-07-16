@@ -18,9 +18,11 @@
     </i-grid-row>
     <i-grid-row>
       <i-grid-column align-self="center">
-        <i-text color="red" align="center">
-          {{ errors }}
-        </i-text>
+        <i-div align="center">
+          <i-text color="red" align="center">
+            {{ errors }}
+          </i-text>
+        </i-div>
       </i-grid-column>
     </i-grid-row>
   </i-grid>
