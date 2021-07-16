@@ -6,10 +6,10 @@ use App\Exceptions\ServiceException;
 use App\Models\Shift;
 use App\Models\ShiftEvent;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class ShiftService
 {
+    const WITH = ['events', 'user', 'labels'];
 
     /**
      * All events, with their occurences applied
@@ -18,7 +18,7 @@ class ShiftService
      */
     public function all($reference = null): iterable
     {
-        $shifts = Shift::with(['events', 'user', 'labels'])->get();
+        $shifts = Shift::with(self::WITH)->get();
         $shifts->each(function (Shift $shift) use ($reference) {
             self::recalculate($shift, $reference);
         });
@@ -32,7 +32,7 @@ class ShiftService
     {
         $shift = Shift::create($array);
         $shift->events()->createMany($array['events'] ?: []);
-        return Shift::with(['events', 'user'])->findOrFail($shift->id);
+        return Shift::with(self::WITH)->findOrFail($shift->id);
     }
 
     /**
@@ -44,7 +44,7 @@ class ShiftService
         $shift->update($array);
         $shift->events()->delete();
         $shift->events()->createMany($array["events"] ?: []);
-        return Shift::with(['events', 'user'])->findOrFail($shift->id);
+        return Shift::with(self::WITH)->findOrFail($shift->id);
     }
 
     /**
@@ -106,7 +106,7 @@ class ShiftService
     {
         $shift = Shift::findOrFail($id);
         $shift->labels()->sync($array);
-        return $shift->load(['events', 'user', 'labels']);
+        return $shift->load(self::WITH);
     }
 
     /**

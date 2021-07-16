@@ -1,5 +1,5 @@
 <template>
-  <div :style="[wide ? { width: '100%' } : {}]" :class="css">
+  <div :style="style" :class="css">
     <slot />
   </div>
 </template>
@@ -10,17 +10,21 @@ export default {
     flex: Boolean,
     align: {
       type: String,
-      validator: (v) =>
-        ["center", "right", "left", null].includes(v),
+      validator: (v) => ["center", "right", "left", null].includes(v),
     },
   },
-  computed:{
-    css(){
-      const align = this.align && "text-"+this.align;
-      const flex = this.flex && "d-flex";
-      return align + " " + flex; 
-    }
-  }
+  computed: {
+    css() {
+      return [
+        this.align && "text-" + this.align, this.flex && "d-flex"
+      ];
+    },
+    style() {
+      return [
+        this.wide && { width: "100%" },
+      ];
+    },
+  },
 };
 </script>
 

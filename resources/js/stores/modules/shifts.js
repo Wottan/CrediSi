@@ -101,8 +101,7 @@ export default {
             state.shifts = shifts
         },
         update(state, shift) {
-            state.shifts = state.shifts.filter(s => s.id !== shift.id);
-            state.shifts.push(shift);
+            state.shifts = state.shifts.map(s => s.id === shift.id ? shift : s);
         },
         delete(state, shift) {
             state.shifts = state.shifts.filter(s => s.id !== shift.id);
