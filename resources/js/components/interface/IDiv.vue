@@ -1,5 +1,5 @@
 <template>
-  <div :style="style" :class="css">
+  <div :style="style" :class="classes">
     <slot />
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     },
   },
   computed: {
-    css() {
+    classes() {
       return [
         this.align && "text-" + this.align, this.flex && "d-flex"
       ];

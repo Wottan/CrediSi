@@ -1,5 +1,5 @@
 <template>
-    <v-chip :color="color"><slot /></v-chip>
+    <v-chip :color="color" class="ma-1"><slot /></v-chip>
 </template>
 
 <script>
