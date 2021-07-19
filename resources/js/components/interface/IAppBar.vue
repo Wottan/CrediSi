@@ -41,6 +41,12 @@
             </v-list-item-icon>
             <v-list-item-title>Etiquetas</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="$router.push('timeoff')">
+            <v-list-item-icon>
+              <i-icon value="timeoff" />
+            </v-list-item-icon>
+            <v-list-item-title>Inasistencias</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
