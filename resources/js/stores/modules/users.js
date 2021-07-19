@@ -27,7 +27,7 @@ export default {
         add({ commit }, user) {
             return new Promise((resolve, reject) => {
                 http.post("/api/users", user).then((result) => {
-                    commit("update", result.data);
+                    commit("add", result.data);
                     resolve(result);
                 }).catch((err) => {
                     reject(err.response);
@@ -68,6 +68,10 @@ export default {
     mutations: {
         users(state, users) {
             state.users = users
+        },
+        add(state, user) {
+            state.users = state.shifts.filter(s => s.id !== user.id);
+            state.users.push(user);
         },
         update(state, user) {
             state.users = state.users.map(u => u.id === user.id ? user : u)

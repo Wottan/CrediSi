@@ -1,6 +1,6 @@
 <template>
   <i-container>
-    <i-table :columns="columns" :sort-by="sortBy" :rows="users" title="Usuarios">
+    <i-table :columns="columns" :sort-by="['name']" :rows="users" title="Usuarios" :loading="loading">
       <template v-slot:tableActions>
         <create-user-action />
       </template>
@@ -38,11 +38,14 @@ export default {
         {
           text: "Etiquetas",
           value: "labels",
+          sortable: false,
+          sort: (a, b) =>
+            a.labels?.map((l) => l.text).join() > b.labels?.map((l) => l.text).join(),
           searchable: (row) => row.labels?.map((l) => l.text).join(" "),
         },
       ],
       showUserEditDialog: false,
-      sortBy: ["name"],
+      loading: false
     };
   },
   computed: {
@@ -54,7 +57,8 @@ export default {
   },
 
   created() {
-    this.load();
+    this.loading = true;
+    this.load().finally(() => this.loading = false);
   },
 };
 </script>
