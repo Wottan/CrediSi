@@ -3,6 +3,8 @@
     :headers="headers"
     :sort-by="sortBy"
     :sort-desc="sortDesc"
+    :loading="loading"
+    loading-text="Cargando los datos... Por favor espere"
     :items="rows"
     :search="searchString"
     :custom-filter="searchFilter"
@@ -70,21 +72,12 @@ export default {
     };
   },
   props: {
-    rows: {
-      type: Array,
-    },
-    columns: {
-      type: Array,
-    },
-    title: {
-      type: String,
-    },
-    sortBy: {
-      type: Array,
-    },
-    sortDesc: {
-      type: Array,
-    }
+    rows: Array,
+    columns: Array,
+    title: String,
+    sortBy: Array,
+    sortDesc: Array,
+    loading: Boolean
   },
   computed: {
     canExpand() {

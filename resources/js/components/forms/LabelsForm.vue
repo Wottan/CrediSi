@@ -1,6 +1,6 @@
 <template>
   <i-form>
-    <i-table :columns="columns" :rows="proxies" :sort-by="sortBy" title="Etiquetas">
+    <i-table :columns="columns" :rows="proxies" :sort-by="['text']" title="Etiquetas" :loading="loading">
       <template v-slot:tableActions>
         <i-text-input :value="newLabel" @input="newLabel = $event" />
         <i-button-icon
@@ -40,7 +40,7 @@ export default {
       ],
       proxies: [],
       newLabel: null,
-      sortBy: ["text"],
+      loading: false
     };
   },
   computed: {
@@ -69,7 +69,8 @@ export default {
     },
   },
   created() {
-    this.load().then(this.proxy);
+    this.loading = true;
+    this.load().then(this.proxy).finally(() => this.loading = false );
   },
 };
 </script>

@@ -28,7 +28,6 @@ class ShiftController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
             'user' => 'required',
             'start' => 'required',
         ]);

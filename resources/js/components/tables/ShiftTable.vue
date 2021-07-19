@@ -1,15 +1,12 @@
 <template>
   <i-container>
-    <i-table :columns="columns" :sort-by="sortBy" :rows="shifts" title="Turnos">
+    <i-table :columns="columns" :sort-by="['user.name']" :rows="shifts" title="Turnos" :loading="loading">
       <template v-slot:tableActions>
         <shift-filter-selector label="Filtrar turnos" />
         <i-spacer />
         <i-button tooltip="Agregar turno" @click="showAddDialog = true">
           <i-icon value="add" />
         </i-button>
-      </template>
-      <template v-slot:user="{ row }">
-        {{ row.user && row.user.name }}
       </template>
       <template v-slot:labels="{ row }">
         <labels-info :value="row.labels" />
@@ -18,10 +15,7 @@
         <shift-actions :value="row" />
       </template>
     </i-table>
-    <shift-dialog
-      v-if="showAddDialog"
-      @close="showAddDialog = false"
-    />
+    <shift-dialog v-if="showAddDialog" @close="showAddDialog = false" />
   </i-container>
 </template>
 <script>
@@ -36,20 +30,26 @@ export default {
     ShiftActions,
     LabelsInfo,
     ShiftFilterSelector,
-    ShiftDialog
+    ShiftDialog,
   },
   data() {
     return {
       columns: [
-        { text: "Usuario", value: "user", searchable: (row) => row.user?.name },
+        {
+          text: "Usuario",
+          value: "user.name"
+        },
         {
           text: "Etiquetas",
           value: "labels",
-          searchable: (row) => row.labels.map((l) => l.text).join(" "),
+          sortable: false,
+          sort: (a, b) =>
+            a.labels?.map((l) => l.text).join() > b.labels?.map((l) => l.text).join(),
+          searchable: (row) => row.labels?.map((l) => l.text).join(),
         },
       ],
       showAddDialog: false,
-      sortBy: ["user"],
+      loading:false
     };
   },
   computed: {
@@ -60,7 +60,8 @@ export default {
     ...mapActions("shifts", ["load"]),
   },
   created() {
-    this.load();
+    this.loading = true;
+    this.load().finally(() => this.loading = false);
   },
 };
 </script>

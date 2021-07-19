@@ -37,7 +37,7 @@ export default {
         add({ commit }, shift) {
             return new Promise((resolve, reject) => {
                 http.post("/api/shifts", shift).then((result) => {
-                    commit("update", result.data);
+                    commit("add", result.data);
                     resolve(result);
                 }).catch((err) => {
                     reject(err.response);
@@ -65,7 +65,7 @@ export default {
             return new Promise((resolve, reject) => {
                 http.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
                 ).then((result) => {
-                    commit("update", result.data);
+                    commit("updateadd", result.data);
                     resolve(result);
                 }).catch((err) => {
                     reject(err.response);
@@ -99,6 +99,10 @@ export default {
     mutations: {
         shifts(state, shifts) {
             state.shifts = shifts
+        },
+        add(state, shift) {
+            state.shifts = state.shifts.filter(s => s.id !== shift.id);
+            state.shifts.push(shift);
         },
         update(state, shift) {
             state.shifts = state.shifts.map(s => s.id === shift.id ? shift : s);
