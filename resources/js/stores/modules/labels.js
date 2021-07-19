@@ -17,7 +17,7 @@ export default {
                 http.get("/api/labels"
                 ).then((result) => {
                     commit("labels", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     commit("labels", {});
                     reject(err.response);
@@ -29,7 +29,7 @@ export default {
                 http.post("api/labels/upsert", labels
                 ).then((result) => {
                     commit("labels", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -40,7 +40,7 @@ export default {
                 http.put("api/labels/bulk", labels
                 ).then((result) => {
                     commit("labels", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -50,7 +50,7 @@ export default {
             return new Promise((resolve, reject) => {
                 http.delete("/api/labels/" + label.id).then((result) => {
                     commit("delete", label);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })

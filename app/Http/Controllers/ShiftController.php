@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\ShiftService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
 class ShiftController extends Controller
 {
 
@@ -20,6 +18,22 @@ class ShiftController extends Controller
     public function index()
     {
         return $this->shiftService->all();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        return $this->shiftService->get($id, request()->get('date'));
+    }
+
+    /**
+     * List of shifts for agiven user
+     */
+    public function forUser($id)
+    {
+        return $this->shiftService->forUser($id, request()->get('date'));
     }
 
     /**

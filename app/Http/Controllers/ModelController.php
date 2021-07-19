@@ -84,7 +84,6 @@ abstract class ModelController extends Controller
     public function bulkUpdate(Request $request) {
         $models = $request->all();
         foreach($models as $model) {
-            Log::debug(json_encode($model));
             $this->getModel()::where('id',$model['id'])->update($model);
         }
         return $this->getModel()::all();

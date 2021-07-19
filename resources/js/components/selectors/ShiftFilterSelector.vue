@@ -1,10 +1,10 @@
 <template>
   <i-card>
-    <i-select :options="options" :label="label" @input="onInput">
+    <i-select-input :options="options" :label="label" @input="onInput">
       <template v-slot:itemSelected="item">
         <select-info :value="item" :date="date" />
       </template>
-    </i-select>
+    </i-select-input>
     <shift-date-time-dialog v-if="showDateTime" @close="onClose" />
     <shift-date-time-range-dialog v-if="showRange" @close="showRange = false" />
   </i-card>

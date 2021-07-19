@@ -1,6 +1,6 @@
 <template >
   <i-div wide>
-    <i-form>
+    <i-form v-if="shift">
       <i-grid>
         <i-grid-row>
           <i-grid-column>
@@ -19,6 +19,14 @@
               label="Inicio"
             />
           </i-grid-column>
+          <i-grid-column>
+            <i-select-input
+              :value="shift.recurrence"
+              :options="recurrences"
+              @input="shift.recurrence = $event"
+              label="Frequencia"
+            />
+          </i-grid-column>
         </i-grid-row>
       </i-grid>
       <i-calendar-input
@@ -27,14 +35,14 @@
         @input="shift.events = $event"
         label="Etiquetas"
       />
-    </i-form>
-    <i-spacer />
+      <i-spacer />
     <i-button @click="onSubmit"> Guardar </i-button>
+    </i-form>
+    <i-container v-else><i-progress /></i-container>
   </i-div>
 </template>
 <script>
 import { mapActions } from "vuex";
-import { cloneDeep } from "lodash";
 import UserSelector from "../selectors/UserSelector.vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
@@ -50,7 +58,11 @@ export default {
   },
   data() {
     return {
-      shift: {},
+      shift: null,
+      recurrences: [
+        { value: "weekly", text: "Semanal" },
+        { value: "biweekly", text: "Cada dos semanas" },
+      ],
     };
   },
   mixins: [validationMixin],
@@ -71,7 +83,7 @@ export default {
         errors.push("Este campo es requerido.");
       return errors;
     },
-    ...mapActions("shifts", ["add", "update"]),
+    ...mapActions("shifts", ["add", "update","editable"]),
     ...mapActions("messages", ["handleError"]),
     onSubmit() {
       this.$v.$touch();
@@ -87,7 +99,9 @@ export default {
     },
     init() {
       if (this.value) {
-        this.shift = cloneDeep(this.value);
+        this.editable(this.value.id).then((shift) => {
+          this.shift = shift;          
+        }).catch(this.handleError);
       } else {
         this.shift = {
           user: {},
