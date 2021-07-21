@@ -11,6 +11,7 @@ class TimeOff extends Model
      *
      * @var string
      */
+    protected $table = 'timeoff';
     protected $primaryKey = 'id';
 
     /**

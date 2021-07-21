@@ -6,6 +6,7 @@ use App\Http\Controllers\SocialiteLoginController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\TimeoffController;
 
 
 /*
@@ -55,7 +56,7 @@ Route::prefix('api')->middleware('auth')->group(function () {
         'users' => UserController::class,
         'labels' => LabelController::class,
         'shifts' => ShiftController::class,
-        'timeoff' => TimeOffController::class,
+        'timeoff' => TimeoffController::class,
     ]);
 });
 
