@@ -33,7 +33,7 @@ import IComboBoxInput from './components/interface/IComboBoxInput';
 import ICalendarInput from './components/interface/ICalendarInput';
 import IFilterableSelect from './components/interface/IFilterableSelect';
 import IDateInput from './components/interface/IDateInput';
-import ISelect from './components/interface/ISelect';
+import ISelectInput from './components/interface/ISelectInput';
 import IDate from './components/interface/IDate';
 import IImage from './components/interface/IImage';
 import IClockInput from './components/interface/IClockInput';
@@ -43,6 +43,7 @@ import IColorInput from './components/interface/IColorInput';
 import IEmailInput from './components/interface/IEmailInput';
 import ICheckboxInput from './components/interface/ICheckboxInput';
 import IText from './components/interface/IText'
+import IProgress from './components/interface/IProgress'
 
 Vue.use(Vuelidate);
 Vue.use(VueAxios, axios);
@@ -75,7 +76,7 @@ Vue.component('i-filterable-select', IFilterableSelect);
 Vue.component('i-div', IDiv);
 Vue.component('i-date-input', IDateInput);
 Vue.component('i-chip', IChip);
-Vue.component('i-select', ISelect);
+Vue.component('i-select-input', ISelectInput);
 Vue.component('i-date', IDate);
 Vue.component('i-image', IImage);
 Vue.component('i-time-input', ITimeInput);
@@ -85,6 +86,7 @@ Vue.component('i-color-input', IColorInput);
 Vue.component('i-email-input', IEmailInput);
 Vue.component('i-checkbox-input', ICheckboxInput);
 Vue.component('i-text', IText);
+Vue.component('i-progress', IProgress);
 
 const app = new Vue({
     router,

@@ -6,7 +6,6 @@ use App\Exceptions\ServiceException;
 use App\Models\Shift;
 use App\Models\ShiftEvent;
 use Carbon\Carbon;
-
 class ShiftService
 {
     const WITH = ['events', 'user', 'labels'];
@@ -18,11 +17,7 @@ class ShiftService
      */
     public function all($reference = null): iterable
     {
-        $shifts = Shift::with(self::WITH)->get();
-        $shifts->each(function (Shift $shift) use ($reference) {
-            self::recalculate($shift, $reference);
-        });
-        return $shifts;
+        return self::recalculateAll(Shift::with(self::WITH)->get(), $reference);
     }
 
     /**
@@ -48,6 +43,27 @@ class ShiftService
     }
 
     /**
+     * Shifts for specific user
+     */
+    public function forUser(string $id, $date): iterable
+    {
+        return self::recalculateAll(
+            Shift::with(self::WITH)->where(["user_id" => $id])->get(), 
+            $date
+        );
+    }
+
+    /**
+     * Specific shift
+     */
+    public function get(string $id, $date): Shift
+    {
+        $shift = Shift::with(self::WITH)->findOrFail($id);
+        self::recalculate($shift, $date);
+        return $shift;
+    }
+
+    /**
      * Deletes a shift and related events
      */
     public function delete(string $id)
@@ -58,12 +74,25 @@ class ShiftService
     }
 
     /**
+     * Recalculate events on all shifts
+     * 
+     * @return Shift[]
+     */
+    public static function recalculateAll($shifts, $reference = null): iterable
+    {
+        $shifts->each(function (Shift $shift) use ($reference) {
+            self::recalculate($shift, $reference);
+        });
+        return $shifts;
+    }
+
+    /**
      * Recalculate events recurrence
      */
-    private static function recalculate(Shift $shift, $reference): Shift
+    private static function recalculate(Shift $shift, $reference, $recurrence = null, $start = null): Shift
     {
         foreach ($shift->events as $event) {
-            self::recalculateEvent($event, $shift->recurrence, $reference);
+            self::recalculateEvent($event, $reference, $recurrence ?: $shift->recurrence, $start ?: $shift->start);
         }
         return $shift;
     }
@@ -71,17 +100,17 @@ class ShiftService
     /**
      * Recalculate event's recurrence
      */
-    private static function recalculateEvent(ShiftEvent $event, string $recurrence, $reference): ShiftEvent
+    private static function recalculateEvent(ShiftEvent $event, $reference, $recurrence, $start): ShiftEvent
     {
-        $event->start = self::calculateNextOccurrence($event->start, $recurrence, $reference);
-        $event->end = self::calculateNextOccurrence($event->end, $recurrence, $reference);
+        $event->start = self::calculateNextOccurrence($event->start, $reference, $recurrence, $start);
+        $event->end = self::calculateNextOccurrence($event->end, $reference, $recurrence, $start);
         return $event;
     }
 
     /**
      * Calculate next occurrence
      */
-    private static function calculateNextOccurrence(String $moment, string $recurrence, $reference): string
+    private static function calculateNextOccurrence(String $moment, $reference, $recurrence, $start): string
     {
         $moment = Carbon::parse($moment);
         $now = $reference ? Carbon::parse($reference) : Carbon::now();
@@ -91,7 +120,14 @@ class ShiftService
             $startOfCurrentWeek = $now->startOfWeek();
             $recalculated = $moment;
             while ($startOfCurrentWeek->gt($recalculated)) {
-                $recalculated = $recalculated->addWeeks(1);
+                $recalculated->addWeeks(1);
+            }
+            return $recalculated->toString();
+        } else if ("biweekly" === $recurrence) {
+            $startOfCurrentWeek = $now->startOfWeek(Carbon::MONDAY);
+            $recalculated = $moment->clone();
+            while ($startOfCurrentWeek->gt($recalculated)) {
+                $recalculated->addWeeks(2);
             }
             return $recalculated->toString();
         } else {

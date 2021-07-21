@@ -49,6 +49,7 @@ Route::prefix('api')->middleware('auth')->group(function () {
     Route::put('shifts/{shift}/sync', [ShiftController::class, 'syncLabels']);
     Route::get('shifts/active', [ShiftController::class, 'active'])->name("active-shifts");
     Route::get('shifts/today', [ShiftController::class, 'today']);
+    Route::get('shifts/user/{id}', [ShiftController::class, 'forUser']);
 
     Route::resources([
         'users' => UserController::class,

@@ -13,7 +13,7 @@ export default {
                 http.get("/login/check")
                 .then((result) => {
                     commit("login", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -24,7 +24,7 @@ export default {
                 http.post("/login", credentials
                 ).then((result) => {
                     commit("login", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -35,7 +35,7 @@ export default {
                 http.post("/logout"
                 ).then((result) => {
                     commit("logout", {});
-                    resolve(result);
+                    resolve(result.data);
                 }).catch(err => {
                     reject(err);
                 })

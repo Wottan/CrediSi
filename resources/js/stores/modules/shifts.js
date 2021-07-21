@@ -17,7 +17,7 @@ export default {
                 http.get("/api/shifts"
                 ).then((result) => {
                     commit("shifts", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     commit("shifts", {});
                     reject(err.response);
@@ -28,17 +28,36 @@ export default {
             return new Promise((resolve, reject) => {
                 http.put("/api/shifts/" + shift.id, shift).then((result) => {
                     commit("update", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 });
             });
         },
+        editable({ commit }, id, date) {
+            return new Promise((resolve, reject) => {
+                http.get("/api/shifts/" + id, { params: { date }}).then((result) => {
+                    resolve(result.data);
+                }).catch((err) => {
+                    reject(err.response);
+                });
+            });
+        },
+        forUser({ commit }, id, date) {
+            return new Promise((resolve, reject) => {
+                http.get("/api/shifts/user/" + id, { params: { date }}).then((result) => {
+                    resolve(result.data);
+                }).catch((err) => {
+                    reject(err.response);
+                });
+            });
+        },
+        
         add({ commit }, shift) {
             return new Promise((resolve, reject) => {
                 http.post("/api/shifts", shift).then((result) => {
                     commit("add", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -48,7 +67,7 @@ export default {
             return new Promise((resolve, reject) => {
                 http.delete("/api/shifts/" + shift.id).then((result) => {
                     commit("delete", shift);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -65,8 +84,8 @@ export default {
             return new Promise((resolve, reject) => {
                 http.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
                 ).then((result) => {
-                    commit("updateadd", result.data);
-                    resolve(result);
+                    commit("update", result.data);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -77,7 +96,7 @@ export default {
                 http.get("/api/shifts/today"
                 ).then((result) => {
                     commit("shifts", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -88,7 +107,7 @@ export default {
                 http.get("/api/shifts/active", { params: { date } }
                 ).then((result) => {
                     commit("shifts", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })

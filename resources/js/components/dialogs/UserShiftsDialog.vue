@@ -1,13 +1,14 @@
 <template >
-  <i-dialog :value="true" @close="close" width="700">
+  <i-dialog :value="true" @close="close" width="900">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
-      <i-calendar-input readonly type="week" :events="events" />
+      <i-calendar-input v-if="events" readonly type="week" :events="events" />
+      <i-progress v-else />
     </v-card>
   </i-dialog>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   props: {
     value: {
@@ -15,17 +16,19 @@ export default {
       required: true,
     },
   },
-  computed: {
-    ...mapGetters("shifts", ["shifts"]),
-    events() {
-      return this.shifts.filter(s => s.user_id === this.value.id).flatMap(s => s.events) || [];
-    },
+  data() {
+    return {
+      events: null,
+    }  
   },
   created() {
-    this.load();
+    this.forUser(this.value.id).then(shifts => {
+      this.events = shifts?.flatMap(s => s.events) || [];
+    }).catch(this.handleError);
   },
   methods: {
-    ...mapActions("shifts", ["load"]),
+    ...mapActions("shifts", ["forUser"]),
+    ...mapActions("messages", ["handleError"]),
     close() {
       this.$emit("close");
     },

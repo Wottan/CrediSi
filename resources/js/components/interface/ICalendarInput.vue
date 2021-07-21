@@ -1,7 +1,7 @@
 <template>
   <v-calendar
     :now="now"
-    :value="value"
+    :value="now"
     :events="eventProxies"
     :type="type"
     :first-time="firstTime"
@@ -16,13 +16,14 @@
     @mouseup:time="endDrag"
     @mouseleave.native="cancelDrag"
   >
+    <template v-slot:day-label-header></template>
     <template v-slot:event="{ event, timed, eventSummary }">
       <i-grid class="pa-0">
         <i-grid-row>
           <i-grid-column cols="9">
             <div class="v-event-draggable" v-html="eventSummary()" />
           </i-grid-column>
-          <i-grid-column cols="1">
+          <i-grid-column v-if="editable" cols="1">
             <i-button-icon
               size="tiny"
               value="close"
@@ -47,36 +48,30 @@ import { cloneDeep, minBy, maxBy } from "lodash";
 import { DateFunctions } from "../../dates";
 export default {
   props: {
-    value: {
-      type: String,
-      default: () => DateFunctions.currentDateStr(),
-    },
+    value: String,
     type: {
       type: String,
       validator: (v) => ["week"].includes(v),
     },
-    readonly: {
-      type: Boolean,
-    },
-    events: {
-      type: Array,
-    },
+    readonly: Boolean,
+    events: Array,
   },
-  data: () => ({
-    eventColor: "#2196F3",
-    firstTime: "0:00",
-    intervals: 24,
-    intervalHeight: 20,
-    intervalWidth: 40,
-    now: DateFunctions.currentDateTimeStr(),
-    weekDays: [0, 1, 2, 3, 4, 5, 6],
-    dragEvent: null,
-    dragStart: null,
-    createEvent: null,
-    createStart: null,
-    extendOriginal: null,
-    eventProxies: [],
-  }),
+  data() {
+    return {
+      eventColor: "#2196F3",
+      firstTime: "0:00",
+      intervals: 24,
+      intervalHeight: 40,
+      intervalWidth: 40,
+      weekDays: [1, 2, 3, 4, 5, 6, 0],
+      dragEvent: null,
+      dragStart: null,
+      createEvent: null,
+      createStart: null,
+      extendOriginal: null,
+      eventProxies: [],
+    };
+  },
   created() {
     this.initProxies();
     if (!this.editable) {
@@ -86,6 +81,51 @@ export default {
   computed: {
     editable() {
       return !this.readonly && !!this.$listeners.input;
+    },
+    now() {
+      return (
+        DateFunctions.fromISOToDateTimeStr(this.value) ||
+        this.dateLimits.min?.str ||
+        DateFunctions.currentDateTimeStr()
+      );
+    },
+    dateLimits() {
+      const comparable = (dateStr) => {
+        const date = DateFunctions.fromStr(dateStr);
+        return {
+          millis: date.toMillis(),
+          str: date.toSQLDate(),
+        };
+      };
+      return {
+        min: minBy(
+          this.eventProxies.map((e) => comparable(e.start)),
+          "millis"
+        ),
+        max: maxBy(
+          this.eventProxies.map((e) => comparable(e.end)),
+          "millis"
+        ),
+      };
+    },
+    timeLimits() {
+      const comparable = (dateStr) => {
+        const date = DateFunctions.fromStr(dateStr);
+        return {
+          time: date.hour * 100 + date.minute, // 18:00 turns into 1800
+          str: date.toSQLTime()
+        };
+      };
+      return {
+        min: minBy(
+          this.eventProxies.map((e) => comparable(e.start)),
+          "time"
+        ),
+        max: maxBy(
+          this.eventProxies.map((e) => comparable(e.end)),
+          "time"
+        ),
+      };
     },
   },
   methods: {
@@ -97,29 +137,14 @@ export default {
       }));
     },
     initLimits() {
-      const comparable = (dateStr) => {
-        const date = DateFunctions.fromStr(dateStr);
-        return {
-          time: date.hour * 100 + date.minute, // 18:00 turns into 1800
-          sql: date.toSQLTime(),
-        };
-      };
-      const minTime = minBy(
-        this.eventProxies.map((e) => comparable(e.start)),
-        "time"
-      );
-      const maxTime = maxBy(
-        this.eventProxies.map((e) => comparable(e.end)),
-        "time"
-      );
-      if (minTime && maxTime) {
+      if (this.timeLimits.min && this.timeLimits.max) {
         let intervals = 0;
-        let time = minTime.time;
-        while (time <= maxTime.time) {
+        let time = this.timeLimits.min.time;
+        while (time <= this.timeLimits.max.time) {
           intervals++;
           time += 100;
         }
-        this.firstTime = minTime.sql;
+        this.firstTime = this.timeLimits.min.str;
         this.intervals = intervals;
       }
     },

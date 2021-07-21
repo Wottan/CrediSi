@@ -17,7 +17,7 @@ export default {
                 http.get("/api/users"
                 ).then((result) => {
                     commit("users", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     commit("users", {});
                     reject(err.response);
@@ -28,7 +28,7 @@ export default {
             return new Promise((resolve, reject) => {
                 http.post("/api/users", user).then((result) => {
                     commit("add", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -39,7 +39,7 @@ export default {
                 http.put("/api/users/" + user.id, user
                 ).then((result) => {
                     commit("update", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
@@ -57,7 +57,7 @@ export default {
                 http.put("api/users/" + payload.idUser + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
-                    resolve(result);
+                    resolve(result.data);
                 }).catch((err) => {
                     reject(err.response);
                 })
