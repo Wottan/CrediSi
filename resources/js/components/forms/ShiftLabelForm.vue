@@ -53,9 +53,9 @@ export default {
 
     onSubmit() {
       this.upsert(this.localeLabels)
-        .then((label) => {
+        .then((labels) => {
           let labelIds = this.localeLabels.map((l) => {
-            return label.data.find((e) => e.text === l.text)?.id;
+            return labels.find((e) => e.text === l.text)?.id;
           });
 
           this.syncLabels({ labelIds: labelIds, idShift: this.value.id }).then(
