@@ -8,6 +8,7 @@
     :hide-no-data="!search"
     hide-selected
     :value="value"
+    :menu-props="menuProps"
     @input="$emit('input', $event)"
   >
     <template v-slot:no-data>
@@ -26,6 +27,9 @@ export default {
   data() {
     return {
       search: null,
+      menuProps:{
+        closeOnContentClick: true,
+      },
     };
   },
   props: {

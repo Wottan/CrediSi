@@ -73,16 +73,9 @@ export default {
                 })
             });
         },
-        /**
-         * Syncronize labels whit shift
-         * 
-         * @param {*} param0 
-         * @param {*} payload id shift and ids of labels
-         * @returns 
-         */
         syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                http.put("api/shifts/" + payload.idShift + "/sync", payload.labelIds
+                http.put("api/shifts/" + payload.id + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result.data);

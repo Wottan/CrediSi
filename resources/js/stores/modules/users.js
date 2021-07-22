@@ -45,16 +45,9 @@ export default {
                 })
             });
         },
-        /**
-         * Syncronize labels whit user
-         * 
-         * @param {*} param0 
-         * @param {*} payload id user and ids of labels
-         * @returns 
-         */
         syncLabels({ commit }, payload) {
             return new Promise((resolve, reject) => {
-                http.put("api/users/" + payload.idUser + "/sync", payload.labelIds
+                http.put("api/users/" + payload.id + "/sync", payload.labelIds
                 ).then((result) => {
                     commit("update", result.data);
                     resolve(result.data);

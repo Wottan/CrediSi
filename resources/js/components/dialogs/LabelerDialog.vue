@@ -2,18 +2,21 @@
   <i-dialog :value="true" @close="close" width="500">
     <v-card>
       <v-card-title> {{ value.name }} </v-card-title>
-      <shift-label-form :value="value" @submit="close" />
+      <labeler-form :value="value" @submit="close" :target="target"/>
     </v-card>
   </i-dialog>
 </template>
 <script>
-import ShiftLabelForm from "../forms/ShiftLabelForm.vue";
+import LabelerForm from '../forms/LabelerForm.vue';
 export default {
-  components: { ShiftLabelForm },
+  components: { LabelerForm },
   props: {
     value: {
       type: Object,
       required: true,
+    },
+    target: {
+      type: String,
     },
   },
 
