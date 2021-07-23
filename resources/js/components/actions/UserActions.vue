@@ -5,9 +5,10 @@
       tooltip="Etiquetar"
       @click="showUserlabelDialog = true"
     />
-    <user-label-dialog
+    <labeler-dialog
       v-if="showUserlabelDialog"
       :value="value"
+      target="user"
       @close="showUserlabelDialog = false"
     />
     
@@ -38,17 +39,17 @@
 </template>
 
 <script>
+import LabelerDialog from '../dialogs/LabelerDialog.vue';
 import UserEditDialog from "../dialogs/UserEditDialog.vue";
-import UserLabelDialog from "../dialogs/UserLabelDialog.vue";
 import UserShiftsDialog from "../dialogs/UserShiftsDialog.vue";
 import LabelsInfo from "../info/LabelsInfo.vue";
 
 export default {
   components: {
-    UserLabelDialog,
     UserShiftsDialog,
     LabelsInfo,
     UserEditDialog,
+    LabelerDialog,
   },
   props: {
     value: {

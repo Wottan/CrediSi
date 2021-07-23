@@ -5,9 +5,10 @@
       tooltip="Etiquetar"
       @click="showLabelDialog = true"
     />
-    <shift-label-dialog
+    <labeler-dialog
       v-if="showLabelDialog"
       :value="value"
+      target="shift"
       @close="showLabelDialog = false"
     />
 
@@ -39,14 +40,14 @@
 <script>
 import { mapActions } from "vuex";
 import ShiftDeleteDialog from "../dialogs/ShiftDeleteDialog.vue";
-import ShiftLabelDialog from "../dialogs/ShiftLabelDialog.vue";
 import ShiftDialog from "../dialogs/ShiftDialog.vue";
+import LabelerDialog from '../dialogs/LabelerDialog.vue';
 
 export default {
   components: {
-    ShiftLabelDialog,
     ShiftDialog,
     ShiftDeleteDialog,
+    LabelerDialog,
   },
   props: {
     value: {

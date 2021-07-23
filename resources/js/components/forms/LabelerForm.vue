@@ -14,6 +14,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -27,6 +28,10 @@ export default {
       type: Object,
       required: true,
     },
+    target:{
+      type: String,
+      validator: (v) => ["user", "shift"].includes(v),
+    }
   },
   computed: {
     ...mapGetters("labels", ["labels"]),
@@ -36,11 +41,11 @@ export default {
   },
   methods: {
     ...mapActions("labels", ["load", "upsert"]),
-    ...mapActions("users", ["syncLabels"]),
+    ...mapActions("users", {userSync: "syncLabels"}),
+    ...mapActions("shifts", {shiftSync: "syncLabels"}),
     ...mapActions("messages", ["handleError"]),
 
     onSelectedLabelsChange(labels) {
-      //to do translate to objects
       this.localeLabels = [];
       labels.forEach((element) => {
         if (typeof element === "string") {
@@ -52,17 +57,21 @@ export default {
     },
 
     onSubmit() {
+      const sync = {
+        user: this.userSync,
+        shift: this.shiftSync,
+      }
       this.upsert(this.localeLabels)
         .then((labels) => {
           let labelIds = this.localeLabels.map((l) => {
             return labels.find((e) => e.text === l.text)?.id;
           });
-
-          this.syncLabels({ labelIds: labelIds, idUser: this.value.id }).then(
+          const id = this.value.id;
+          sync[this.target]({id, labelIds}).then(
             () => {
               this.$emit("submit");
             }
-          );
+          ).catch(this.handleError);
         })
         .catch(this.handleError);
     },
