@@ -7,6 +7,8 @@ import users from './modules/users';
 import labels from './modules/labels';
 import shifts from './modules/shifts';
 import timeoff from './modules/timeoff';
+import abonados from './modules/abonados';
+import provinces from './modules/provinces';
 
 Vue.use(Vuex);
 
@@ -18,5 +20,7 @@ export default new Vuex.Store({
         labels,
         shifts,
         timeoff,
+        abonados,
+        provinces
     },
 })

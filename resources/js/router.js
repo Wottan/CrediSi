@@ -15,31 +15,13 @@ const router = new VueRouter({
     linkExactActiveClass: 'active',
     routes: [
         {
-            path: '/login',
-            name: 'login',
-            component: LoginPage
-        },
-        {
             path: '/home',
             name: 'home',
             component: HomePage
         },
         {
-            path: '/shifts',
-            name: 'shifts',
-            component: ShiftsPage
-        },{
-            path: '/labels',
-            name: 'labels',
-            component: LabelsPage
-        },{
-            path: '/timeoff',
-            name: 'timeoff',
-            component: TimeoffPage
-        },
-        { 
-            path: '*', 
-            redirect: '/home' 
+            path: '*',
+            redirect: '/home'
         },
     ]
 });

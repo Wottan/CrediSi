@@ -63,6 +63,7 @@ export default {
 
   created() {
     this.loading = true;
+    console.debug(this.loading);
     this.load().finally(() => (this.loading = false));
   },
 };

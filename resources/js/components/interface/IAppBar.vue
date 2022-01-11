@@ -2,9 +2,8 @@
   <i-div>
     <v-app-bar>
       <v-app-bar-nav-icon @click="menu = true" />
-      <i-image value="logo" height="40" width="40" />
       <v-container class="justify-start"
-        ><v-toolbar-title>Sistema de RRHH</v-toolbar-title></v-container
+        ><v-toolbar-title>Abonados</v-toolbar-title></v-container
       >
       <slot />
     </v-app-bar>

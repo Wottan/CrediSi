@@ -10,16 +10,16 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions("auth", ["check"]),
+    // ...mapActions("auth", ["check"]),
     ...mapActions("messages", ["error"]),
   },
   created() {
     this.$route.query.error && this.error(this.$route.query.error);
-    this.check().catch((err) => {
-      if (this.$route.name !== "login") {
-        this.$router.push({ name: "login" });
-      }
-    });
+    // this.check().catch((err) => {
+    //   if (this.$route.name !== "timeoff") {
+    //     this.$router.push({ name: "timeoff" });
+    //   }
+    // });
   },
 };
 </script>
