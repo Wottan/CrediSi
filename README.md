@@ -1,4 +1,6 @@
-## rrhh
+## CrediSi
+
+Laravel integrado con Vuejs. Como es un sistema monolitico los "end points" se encuentran en el archivo web.
 
 # Pre-requisites:
 

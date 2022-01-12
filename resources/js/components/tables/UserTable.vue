@@ -26,13 +26,11 @@
 import { mapActions, mapGetters } from "vuex";
 
 import UserInfo from "../info/UserInfo";
-import LabelsInfo from "../info/LabelsInfo";
 import UserActions from "../actions/UserActions";
 import CreateUserAction2 from "../actions/CreateUserAction2.vue";
 export default {
   components: {
     UserInfo,
-    LabelsInfo,
     UserActions,
     CreateUserAction2,
   },
@@ -42,6 +40,7 @@ export default {
       columns: [
         { text: "Nombre", value: "name" },
         { text: "Apellido", value: "last_name" },
+        { text: "Dni", value: "dni" },
         { text: "Sexo", value: "sex" },
         { text: "Inicio", value: "start_date" },
         // {

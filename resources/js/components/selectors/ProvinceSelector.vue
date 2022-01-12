@@ -13,6 +13,10 @@ import { cloneDeep } from "lodash";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  created() {
+    this.load();
+  },
+
   props: {
     value: {
       type: Object,
@@ -26,22 +30,19 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("users", ["users"]),
+    ...mapGetters("provinces", ["provinces"]),
     options() {
-      return this.users.map((u) => ({ value: u.id, label: u.name }));
+      return this.provinces.map((u) => ({ value: u.id, label: u.name }));
     },
     selected() {
-      return { value: this.value.id, label: this.value.name };
+      return { value: this.value?.id, label: this.value?.name };
     },
   },
   methods: {
-    ...mapActions("users", ["load"]),
+    ...mapActions("provinces", ["load"]),
     onInput(id) {
-      this.$emit("input", cloneDeep(this.users.find((u) => u.id === id)));
+      this.$emit("input", cloneDeep(this.provinces.find((u) => u.id === id)));
     },
-  },
-  created() {
-    this.load();
   },
 };
 </script>

@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Abonado extends Model
 {
-    use HasFactory;
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -20,5 +25,13 @@ class Abonado extends Model
         'date_of_birth',
         'start_date',
         'sex',
+        'province_id',
+        'dni'
     ];
+
+
+    public function province()
+    {
+        return $this->belongsTo(Provinces::class, 'province_id');
+    }
 }

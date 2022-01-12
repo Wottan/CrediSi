@@ -10,4 +10,9 @@ class AbonadosController extends ModelController
     {
         return Abonado::class;
     }
+
+    protected function with(): array
+    {
+        return ['province'];
+    }
 }

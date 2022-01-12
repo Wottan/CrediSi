@@ -12,6 +12,7 @@
           <i-card-text>
             <i-text bold>Sexo: </i-text>{{ value.sex }}</i-card-text
           >
+          <i-card-text> <i-text bold>Dni: </i-text>{{ value.dni }}</i-card-text>
         </i-grid-column>
         <i-grid-column :cols="2">
           <i-card-text>
@@ -23,7 +24,7 @@
             ><i-date :value="value.start_date"
           /></i-card-text>
           <i-card-text>
-            <i-text bold>Provincia: </i-text>{{ value.provincia }}
+            <i-text bold>Provincia: </i-text>{{ value.province.name }}
           </i-card-text>
         </i-grid-column>
       </i-grid-row>
@@ -33,12 +34,7 @@
 </template>
 
 <script>
-import LabelsInfo from "../info/LabelsInfo.vue";
-
 export default {
-  components: {
-    LabelsInfo,
-  },
   props: {
     value: {
       type: Object,

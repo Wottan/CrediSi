@@ -15,13 +15,14 @@ class CreateAbonadosTable extends Migration
     {
         Schema::create('abonados', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('last_name');
-            $table->datetime('date_of_birth');
-            $table->string('sex');
-            $table->foreignId('province_id')->constrained('provinces');
+            $table->string('dni')->unique();
+            $table->string('name')->nullable();;
+            $table->string('last_name')->nullable();;
+            $table->date('date_of_birth')->nullable();;
+            $table->string('sex')->nullable();;
+            $table->foreignId('province_id')->constrained('provinces')->nullable();
             $table->date('start_date')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamps();
         });
     }

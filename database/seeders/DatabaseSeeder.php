@@ -15,15 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call([
-        //     // SampleDataSeeder::class
-        //     ProvincesSeeder::class
-        // ]);
         $this->provinceSeeder();
         $this->abonadosSeeder();
     }
-
-
 
     public function provinceSeeder()
     {
@@ -44,9 +38,10 @@ class DatabaseSeeder extends Seeder
     {
         Abonado::truncate();
         Abonado::create([
+            "dni" => "12345678",
             "name" => "Abonado 1",
             "last_name" => "Abonado 1",
-            "sex" => "masculino",
+            "sex" => "Masculino",
             "province_id" => 1,
         ]);
         $this->command->info("Abonado created!");
